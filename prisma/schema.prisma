@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Drink {
+  id        Int        @id @default(autoincrement())
+  name      String
+  price     Float
+  stock     Int
+  imageUrl  String?
+  purchases Purchase[]
+}
+
+model Purchase {
+  id        Int      @id @default(autoincrement())
+  drink     Drink    @relation(fields: [drinkId], references: [id])
+  drinkId   Int
+  createdAt DateTime @default(now())
+}

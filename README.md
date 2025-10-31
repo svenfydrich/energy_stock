@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Energy Stock
 
-## Getting Started
+A modern inventory dashboard for tracking, purchasing, and restocking energy drinks. Built with **Next.js 16**, **React 19**, **Prisma**, **Tailwind CSS v4 (inline theme)**, and **Framer Motion**. It features animated toasts, optimistic UI, gradient borders, responsive layout, and light/dark adaptive card styling.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Table of Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture Overview](#architecture-overview)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Database & Seeding](#database--seeding)
+- [Available Scripts](#available-scripts)
+- [API Endpoints](#api-endpoints)
+- [UI / UX Details](#ui--ux-details)
+- [Folder Structure](#folder-structure)
+- [Customization](#customization)
+- [Roadmap Ideas](#roadmap-ideas)
+- [Contributing](#contributing)
+- [License](#license)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Domain | Description |
+| ------ | ----------- |
+| Inventory | View all drinks with stock, price, and image |
+| Purchase Flow | Optimistic stock decrement + toast feedback |
+| Restocking | Single or batch restock via REST endpoint |
+| Animated Feedback | Framer Motion transitions + processing overlay |
+| Toast System | Success / error / info toasts with auto-dismiss |
+| Skeleton Loading | Shimmer placeholders during initial fetch |
+| Responsive Grid | 1 / 2 / 3 columns (mobile / tablet / desktop) |
+| Gradient Branding | Theming for headers & borders |
+| Adaptive Cards | Solid white in light mode, glass blur in dark mode |
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js 16 (App Router)**
+- **React 19**
+- **TypeScript**
+- **Prisma** (PostgreSQL)
+- **Tailwind CSS v4 (inline @theme)**
+- **Framer Motion** (animations)
+- **Supabase** (Remote DB hosting)
+- **next/font** (Plus Jakarta Sans, Geist)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Architecture Overview
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **App Router**: All routing under `app/` (no legacy pages directory).
+- **Data Layer**: Prisma models (`prisma/schema.prisma`) + generated client output directed to `app/generated/prisma`.
+- **API Routes**:
+  - `app/api/buy/route.ts` (POST)
+  - `app/api/restock/route.ts` (GET/POST single & batch)
+- **Client UI**: `app/page.tsx` is a client component (fetch + optimistic mutations).
+- **State & Feedback**:
+  - Toasts via context provider (`ToastProvider`)
+  - Optimistic mutation pattern for instant feedback
+- **Styling**:
+  - Tailwind with inline theme variables
+  - Custom gradient + animated borders using CSS layered backgrounds
+- **Image Handling**:
+  - External remotePatterns configured in `next.config.ts` for allowed domains
+  - Fallback logo/image reference in case of missing drink images
+- **Supabase**:
+  - Remote DB hosting for data storage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## UI / UX Details
+
+| Element | Behavior |
+| ------- | -------- |
+| Cards | Animated entrance, gradient border, angle shift on hover |
+| Pending Overlay | Semi-transparent layer + pulse indicator while mutation in flight |
+| Toasts | Auto-dismiss, accessible `aria-live` region |
+| Skeletons | Pulsing placeholders before initial load |
+| Gradient Border | Layered background with CSS custom property `--card-angle` |
+| Light vs Dark | Media query driven style for card fill (solid vs glass) |
+
+**Energy Stock** – fast UX, clean code, and extensible architecture.
