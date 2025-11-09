@@ -19,8 +19,30 @@ model Drink {
 }
 
 model Purchase {
-  id        Int      @id @default(autoincrement())
-  drink     Drink    @relation(fields: [drinkId], references: [id])
-  drinkId   Int
+  id           Int      @id @default(autoincrement())
+  drink        Drink    @relation(fields: [drinkId], references: [id])
+  drinkId      Int
+  customerName String?
+  createdAt    DateTime @default(now())
+}
+
+model WishlistDrink {
+  id       Int      @id @default(autoincrement())
+  name     String
+  imageUrl String?
   createdAt DateTime @default(now())
+}
+
+model Payment {
+  id            Int       @id @default(autoincrement())
+  userId        String?   // Optional for now, can be linked to user later
+  itemId        Int       // Drink ID
+  method        String    // "paypal" or "bank_transfer"
+  status        String    // "pending", "pending_bank_transfer", "paid", "failed", "cancelled"
+  referenceCode String?   // Unique reference for bank transfers
+  paypalOrderId String?   // PayPal order ID
+  amount        Float
+  customerName  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }

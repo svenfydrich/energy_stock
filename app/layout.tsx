@@ -37,7 +37,6 @@ export default function RootLayout({
       >
         <ToastProvider>
           <div className="relative isolate min-h-screen flex flex-col">
-            {/* Decorative gradient blobs */}
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -46,28 +45,49 @@ export default function RootLayout({
               <div className="absolute top-1/2 -right-24 h-80 w-80 rounded-full bg-purple-300/30 blur-3xl dark:bg-purple-600/20" />
             </div>
             <header className="z-10 w-full py-6 px-4 lg:px-10 flex items-center justify-between">
-              <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight flex items-center">
+              <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight flex items-center cursor-pointer">
                 <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  Energy
+                  <a href="/" className="cursor-pointer">
+                    Energy
+                  </a>
                 </span>
-                <Image
-                  src="/logo.png"
-                  alt="Kodee"
-                  width={100}
-                  height={100}
-                  className="mx-0 h-16 w-16 inline-block"
-                  priority
-                />
+                <a href="/">
+                  <Image
+                    src="/logo.png"
+                    alt="Kodee"
+                    width={100}
+                    height={100}
+                    className="mx-0 h-16 w-16 inline-block"
+                    priority
+                  />
+                </a>
                 <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  Stock
+                  <a href="/" className="cursor-pointer">
+                    Stock
+                  </a>
                 </span>
               </h1>
             </header>
             <main className="z-10 flex-1 w-full px-7 pb-12 lg:px-10">
               {children}
             </main>
-            <footer className="z-10 w-full py-6 text-center text-xs text-neutral-500 dark:text-neutral-400">
-              © {new Date().getFullYear()} waipu.tv engineering
+            <footer className="z-10 w-full py-6 text-center text-s text-neutral-500 dark:text-neutral-400">
+              <ul>
+                <li>
+                  <span>© {new Date().getFullYear()} waipu.tv engineering</span>
+                </li>
+                <li>
+                  <span>
+                    <a
+                      href="/admin/login"
+                      className="py-4 underline cursor-pointer text-xs hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                    >
+                      Admin
+                    </a>
+                  </span>
+                </li>
+              </ul>
+
               <div className="mt-2 flex flex-wrap justify-center gap-3 text-[10px] tracking-wide text-neutral-500 dark:text-neutral-500">
                 <span className="flex items-center gap-1">
                   <svg
