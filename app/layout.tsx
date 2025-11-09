@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "./components/ToastProvider";
+import { ThemeProvider } from "./components/ThemeProvider";
+import { ThemeToggle } from "./components/ThemeToggle";
 import Image from "next/image";
 
 const geistSans = Geist({
@@ -33,172 +35,178 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} font-display antialiased min-h-screen bg-gradient-to-br from-white via-indigo-50 to-purple-100 dark:from-neutral-950 dark:via-slate-900 dark:to-black text-neutral-800 dark:text-neutral-100 selection:bg-indigo-300/60 selection:text-indigo-900`}
+        className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} font-display antialiased min-h-screen bg-gradient-to-br from-indigo-50/80 via-purple-50/60 to-pink-50/80 dark:from-neutral-950 dark:via-indigo-950/40 dark:to-purple-950/60 text-neutral-800 dark:text-neutral-100 selection:bg-indigo-300/60 selection:text-indigo-900`}
       >
-        <ToastProvider>
-          <div className="relative isolate min-h-screen flex flex-col">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 overflow-hidden"
-            >
-              <div className="absolute -top-32 -left-32 h-72 w-72 rounded-full bg-indigo-300/30 blur-3xl dark:bg-indigo-500/20" />
-              <div className="absolute top-1/2 -right-24 h-80 w-80 rounded-full bg-purple-300/30 blur-3xl dark:bg-purple-600/20" />
-            </div>
-            <header className="z-10 w-full py-6 px-4 lg:px-10 flex items-center justify-between">
-              <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight flex items-center cursor-pointer">
-                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  <a href="/" className="cursor-pointer">
-                    Energy
-                  </a>
-                </span>
-                <a href="/">
-                  <Image
-                    src="/logo.png"
-                    alt="Kodee"
-                    width={100}
-                    height={100}
-                    className="mx-0 h-16 w-16 inline-block"
-                    priority
-                  />
-                </a>
-                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  <a href="/" className="cursor-pointer">
-                    Stock
-                  </a>
-                </span>
-              </h1>
-            </header>
-            <main className="z-10 flex-1 w-full px-7 pb-12 lg:px-10">
-              {children}
-            </main>
-            <footer className="z-10 w-full py-6 text-center text-s text-neutral-500 dark:text-neutral-400">
-              <ul>
-                <li>
-                  <span>© {new Date().getFullYear()} waipu.tv engineering</span>
-                </li>
-                <li>
-                  <span>
-                    <a
-                      href="/admin/login"
-                      className="py-4 underline cursor-pointer text-xs hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                    >
-                      Admin
+        <ThemeProvider>
+          <ToastProvider>
+            <div className="relative isolate min-h-screen flex flex-col">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 overflow-hidden"
+              >
+                <div className="absolute -top-32 -left-32 h-80 w-80 rounded-full bg-indigo-400/60 blur-3xl dark:bg-indigo-500/30" />
+                <div className="absolute top-1/2 -right-24 h-96 w-96 rounded-full bg-purple-400/60 blur-3xl dark:bg-purple-500/30" />
+                <div className="absolute bottom-0 left-1/2 h-64 w-64 rounded-full bg-pink-400/50 blur-3xl dark:bg-pink-500/20" />
+              </div>
+              <header className="sticky top-0 z-50 w-full py-4 sm:py-6 px-4 lg:px-10 flex items-center justify-between bg-white/60 dark:bg-neutral-950/60 backdrop-blur-sm border-b border-neutral-200/30 dark:border-neutral-800/30">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight flex items-center cursor-pointer">
+                  <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    <a href="/" className="cursor-pointer">
+                      Energy
                     </a>
                   </span>
-                </li>
-              </ul>
+                  <a href="/">
+                    <Image
+                      src="/logo.png"
+                      alt="Kodee"
+                      width={100}
+                      height={100}
+                      className="mx-0 h-12 w-12 sm:h-16 sm:w-16 inline-block"
+                      priority
+                    />
+                  </a>
+                  <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    <a href="/" className="cursor-pointer">
+                      Stock
+                    </a>
+                  </span>
+                </h1>
+                <ThemeToggle />
+              </header>
+              <main className="z-10 flex-1 w-full px-7 pb-12 lg:px-10 pt-4">
+                {children}
+              </main>
+              <footer className="z-10 w-full py-6 text-center text-s text-neutral-500 dark:text-neutral-400">
+                <ul>
+                  <li>
+                    <span>
+                      © {new Date().getFullYear()} waipu.tv engineering
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a
+                        href="/admin/login"
+                        className="py-4 underline cursor-pointer text-xs hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                      >
+                        Admin
+                      </a>
+                    </span>
+                  </li>
+                </ul>
 
-              <div className="mt-2 flex flex-wrap justify-center gap-3 text-[10px] tracking-wide text-neutral-500 dark:text-neutral-500">
-                <span className="flex items-center gap-1">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M4 4h7v7H4V4zm9 9h7v7h-7v-7zm0-9h7v7h-7V4zM4 13h7v7H4v-7z"
-                      fill="#6366f1"
-                    />
-                  </svg>
-                  Next.js
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="#8b5cf6"
-                      strokeWidth="2"
-                    />
-                    <path
-                      d="M12 6v6l4 4"
-                      stroke="#8b5cf6"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  Prisma
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M4 7l8-4 8 4-8 10-8-10z"
-                      stroke="#0ea5e9"
-                      strokeWidth="2"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M12 13v7"
-                      stroke="#0ea5e9"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  Supabase
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <rect
-                      x="3"
-                      y="5"
-                      width="18"
-                      height="14"
-                      rx="3"
-                      stroke="#14b8a6"
-                      strokeWidth="2"
-                    />
-                    <path
-                      d="M7 9h10M7 13h6"
-                      stroke="#14b8a6"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  Tailwind CSS
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M12 3l7 7-7 7-7-7 7-7z"
-                      stroke="#ec4899"
-                      strokeWidth="2"
-                    />
-                    <circle cx="12" cy="12" r="3" fill="#ec4899" />
-                  </svg>
-                  Framer Motion
-                </span>
-              </div>
-            </footer>
-          </div>
-        </ToastProvider>
+                <div className="mt-2 flex flex-wrap justify-center gap-3 text-[10px] tracking-wide text-neutral-500 dark:text-neutral-500">
+                  <span className="flex items-center gap-1">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 4h7v7H4V4zm9 9h7v7h-7v-7zm0-9h7v7h-7V4zM4 13h7v7H4v-7z"
+                        fill="#6366f1"
+                      />
+                    </svg>
+                    Next.js
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="#8b5cf6"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M12 6v6l4 4"
+                        stroke="#8b5cf6"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    Prisma
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 7l8-4 8 4-8 10-8-10z"
+                        stroke="#0ea5e9"
+                        strokeWidth="2"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M12 13v7"
+                        stroke="#0ea5e9"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    Supabase
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <rect
+                        x="3"
+                        y="5"
+                        width="18"
+                        height="14"
+                        rx="3"
+                        stroke="#14b8a6"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M7 9h10M7 13h6"
+                        stroke="#14b8a6"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    Tailwind CSS
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M12 3l7 7-7 7-7-7 7-7z"
+                        stroke="#ec4899"
+                        strokeWidth="2"
+                      />
+                      <circle cx="12" cy="12" r="3" fill="#ec4899" />
+                    </svg>
+                    Framer Motion
+                  </span>
+                </div>
+              </footer>
+            </div>
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

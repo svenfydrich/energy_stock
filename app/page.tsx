@@ -154,37 +154,37 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col items-center py-4 md:py-8 fade-in">
       <div className="w-full max-w-6xl">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
-          <div className="text-center md:text-left">
-            <p className="text-sm uppercase tracking-wider text-indigo-600 font-semibold">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
+          <div className="text-center sm:text-left">
+            <p className="text-xs sm:text-sm uppercase tracking-wider text-indigo-600 font-semibold">
               {activeTab === "inventory" ? "Inventory Dashboard" : "Wishlist"}
             </p>
-            <h2 className="mt-2 text-3xl md:text-4xl font-extrabold gradient-text leading-tight">
+            <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-extrabold gradient-text leading-tight">
               {activeTab === "inventory"
                 ? "Recharge and keep hacking."
                 : "Your wishlist"}
             </h2>
-            <p className="mt-3 max-w-xl text-neutral-600 dark:text-neutral-300 text-sm md:text-base">
+            <p className="mt-2 sm:mt-3 max-w-xl text-neutral-600 dark:text-neutral-300 text-sm md:text-base">
               {activeTab === "inventory"
                 ? "Select a drink and pay with Paypal or bank transfer"
                 : "Add drinks you'd like to see in stock."}
             </p>
           </div>
           {activeTab === "inventory" && (
-            <div className="flex flex-wrap gap-4 justify-center md:justify-end">
-              <div className="card bg-white text-neutral-900 px-5 py-4 flex flex-col items-start min-w-[12rem]">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-end w-full sm:w-auto">
+              <div className="card bg-white text-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
                 <span className="text-xs uppercase tracking-wide text-indigo-600">
                   Total Items
                 </span>
-                <span className="text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
+                <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-800 dark:text-neutral-100">
                   {drinks.length}
                 </span>
               </div>
-              <div className="card bg-white text-neutral-900 px-5 py-4 flex flex-col items-start min-w-[12rem]">
+              <div className="card bg-white text-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
                 <span className="text-xs uppercase tracking-wide text-indigo-600">
                   Total Stock
                 </span>
-                <span className="text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
+                <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-800 dark:text-neutral-100">
                   {totalStock}
                 </span>
               </div>
@@ -192,13 +192,13 @@ export default function HomePage() {
                 <span className="text-xs uppercase tracking-wide text-indigo-600">
                   Wishlisted Items
                 </span>
-                <span className="text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
+                <span className="text-2xl font-bold mt-1 text-neutral-800 dark:text-neutral-100">
                   {wishlistCount}
                 </span>
               </div>
               <button
                 onClick={hardRefresh}
-                className={`${BUTTON_BASE} btn-outline min-w-[10rem]`}
+                className={`${BUTTON_BASE} btn-outline min-w-32 sm:min-w-40 text-xs sm:text-sm py-2 sm:py-3`}
                 disabled={isRefreshing}
               >
                 {isRefreshing ? "Refreshing…" : "Refresh"}
@@ -208,13 +208,13 @@ export default function HomePage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-8 border-b border-neutral-200 dark:border-neutral-800">
+        <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 border-b border-neutral-200 dark:border-neutral-800">
           <button
             onClick={() => setActiveTab("inventory")}
-            className={`px-6 py-3 text-sm font-semibold border-b-2 transition-colors ${
+            className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
               activeTab === "inventory"
                 ? "border-indigo-600 text-indigo-600"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
             Inventory
@@ -224,10 +224,10 @@ export default function HomePage() {
               setActiveTab("wishlist");
               fetchWishlistCount();
             }}
-            className={`px-6 py-3 text-sm font-semibold border-b-2 transition-colors ${
+            className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
               activeTab === "wishlist"
                 ? "border-indigo-600 text-indigo-600"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
             Wishlist

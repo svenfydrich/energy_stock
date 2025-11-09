@@ -373,28 +373,32 @@ export default function DrinkRefillView() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4 sm:gap-0">
         <div>
-          <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+          <h2 className="text-xl sm:text-2xl font-bold text-neutral-800 dark:text-neutral-100">
             Drink Inventory
           </h2>
           <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
             Manage stock levels for all drinks
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full sm:w-auto">
           <button
             onClick={fetchDrinks}
-            className="btn btn-outline text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400"
+            className="btn btn-outline text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 px-3 py-2 sm:px-4 sm:py-2 flex-1 sm:flex-initial"
           >
-            Refresh
+            <span className="hidden sm:inline">Refresh</span>
+            <span className="sm:hidden">↻</span>
           </button>
           <button
             onClick={handleResetClick}
             disabled={isResetting}
-            className="btn bg-red-500 hover:bg-red-600 text-white border-red-500 hover:border-red-600 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none"
+            className="btn bg-red-500 hover:bg-red-600 text-white border-red-500 hover:border-red-600 text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none px-3 py-2 sm:px-4 sm:py-2 flex-1 sm:flex-initial"
           >
-            {isResetting ? "Resetting..." : "Reset Stock"}
+            <span className="hidden sm:inline">
+              {isResetting ? "Resetting..." : "Reset Stock"}
+            </span>
+            <span className="sm:hidden">{isResetting ? "..." : "Reset"}</span>
           </button>
         </div>
       </div>
@@ -536,7 +540,7 @@ export default function DrinkRefillView() {
                         </motion.div>
                       )}
                     </div>
-                    <h2 className="text-xl font-semibold mt-4 truncate text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-xl font-semibold mt-4 truncate text-neutral-800 dark:text-neutral-100">
                       {d.name}
                     </h2>
                     <div className="mt-2 flex items-center justify-between gap-2">
@@ -553,7 +557,7 @@ export default function DrinkRefillView() {
                     </div>
 
                     <div className="mt-5 space-y-2">
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 w-full">
                         <input
                           type="number"
                           min="1"
@@ -564,7 +568,7 @@ export default function DrinkRefillView() {
                           }
                           disabled={isPending}
                           placeholder="Amount"
-                          className="flex-1 px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                          className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                         />
                         <button
                           onClick={() => {
@@ -578,7 +582,7 @@ export default function DrinkRefillView() {
                             !restockAmounts.get(d.id) ||
                             (restockAmounts.get(d.id) ?? 0) <= 0
                           }
-                          className="rounded-full btn btn-primary text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none whitespace-nowrap"
+                          className="btn btn-primary text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none whitespace-nowrap px-2 sm:px-3 py-2 w-16 sm:w-20 shrink-0"
                         >
                           Restock
                         </button>
@@ -605,21 +609,21 @@ export default function DrinkRefillView() {
       {/* Add Drink Modal */}
       {isAddModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-sm"
           onClick={handleCancelAdd}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="card bg-white text-neutral-900 p-6 w-full max-w-md"
+            className="card bg-white text-neutral-900 p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-neutral-900 dark:text-neutral-100">
               Add New Drink
             </h2>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div>
                 <label
                   htmlFor="name"
@@ -716,18 +720,18 @@ export default function DrinkRefillView() {
               </div>
             </div>
 
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-2 sm:gap-3 mt-4 sm:mt-6">
               <button
                 onClick={handleAddDrink}
                 disabled={isAdding || !newDrink.name.trim()}
-                className="btn btn-primary flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                className="btn btn-primary flex-1 text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none py-2 sm:py-2"
               >
                 {isAdding ? "Adding..." : "Add"}
               </button>
               <button
                 onClick={handleCancelAdd}
                 disabled={isAdding}
-                className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                className="btn btn-outline flex-1 text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none py-2 sm:py-2"
               >
                 Cancel
               </button>
@@ -739,21 +743,21 @@ export default function DrinkRefillView() {
       {/* Edit Drink Modal */}
       {isEditModalOpen && editingDrink && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-sm"
           onClick={handleCancelEdit}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="card bg-white text-neutral-900 p-6 w-full max-w-md"
+            className="card bg-white text-neutral-900 p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-neutral-900 dark:text-neutral-100">
               Edit Drink
             </h2>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div>
                 <label
                   htmlFor="edit-name"

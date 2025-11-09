@@ -61,7 +61,6 @@ export default function WishlistAdminView(
   const [isDeleting, setIsDeleting] = useState(false);
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
-  const [customerName, setCustomerName] = useState("");
   const { success, error } = useToasts();
 
   const fetchWishlist = useCallback(async () => {
@@ -102,7 +101,6 @@ export default function WishlistAdminView(
     setConvertModal({ isOpen: true, drinkId: id, drinkName: name });
     setPrice(0);
     setStock(0);
-    setCustomerName("");
   };
 
   const handleDeleteClick = (id: number, name: string) => {
@@ -158,11 +156,6 @@ export default function WishlistAdminView(
       return;
     }
 
-    if (!customerName.trim()) {
-      error("Please enter customer name");
-      return;
-    }
-
     setIsConverting(true);
     markPending(wishlistId, true);
 
@@ -173,7 +166,6 @@ export default function WishlistAdminView(
           wishlistId,
           price,
           stock,
-          customerName: customerName.trim(),
         }),
         headers: { "Content-Type": "application/json" },
       });
@@ -213,9 +205,9 @@ export default function WishlistAdminView(
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4 sm:gap-0">
         <div>
-          <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+          <h2 className="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-neutral-100">
             Wishlist Items
           </h2>
           <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
@@ -224,9 +216,10 @@ export default function WishlistAdminView(
         </div>
         <button
           onClick={fetchWishlist}
-          className="btn btn-outline text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400"
+          className="btn btn-outline text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 px-3 py-2 sm:px-4 sm:py-2 self-start sm:self-auto"
         >
-          Refresh
+          <span className="hidden sm:inline">Refresh</span>
+          <span className="sm:hidden">↻</span>
         </button>
       </div>
 
@@ -358,24 +351,6 @@ export default function WishlistAdminView(
             <div className="space-y-4">
               <div>
                 <label
-                  htmlFor="convert-customer-name"
-                  className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
-                >
-                  Customer Name *
-                </label>
-                <input
-                  id="convert-customer-name"
-                  type="text"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  disabled={isConverting}
-                  required
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-                  placeholder="Enter customer name"
-                />
-              </div>
-              <div>
-                <label
                   htmlFor="convert-price"
                   className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
                 >
@@ -420,12 +395,7 @@ export default function WishlistAdminView(
             <div className="flex gap-3 mt-6">
               <button
                 onClick={handleConvertConfirm}
-                disabled={
-                  isConverting ||
-                  price <= 0 ||
-                  stock < 0 ||
-                  !customerName.trim()
-                }
+                disabled={isConverting || price <= 0 || stock < 0}
                 className="btn btn-primary flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
               >
                 {isConverting ? "Adding..." : "Add to Inventory"}

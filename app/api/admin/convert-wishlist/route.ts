@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { wishlistId, price, stock, customerName } = await req.json();
+    const { wishlistId, price, stock } = await req.json();
 
     // Validate input
     if (!Number.isInteger(wishlistId) || wishlistId <= 0) {
@@ -53,9 +53,9 @@ export async function POST(req: Request) {
         );
       }
 
-      // Create the drink and purchase record in transaction
+      // Create the drink from wishlist item
       const result = await prisma.$transaction(async (tx) => {
-        // Create the drink
+        // Create the drink in inventory
         const drink = await tx.drink.create({
           data: {
             name: wishlistItem.name,
@@ -69,14 +69,6 @@ export async function POST(req: Request) {
             price: true,
             stock: true,
             imageUrl: true,
-          },
-        });
-
-        // Create purchase record with customer name
-        await tx.purchase.create({
-          data: {
-            drinkId: drink.id,
-            customerName: customerName?.trim() || null,
           },
         });
 

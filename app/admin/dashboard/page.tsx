@@ -117,9 +117,9 @@ export default function AdminDashboard() {
     <div className="min-h-screen py-8">
       <div className="w-full max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2">
               <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Admin Dashboard
               </span>
@@ -130,40 +130,41 @@ export default function AdminDashboard() {
           </div>
           <button
             onClick={handleLogout}
-            className="btn btn-outline text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400"
+            className="btn btn-outline text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 px-3 py-2 sm:px-4 sm:py-2 self-start sm:self-auto"
           >
             Logout
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-8 border-b border-neutral-200 dark:border-neutral-800">
+        <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 border-b border-neutral-200 dark:border-neutral-800 overflow-x-auto">
           <button
             onClick={() => setActiveTab("stats")}
-            className={`px-6 py-3 text-sm font-semibold border-b-2 transition-colors ${
+            className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg whitespace-nowrap ${
               activeTab === "stats"
                 ? "border-indigo-600 text-indigo-600"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
             Statistics
           </button>
           <button
             onClick={() => setActiveTab("refill")}
-            className={`px-6 py-3 text-sm font-semibold border-b-2 transition-colors ${
+            className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg whitespace-nowrap ${
               activeTab === "refill"
                 ? "border-indigo-600 text-indigo-600"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
-            Drink Refill
+            <span className="hidden sm:inline">Drink Refill</span>
+            <span className="sm:hidden">Refill</span>
           </button>
           <button
             onClick={() => setActiveTab("wishlist")}
-            className={`px-6 py-3 text-sm font-semibold border-b-2 transition-colors ${
+            className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg whitespace-nowrap ${
               activeTab === "wishlist"
                 ? "border-indigo-600 text-indigo-600"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
             Wishlist
@@ -190,16 +191,17 @@ export default function AdminDashboard() {
             ) : stats ? (
               <>
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="card bg-white text-neutral-900 p-6"
+                    className="card bg-white text-neutral-900 p-3 sm:p-6"
                   >
-                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-2">
-                      Total Purchases
+                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
+                      <span className="hidden sm:inline">Total Purchases</span>
+                      <span className="sm:hidden">Total</span>
                     </p>
-                    <p className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-100">
                       {stats.totalPurchases}
                     </p>
                   </motion.div>
@@ -208,12 +210,12 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="card bg-white text-neutral-900 p-6"
+                    className="card bg-white text-neutral-900 p-3 sm:p-6"
                   >
-                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-2">
+                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       Today
                     </p>
-                    <p className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-100">
                       {stats.purchasesToday}
                     </p>
                   </motion.div>
@@ -222,12 +224,13 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="card bg-white text-neutral-900 p-6"
+                    className="card bg-white text-neutral-900 p-3 sm:p-6"
                   >
-                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-2">
-                      This Week
+                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
+                      <span className="hidden sm:inline">This Week</span>
+                      <span className="sm:hidden">Week</span>
                     </p>
-                    <p className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-100">
                       {stats.purchasesThisWeek}
                     </p>
                   </motion.div>
@@ -236,46 +239,50 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="card bg-white text-neutral-900 p-6"
+                    className="card bg-white text-neutral-900 p-3 sm:p-6"
                   >
-                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-2">
-                      This Month
+                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
+                      <span className="hidden sm:inline">This Month</span>
+                      <span className="sm:hidden">Month</span>
                     </p>
-                    <p className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-100">
                       {stats.purchasesThisMonth}
                     </p>
                   </motion.div>
                 </div>
 
                 {/* Top Drinks & Recent Purchases */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6">
                   {/* Top Drinks */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="card bg-white text-neutral-900 p-6"
+                    className="card bg-white text-neutral-900 p-4 sm:p-6"
                   >
-                    <h2 className="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-800 dark:text-neutral-100">
                       Top Drinks
                     </h2>
                     {stats.topDrinks.length > 0 ? (
-                      <div className="space-y-3">
+                      <div className="space-y-2 sm:space-y-3">
                         {stats.topDrinks.map((drink, index) => (
                           <div
                             key={drink.drinkId}
-                            className="flex items-center justify-between p-3 rounded-lg bg-neutral-50 dark:bg-neutral-900"
+                            className="flex items-center justify-between p-2 sm:p-3 rounded-lg bg-neutral-50 dark:bg-neutral-900"
                           >
-                            <div className="flex items-center gap-3">
-                              <span className="text-sm font-semibold text-indigo-600 w-6">
+                            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                              <span className="text-xs sm:text-sm font-semibold text-indigo-600 w-4 sm:w-6 shrink-0">
                                 #{index + 1}
                               </span>
-                              <span className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                              <span className="text-xs sm:text-sm font-medium text-neutral-800 dark:text-neutral-100 truncate">
                                 {drink.drinkName}
                               </span>
                             </div>
-                            <span className="text-sm font-bold text-neutral-700 dark:text-neutral-300">
-                              {drink.count} purchases
+                            <span className="text-xs sm:text-sm font-bold text-neutral-700 dark:text-neutral-300 whitespace-nowrap ml-2">
+                              <span className="hidden sm:inline">
+                                {drink.count} purchases
+                              </span>
+                              <span className="sm:hidden">{drink.count}</span>
                             </span>
                           </div>
                         ))}
@@ -292,28 +299,38 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="card bg-white text-neutral-900 p-6"
+                    className="card bg-white text-neutral-900 p-4 sm:p-6"
                   >
-                    <h2 className="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-800 dark:text-neutral-100">
                       Recent Purchases
                     </h2>
                     {stats.recentPurchases.length > 0 ? (
-                      <div className="space-y-3 max-h-96 overflow-y-auto">
+                      <div className="space-y-2 sm:space-y-3 max-h-80 sm:max-h-96 overflow-y-auto">
                         {stats.recentPurchases.map((purchase) => (
                           <div
                             key={purchase.id}
-                            className="flex items-center justify-between p-3 rounded-lg bg-neutral-50 dark:bg-neutral-900"
+                            className="p-2 sm:p-3 rounded-lg bg-neutral-50 dark:bg-neutral-900"
                           >
                             <div>
-                              <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                              <p className="text-xs sm:text-sm font-medium text-neutral-800 dark:text-neutral-100 truncate">
                                 {purchase.drinkName}
                               </p>
-                              <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                                {purchase.customerName
-                                  ? `by ${purchase.customerName}`
-                                  : "Anonymous"}{" "}
-                                •{" "}
-                                {new Date(purchase.createdAt).toLocaleString()}
+                              <p className="text-xs text-neutral-500 dark:text-neutral-400 truncate">
+                                <span className="hidden sm:inline">
+                                  {purchase.customerName
+                                    ? `by ${purchase.customerName}`
+                                    : "Anonymous"}{" "}
+                                  •{" "}
+                                  {new Date(
+                                    purchase.createdAt
+                                  ).toLocaleString()}
+                                </span>
+                                <span className="sm:hidden">
+                                  {purchase.customerName || "Anonymous"} •{" "}
+                                  {new Date(
+                                    purchase.createdAt
+                                  ).toLocaleDateString()}
+                                </span>
                               </p>
                             </div>
                           </div>
