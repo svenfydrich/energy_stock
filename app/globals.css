@@ -1,171 +1,196 @@
 @import "tailwindcss";
 
 :root {
-    --background: #ffffff;
-    --foreground: #171717;
-    --accent: #6366f1;
-    --accent-muted: #818cf8;
-    --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6 55%, #ec4899);
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
+  --background: #ffffff;
+  --foreground: #171717;
+  --accent: #6366f1;
+  --accent-muted: #818cf8;
+  --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6 55%, #ec4899);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
 }
 
 @theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --font-sans: var(--font-geist-sans);
-    --font-mono: var(--font-geist-mono);
-    --font-display: var(--font-display);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family:
-        var(--font-display), var(--font-geist-sans), system-ui, sans-serif;
-    font-feature-settings:
-        "liga" 1,
-        "kern" 1;
-    text-rendering: optimizeLegibility;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-display), var(--font-geist-sans), system-ui,
+    sans-serif;
+  font-feature-settings: "liga" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
 }
 
 /* Font utility */
 .font-display {
-    font-family:
-        var(--font-display), var(--font-geist-sans), system-ui, sans-serif;
-    font-weight: 700;
+  font-family: var(--font-display), var(--font-geist-sans), system-ui,
+    sans-serif;
+  font-weight: 700;
 }
 
 /* Gradient text utility */
 .gradient-text {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* Card styling */
 .card {
-    --card-angle: 135deg;
-    border-radius: var(--radius-lg);
-    background:
-        linear-gradient(#ffffff, #ffffff) padding-box,
-        linear-gradient(var(--card-angle), #6366f1, #8b5cf6 55%, #ec4899)
-            border-box;
-    border: 2px solid transparent;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    transition:
-        box-shadow 0.25s,
-        transform 0.25s,
-        --card-angle 0.6s;
+  --card-angle: 135deg;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(var(--card-angle), #6366f1, #8b5cf6 55%, #ec4899) border-box;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
 }
 
 /* Apply translucent glass style only when user prefers dark mode */
 @media (prefers-color-scheme: dark) {
-    .card {
-        --card-angle: 135deg;
-        background:
-            linear-gradient(rgba(20, 20, 24, 0.55), rgba(20, 20, 24, 0.55))
-                padding-box,
-            linear-gradient(var(--card-angle), #6366f1, #8b5cf6 55%, #ec4899)
-                border-box;
-        border: 2px solid transparent;
-        backdrop-filter: blur(12px) saturate(1.2);
-        -webkit-backdrop-filter: blur(12px) saturate(1.2);
-        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
-        transition:
-            box-shadow 0.25s,
-            transform 0.25s,
-            --card-angle 0.6s;
-    }
-    .card:hover {
-        --card-angle: 315deg;
-        box-shadow: 0 6px 28px rgba(0, 0, 0, 0.7);
-    }
+  .card {
+    --card-angle: 135deg;
+    background: linear-gradient(rgba(20, 20, 24, 0.55), rgba(20, 20, 24, 0.55))
+        padding-box,
+      linear-gradient(var(--card-angle), #6366f1, #8b5cf6 55%, #ec4899)
+        border-box;
+    border: 2px solid transparent;
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
+    transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
+  }
+  .card:hover {
+    --card-angle: 315deg;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.7);
+  }
 }
 .card:hover {
-    --card-angle: 315deg;
-    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.15);
-    transform: translateY(-3px);
+  --card-angle: 315deg;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+/* Add New Drink Card - Green gradient */
+.add-drink-card {
+  --card-angle: 135deg;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2))
+      padding-box,
+    linear-gradient(135deg, #10b981, #059669 55%, #047857) border-box;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
+}
+
+@media (prefers-color-scheme: dark) {
+  .add-drink-card {
+    background: linear-gradient(
+          rgba(16, 185, 129, 0.15),
+          rgba(5, 150, 105, 0.15)
+        )
+        padding-box,
+      linear-gradient(135deg, #10b981, #059669 55%, #047857) border-box;
+    border: 2px solid transparent;
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.add-drink-card:hover {
+  --card-angle: 315deg;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .add-drink-card:hover {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.7);
+  }
 }
 
 /* Buttons */
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    border-radius: var(--radius-md);
-    padding: 0.7rem 1.1rem;
-    line-height: 1;
-    cursor: pointer;
-    transition:
-        background 0.25s,
-        box-shadow 0.25s,
-        transform 0.25s;
-    user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 0.7rem 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.25s, transform 0.25s;
+  user-select: none;
 }
 .btn-primary {
-    background: var(--accent-gradient);
-    color: #fff;
+  background: var(--accent-gradient);
+  color: #fff;
 }
 .btn-primary:hover {
-    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.45);
-    transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.45);
+  transform: translateY(-2px);
 }
 .btn-outline {
-    background: transparent;
-    color: var(--accent);
-    border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 .btn-outline:hover {
-    background: var(--accent);
-    color: #fff;
+  background: var(--accent);
+  color: #fff;
 }
 
 /* Stock badges */
 .stock-badge {
-    display: inline-block;
-    padding: 0.25rem 0.6rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    background: #10b981;
-    color: #fff;
-    letter-spacing: 0.5px;
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #10b981;
+  color: #fff;
+  letter-spacing: 0.5px;
 }
 .stock-badge.out {
-    background: #ef4444;
+  background: #ef4444;
 }
 
 /* Center helper */
 .flex-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Smooth container fade-in */
 .fade-in {
-    animation: fade-in 0.5s ease;
+  animation: fade-in 0.5s ease;
 }
 
 @keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(4px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
