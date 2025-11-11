@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Offer {
   title: string;
@@ -50,10 +51,10 @@ export function PriceAlert() {
 
     const formattedOffers = offers
       .map((offer) => `${offer.title}: ${offer.price}`)
-      .join(" || ");
+      .join(" // ");
 
     return {
-      prefix: "Price Alert: ",
+      prefix: "!!! Price Alert: ",
       content: formattedOffers,
     };
   };
@@ -61,15 +62,122 @@ export function PriceAlert() {
   const { prefix, content } = getDisplayContent();
 
   return (
-    <div className="relative w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white overflow-hidden py-2 z-40">
-      <div className="flex">
-        <div className="animate-marquee whitespace-nowrap">
-          <span className="text-sm px-4">
-            <span className="font-bold">{prefix}</span>
-            {content && <span className="font-medium">{content}</span>}
-          </span>
+    <AnimatePresence mode="wait">
+      <motion.div
+        initial={{ opacity: 0, y: -50, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: -50, scale: 0.95 }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 25,
+          mass: 0.8,
+        }}
+        className="relative w-full overflow-hidden py-2 mobile:py-1 z-40"
+      >
+        {/* Animated Background */}
+        <motion.div
+          animate={{
+            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+          }}
+          transition={{
+            duration: 8,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+          className="absolute inset-0 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-size-[300%_100%]"
+        />
+
+        {/* Shimmer Effect */}
+        <motion.div
+          animate={{
+            x: ["-100%", "100%"],
+          }}
+          transition={{
+            duration: 3,
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatDelay: 2,
+          }}
+          className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent transform skew-x-12"
+        />
+
+        <div className="relative flex items-center text-white whitespace-nowrap">
+          <div className="flex items-center text-md mobile:text-xs p-3 mobile:px-2 mobile:py-1 w-full">
+            {/* Pulsing Prefix */}
+            <motion.span
+              animate={{
+                scale: [1, 1.05, 1],
+                textShadow: [
+                  "0 0 0px rgba(255,255,255,0)",
+                  "0 0 10px rgba(255,255,255,0.5)",
+                  "0 0 0px rgba(255,255,255,0)",
+                ],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="font-bold shrink-0"
+            >
+              {prefix}
+            </motion.span>
+
+            {/* Sliding Content */}
+            {content && (
+              <motion.div
+                key={content}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                  delay: 0.2,
+                }}
+                className="ml-2 mobile:ml-1 font-extralight overflow-hidden flex-1 min-w-0"
+              >
+                <motion.span
+                  animate={
+                    content.length > 100
+                      ? {
+                          x: [0, -50, 0],
+                        }
+                      : {}
+                  }
+                  transition={
+                    content.length > 100
+                      ? {
+                          duration: 15,
+                          ease: "linear",
+                          repeat: Infinity,
+                        }
+                      : {}
+                  }
+                  className="inline-block"
+                >
+                  {content}
+                </motion.span>
+              </motion.div>
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+
+        {/* Glowing Border Effect */}
+        <motion.div
+          animate={{
+            opacity: [0.3, 0.8, 0.3],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute inset-0 border-t-2 border-b-2 border-white/30"
+        />
+      </motion.div>
+    </AnimatePresence>
   );
 }
