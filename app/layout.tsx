@@ -4,6 +4,7 @@ import "./globals.css";
 import { ToastProvider } from "./components/ToastProvider";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle";
+import { PriceAlert } from "./components/PriceAlert";
 import Image from "next/image";
 
 const geistSans = Geist({
@@ -40,6 +41,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ToastProvider>
             <div className="relative isolate min-h-screen flex flex-col">
+              <PriceAlert />
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 overflow-hidden"
