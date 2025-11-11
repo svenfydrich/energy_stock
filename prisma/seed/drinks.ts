@@ -22,7 +22,7 @@
  * Then you could use createMany({ skipDuplicates: true }) or upsert.
  */
 
-import { PrismaClient } from "../../app/generated/prisma/index.js";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
