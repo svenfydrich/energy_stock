@@ -156,8 +156,8 @@ export default function AdminDashboard() {
                 : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
-            <span className="hidden sm:inline">Drink Refill</span>
-            <span className="sm:hidden">Refill</span>
+            <span className="hidden sm:inline">Restock</span>
+            <span className="sm:hidden">Restock</span>
           </button>
           <button
             onClick={() => setActiveTab("wishlist")}
@@ -195,13 +195,13 @@ export default function AdminDashboard() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="card bg-white text-neutral-900 p-3 sm:p-6"
+                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       <span className="hidden sm:inline">Total Purchases</span>
                       <span className="sm:hidden">Total</span>
                     </p>
-                    <p className="text-xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                       {stats.totalPurchases}
                     </p>
                   </motion.div>
@@ -210,12 +210,12 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="card bg-white text-neutral-900 p-3 sm:p-6"
+                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       Today
                     </p>
-                    <p className="text-xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                       {stats.purchasesToday}
                     </p>
                   </motion.div>
@@ -224,13 +224,13 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="card bg-white text-neutral-900 p-3 sm:p-6"
+                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       <span className="hidden sm:inline">This Week</span>
                       <span className="sm:hidden">Week</span>
                     </p>
-                    <p className="text-xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                       {stats.purchasesThisWeek}
                     </p>
                   </motion.div>
@@ -239,13 +239,13 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="card bg-white text-neutral-900 p-3 sm:p-6"
+                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       <span className="hidden sm:inline">This Month</span>
                       <span className="sm:hidden">Month</span>
                     </p>
-                    <p className="text-xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                       {stats.purchasesThisMonth}
                     </p>
                   </motion.div>
@@ -258,9 +258,9 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="card bg-white text-neutral-900 p-4 sm:p-6"
+                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-4 sm:p-6"
                   >
-                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-800 dark:text-neutral-100">
+                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-900 dark:text-neutral-100">
                       Top Drinks
                     </h2>
                     {stats.topDrinks.length > 0 ? (
@@ -268,17 +268,17 @@ export default function AdminDashboard() {
                         {stats.topDrinks.map((drink, index) => (
                           <div
                             key={drink.drinkId}
-                            className="flex items-center justify-between p-2 sm:p-3 rounded-lg bg-neutral-50 dark:bg-neutral-900"
+                            className="flex items-center justify-between p-2 sm:p-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 hover:border-indigo-400/60 dark:hover:border-indigo-500/60 transition-colors"
                           >
                             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                               <span className="text-xs sm:text-sm font-semibold text-indigo-600 w-4 sm:w-6 shrink-0">
                                 #{index + 1}
                               </span>
-                              <span className="text-xs sm:text-sm font-medium text-neutral-800 dark:text-neutral-100 truncate">
+                              <span className="text-xs sm:text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
                                 {drink.drinkName}
                               </span>
                             </div>
-                            <span className="text-xs sm:text-sm font-bold text-neutral-700 dark:text-neutral-300 whitespace-nowrap ml-2">
+                            <span className="text-xs sm:text-sm font-bold text-neutral-800 dark:text-neutral-300 whitespace-nowrap ml-2">
                               <span className="hidden sm:inline">
                                 {drink.count} purchases
                               </span>
@@ -299,9 +299,9 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="card bg-white text-neutral-900 p-4 sm:p-6"
+                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-4 sm:p-6"
                   >
-                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-800 dark:text-neutral-100">
+                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-900 dark:text-neutral-100">
                       Recent Purchases
                     </h2>
                     {stats.recentPurchases.length > 0 ? (
@@ -309,10 +309,10 @@ export default function AdminDashboard() {
                         {stats.recentPurchases.map((purchase) => (
                           <div
                             key={purchase.id}
-                            className="p-2 sm:p-3 rounded-lg bg-neutral-50 dark:bg-neutral-900"
+                            className="p-2 sm:p-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 hover:border-indigo-400/60 dark:hover:border-indigo-500/60 transition-colors"
                           >
                             <div>
-                              <p className="text-xs sm:text-sm font-medium text-neutral-800 dark:text-neutral-100 truncate">
+                              <p className="text-xs sm:text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
                                 {purchase.drinkName}
                               </p>
                               <p className="text-xs text-neutral-500 dark:text-neutral-400 truncate">

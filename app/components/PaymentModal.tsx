@@ -62,6 +62,11 @@ export default function PaymentModal({
   }, []);
 
   const handlePayPalPayment = () => {
+    if (!customerName.trim()) {
+      error("Please enter your name before proceeding");
+      return;
+    }
+
     // Remove @ symbol if present for the URL
     const accountName = paypalAccountHolder.startsWith("@")
       ? paypalAccountHolder.slice(1)
@@ -153,7 +158,7 @@ export default function PaymentModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="card bg-white text-neutral-900 p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
+        className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
@@ -262,37 +267,75 @@ export default function PaymentModal({
               Choose Payment Method
             </h3>
 
-            <div className="mb-4">
+            <div className="mb-6">
               <label
                 htmlFor="customerName"
-                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+                className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
               >
-                Your Name
+                Your Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 id="customerName"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
-                placeholder="Enter your name"
-                className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-neutral-800 dark:text-white"
+                placeholder="Enter your name (required)"
+                className={`w-full px-4 py-3 border-2 border-dashed rounded-lg focus:outline-none focus:ring-2 transition-all ${
+                  !customerName.trim()
+                    ? "border-red-300/60 dark:border-red-700/60 focus:ring-red-500 focus:border-red-400/60 dark:focus:border-red-500/60 bg-red-50/30 dark:bg-red-950/10"
+                    : "border-neutral-300/40 dark:border-neutral-600/40 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 bg-transparent"
+                } dark:text-white`}
+                required
               />
+              {!customerName.trim() && (
+                <p className="mt-2 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                  Name is required before payment
+                </p>
+              )}
             </div>
 
             <div className="space-y-3">
               <button
                 onClick={handlePayPalPayment}
-                disabled={isProcessing}
-                className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-40 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0070ba]"
+                disabled={isProcessing || !customerName.trim()}
+                className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-semibold py-3 px-4 rounded-lg transition-all disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0070ba] relative"
               >
+                {!customerName.trim() && (
+                  <span className="absolute -top-2 -right-2 flex h-5 w-5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-5 w-5 bg-red-500 items-center justify-center text-white text-xs font-bold">
+                      !
+                    </span>
+                  </span>
+                )}
                 Pay with PayPal
               </button>
 
               <button
                 onClick={handleBankTransferPayment}
-                disabled={isProcessing}
-                className="w-full bg-neutral-800 hover:bg-neutral-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-40 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-800"
+                disabled={isProcessing || !customerName.trim()}
+                className="w-full bg-neutral-800 hover:bg-neutral-700 text-white font-semibold py-3 px-4 rounded-lg transition-all disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-800 relative"
               >
+                {!customerName.trim() && (
+                  <span className="absolute -top-2 -right-2 flex h-5 w-5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-5 w-5 bg-red-500 items-center justify-center text-white text-xs font-bold">
+                      !
+                    </span>
+                  </span>
+                )}
                 Bank Transfer
               </button>
             </div>
@@ -305,7 +348,7 @@ export default function PaymentModal({
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="card bg-white text-neutral-900 p-6 w-full max-w-sm"
+              className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-sm"
               onClick={(e) => e.stopPropagation()}
             >
               <h3 className="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">

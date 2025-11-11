@@ -6,9 +6,21 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "class", // Enable class-based dark mode
+  darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        accent: {
+          DEFAULT: "#6366f1",
+          muted: "#818cf8",
+        },
+      },
+      borderRadius: {
+        sm: "6px",
+        md: "12px",
+        lg: "20px",
+      },
+    },
   },
   plugins: [],
 };

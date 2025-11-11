@@ -34,22 +34,22 @@ export interface Toast {
 interface ToastContextValue {
   toasts: Toast[];
   addToast: (
-    input: Omit<Toast, "id" | "createdAt"> & { id?: string },
+    input: Omit<Toast, "id" | "createdAt"> & { id?: string }
   ) => string;
   removeToast: (id: string) => void;
   clearToasts: () => void;
   // Convenience helpers
   success: (
     message: string,
-    opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>,
+    opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
   ) => string;
   error: (
     message: string,
-    opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>,
+    opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
   ) => string;
   info: (
     message: string,
-    opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>,
+    opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
   ) => string;
 }
 
@@ -156,7 +156,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       const timeout = setTimeout(() => removeToast(toast.id), duration);
       timeoutsRef.current[toast.id] = timeout;
     },
-    [removeToast],
+    [removeToast]
   );
 
   const addToast = useCallback(
@@ -174,32 +174,32 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       scheduleRemoval(toast);
       return id;
     },
-    [scheduleRemoval],
+    [scheduleRemoval]
   );
 
   // Convenience helpers
   const success = useCallback(
     (
       message: string,
-      opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>,
+      opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
     ) => addToast({ type: "success", message, ...opts }),
-    [addToast],
+    [addToast]
   );
 
   const error = useCallback(
     (
       message: string,
-      opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>,
+      opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
     ) => addToast({ type: "error", message, ...opts }),
-    [addToast],
+    [addToast]
   );
 
   const info = useCallback(
     (
       message: string,
-      opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>,
+      opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
     ) => addToast({ type: "info", message, ...opts }),
-    [addToast],
+    [addToast]
   );
 
   const clearToasts = useCallback(() => {
@@ -243,8 +243,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 toast.type === "success"
                   ? "bg-green-50/80 dark:bg-green-900/30 border-green-200 dark:border-green-700"
                   : toast.type === "error"
-                    ? "bg-red-50/80 dark:bg-red-900/30 border-red-200 dark:border-red-700"
-                    : "bg-indigo-50/80 dark:bg-indigo-900/30 border-indigo-200 dark:border-indigo-700",
+                  ? "bg-red-50/80 dark:bg-red-900/30 border-red-200 dark:border-red-700"
+                  : "bg-indigo-50/80 dark:bg-indigo-900/30 border-indigo-200 dark:border-indigo-700",
               ].join(" ")}
             >
               <div className="text-xl flex items-start pt-0.5">
@@ -260,9 +260,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 <div className="mt-2 flex gap-2">
                   <button
                     onClick={() => removeToast(toast.id)}
-                    className="text-xs font-semibold uppercase tracking-wide text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition"
+                    className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition"
                   >
-                    Dismiss
+                    Close
                   </button>
                   {toast.type === "error" && (
                     <button
@@ -272,7 +272,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                       }}
                       className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition"
                     >
-                      Ack
+                      Okay
                     </button>
                   )}
                 </div>
@@ -327,7 +327,7 @@ export function useOptimisticAction<A extends unknown[], R>(
   }: {
     onError?: (err: unknown) => void;
     onSuccess?: (result: R) => void;
-  } = {},
+  } = {}
 ) {
   const { success, error } = useToasts();
 

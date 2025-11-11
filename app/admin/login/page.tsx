@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="card bg-white text-neutral-900 p-8 w-full max-w-md"
+        className="card-no-shimmer bg-white dark:bg-neutral-900 p-8 w-full max-w-md"
       >
         <h1 className="text-3xl font-extrabold mb-2 text-center">
           <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={isLoading}
-              className="w-full px-4 py-3 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               placeholder="Enter admin password"
             />
           </div>

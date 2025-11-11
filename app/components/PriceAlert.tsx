@@ -76,16 +76,14 @@ export function PriceAlert() {
         className="relative w-full overflow-hidden py-2 mobile:py-1 z-40"
       >
         {/* Animated Background */}
-        <motion.div
-          animate={{
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899, #f97316, #eab308, #ec4899, #8b5cf6, #6366f1)",
+            backgroundSize: "200% 100%",
+            animation: "gradient-flow 4s linear infinite",
           }}
-          transition={{
-            duration: 8,
-            ease: "linear",
-            repeat: Infinity,
-          }}
-          className="absolute inset-0 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-size-[300%_100%]"
         />
 
         {/* Shimmer Effect */}
