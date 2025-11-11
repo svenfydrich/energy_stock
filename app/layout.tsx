@@ -4,6 +4,7 @@ import "./globals.css";
 import { ToastProvider } from "./components/ToastProvider";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { PriceAlert } from "./components/PriceAlert";
+import LaunchAnimation from "./components/LaunchAnimation";
 import Image from "next/image";
 
 const geistSans = Geist({
@@ -36,7 +37,9 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} font-display antialiased min-h-screen bg-gradient-to-br from-indigo-50/80 via-purple-50/60 via-pink-50/70 via-orange-50/60 to-yellow-50/80 dark:from-neutral-950 dark:via-indigo-950/40 dark:via-purple-950/60 dark:via-pink-950/50 dark:to-orange-950/40 text-neutral-800 dark:text-neutral-100 selection:bg-indigo-300/60 selection:text-indigo-900`}
+        suppressHydrationWarning
       >
+        <LaunchAnimation />
         <ThemeProvider>
           <ToastProvider>
             <div className="relative isolate min-h-screen flex flex-col">

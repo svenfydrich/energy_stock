@@ -363,4 +363,89 @@
       transform: translateY(0);
     }
   }
+
+  /* Launch Animation */
+  .launch-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: transparent;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    animation: launch-exit 6s ease-in forwards;
+    pointer-events: none;
+    padding-bottom: 10vh;
+  }
+
+  .rocket {
+    position: relative;
+    animation: rocket-launch 6s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+  }
+
+  .flame {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 50px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 165, 0, 0.9),
+      rgba(255, 69, 0, 0.7),
+      transparent
+    );
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flame-grow 6s ease-in infinite;
+  }
+
+  @keyframes rocket-launch {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    16.67% {
+      /* Wait for 1 second (1/6 of 6s) */
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      /* Accelerate upwards for 5 seconds */
+      transform: translateY(-150vh) scale(0.3);
+      opacity: 0;
+    }
+  }
+
+  @keyframes flame-grow {
+    0%,
+    16.67% {
+      /* Idle flame during wait */
+      transform: translateX(-50%) scaleY(0.8);
+      opacity: 0.7;
+    }
+    30% {
+      /* Flame grows as rocket starts */
+      transform: translateX(-50%) scaleY(1.5);
+      opacity: 1;
+    }
+    100% {
+      /* Maximum flame during full acceleration */
+      transform: translateX(-50%) scaleY(2.5);
+      opacity: 1;
+    }
+  }
+
+  @keyframes launch-exit {
+    0% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
 }
