@@ -30,7 +30,7 @@ const CARD_ANIM = {
 
 function SkeletonCard() {
   return (
-    <div className="card bg-white text-neutral-900 p-5 flex flex-col gap-4 h-full animate-pulse">
+    <div className="card bg-white dark:bg-neutral-900 p-5 flex flex-col gap-4 h-full animate-pulse">
       <div className="rounded-xl bg-neutral-200 dark:bg-neutral-800 h-64" />
       <div className="h-6 w-3/4 rounded bg-neutral-200 dark:bg-neutral-800" />
     </div>
@@ -241,7 +241,7 @@ export default function WishlistAdminView(
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    className="card bg-white text-neutral-900 p-5 flex flex-col h-full group relative"
+                    className="card bg-white dark:bg-neutral-900 p-5 flex flex-col h-full group relative"
                   >
                     <div className="w-full h-64 rounded-xl overflow-hidden relative">
                       <Image
@@ -291,7 +291,7 @@ export default function WishlistAdminView(
                       <button
                         onClick={() => handleDeleteClick(d.id, d.name)}
                         disabled={isPending}
-                        className="btn btn-outline p-2 w-12 h-10 flex items-center justify-center text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 hover:bg-red-50 hover:border-red-300 hover:text-red-600 disabled:opacity-40 disabled:pointer-events-none"
+                        className="p-2 w-12 h-10 flex items-center justify-center rounded-lg border-2 border-dashed border-neutral-300/50 dark:border-neutral-600/50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-red-400/70 dark:hover:border-red-500/70 hover:bg-red-50/80 dark:hover:bg-red-950/30 text-neutral-600 dark:text-neutral-400 hover:text-red-600 dark:hover:text-red-400 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none"
                         title="Delete wishlist item"
                       >
                         <svg
@@ -338,7 +338,7 @@ export default function WishlistAdminView(
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="card bg-white text-neutral-900 p-6 w-full max-w-md"
+            className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
@@ -424,7 +424,7 @@ export default function WishlistAdminView(
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="card bg-white text-neutral-900 p-6 w-full max-w-md"
+            className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">

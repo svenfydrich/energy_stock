@@ -1,445 +1,451 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --accent: #6366f1;
-  --accent-muted: #818cf8;
-  --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6 55%, #ec4899);
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-}
-
-/* Force class-based dark mode */
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
-/* Force disable system dark mode preferences */
-@media (prefers-color-scheme: dark) {
-  html:not(.dark) {
-    color-scheme: light !important;
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+    --accent: #6366f1;
+    --accent-muted: #818cf8;
+    --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6 55%, #ec4899);
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
   }
 
-  html:not(.dark) * {
-    background-color: initial !important;
-    color: initial !important;
+  .dark {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-display), var(--font-geist-sans), system-ui,
+      sans-serif;
+    font-feature-settings: "liga" 1, "kern" 1;
+    text-rendering: optimizeLegibility;
   }
 }
 
-/* Comprehensive text color overrides - catch all instances */
-html:not(.dark) .text-neutral-800,
-html:not(.dark) .text-neutral-900,
-html:not(.dark) *[class*="text-neutral-800"],
-html:not(.dark) *[class*="text-neutral-900"] {
-  color: rgb(38 38 38) !important;
-}
-
-html.dark .text-neutral-800,
-html.dark .text-neutral-900,
-html.dark *[class*="text-neutral-800"],
-html.dark *[class*="text-neutral-900"] {
-  color: rgb(245 245 245) !important;
-}
-
-html:not(.dark) .text-neutral-600,
-html:not(.dark) .text-neutral-700,
-html:not(.dark) *[class*="text-neutral-600"],
-html:not(.dark) *[class*="text-neutral-700"] {
-  color: rgb(82 82 82) !important;
-}
-
-html.dark .text-neutral-600,
-html.dark .text-neutral-700,
-html.dark *[class*="text-neutral-600"],
-html.dark *[class*="text-neutral-700"] {
-  color: rgb(212 212 212) !important;
-}
-
-/* Input text color fixes */
-html:not(.dark) input[class*="text-neutral-900"],
-html:not(.dark) textarea[class*="text-neutral-900"] {
-  color: rgb(38 38 38) !important;
-}
-
-html.dark input[class*="text-neutral-900"],
-html.dark textarea[class*="text-neutral-900"] {
-  color: rgb(245 245 245) !important;
-}
-
-/* Background overrides */
-html:not(.dark) .bg-white {
-  background-color: #ffffff !important;
-}
-
-html.dark .bg-white {
-  background-color: rgb(38 38 38) !important;
-}
-
-html:not(.dark) .bg-neutral-900 {
-  background-color: rgb(23 23 23) !important;
-}
-
-html.dark .bg-neutral-900 {
-  background-color: rgb(23 23 23) !important;
-}
-
-/* Border overrides */
-html:not(.dark) .border-neutral-200 {
-  border-color: rgb(229 229 229) !important;
-}
-
-html.dark .border-neutral-200 {
-  border-color: rgb(82 82 82) !important;
-}
-
-html:not(.dark) .border-neutral-700 {
-  border-color: rgb(64 64 64) !important;
-}
-
-html.dark .border-neutral-700 {
-  border-color: rgb(64 64 64) !important;
-}
-
-/* Protect gradient text from theme overrides - comprehensive */
-.gradient-text,
-.bg-gradient-to-r.bg-clip-text.text-transparent,
-*[class*="bg-gradient-to-r"][class*="bg-clip-text"][class*="text-transparent"] {
-  background: var(--accent-gradient) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  color: transparent !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
-/* Ensure gradients work in both themes - more specific */
-html:not(.dark) .gradient-text,
-html:not(.dark) .bg-gradient-to-r.bg-clip-text.text-transparent,
-html:not(.dark)
-  *[class*="bg-gradient-to-r"][class*="bg-clip-text"][class*="text-transparent"],
-html.dark .gradient-text,
-html.dark .bg-gradient-to-r.bg-clip-text.text-transparent,
-html.dark
-  *[class*="bg-gradient-to-r"][class*="bg-clip-text"][class*="text-transparent"] {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6 55%, #ec4899) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  color: transparent !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-display), var(--font-geist-sans), system-ui,
-    sans-serif;
-  font-feature-settings: "liga" 1, "kern" 1;
-  text-rendering: optimizeLegibility;
-}
-
-/* Font utility */
-.font-display {
-  font-family: var(--font-display), var(--font-geist-sans), system-ui,
-    sans-serif;
-  font-weight: 700;
-}
-
-/* Gradient text utility */
-.gradient-text {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Card styling */
-.card {
-  --card-angle: 135deg;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(var(--card-angle), #6366f1, #8b5cf6 55%, #ec4899) border-box;
-  border: 2px solid transparent;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
-}
-
-/* Dark mode cards - class-based only */
-.dark .card {
-  --card-angle: 135deg;
-  background: linear-gradient(rgba(20, 20, 24, 0.55), rgba(20, 20, 24, 0.55))
-      padding-box,
-    linear-gradient(var(--card-angle), #6366f1, #8b5cf6 55%, #ec4899) border-box;
-  border: 2px solid transparent;
-  backdrop-filter: blur(12px) saturate(1.2);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
-  transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
-}
-.dark .card:hover {
-  --card-angle: 315deg;
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.7);
-}
-.card:hover {
-  --card-angle: 315deg;
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.15);
-  transform: translateY(-3px);
-}
-
-/* Add New Drink Card - Green gradient */
-.add-drink-card {
-  --card-angle: 135deg;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2))
-      padding-box,
-    linear-gradient(135deg, #10b981, #059669 55%, #047857) border-box;
-  border: 2px solid transparent;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
-}
-
-.dark .add-drink-card {
-  background: linear-gradient(rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15))
-      padding-box,
-    linear-gradient(135deg, #10b981, #059669 55%, #047857) border-box;
-  border: 2px solid transparent;
-  backdrop-filter: blur(12px) saturate(1.2);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
-}
-
-.add-drink-card:hover {
-  --card-angle: 315deg;
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.15);
-  transform: translateY(-3px);
-}
-
-.dark .add-drink-card:hover {
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.7);
-}
-
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-weight: 600;
-  border-radius: var(--radius-md);
-  padding: 0.7rem 1.1rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: background 0.25s, box-shadow 0.25s, transform 0.25s;
-  user-select: none;
-}
-.btn-primary {
-  background: var(--accent-gradient);
-  color: #fff;
-}
-.btn-primary:hover {
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.45);
-  transform: translateY(-2px);
-}
-.btn-outline {
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-}
-.btn-outline:hover {
-  background: var(--accent);
-  color: #fff;
-}
-
-/* Stock badges */
-.stock-badge {
-  display: inline-block;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: #10b981;
-  color: #fff;
-  letter-spacing: 0.5px;
-}
-.stock-badge.out {
-  background: #ef4444;
-}
-
-/* Center helper */
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Smooth container fade-in */
-.fade-in {
-  animation: fade-in 0.5s ease;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
+@layer components {
+  .gradient-text {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .animated-gradient-text {
+    background: linear-gradient(
+      90deg,
+      #6366f1,
+      #8b5cf6,
+      #ec4899,
+      #f97316,
+      #eab308,
+      #ec4899,
+      #8b5cf6,
+      #6366f1
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-flow 4s linear infinite;
   }
-}
 
-/* Preserve specific component colors in both themes */
+  @keyframes gradient-flow {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
 
-/* Red delete/trash buttons - stay red in both themes */
-html:not(.dark) .bg-red-500,
-html:not(.dark) *[class*="bg-red-500"],
-html.dark .bg-red-500,
-html.dark *[class*="bg-red-500"] {
-  background-color: rgb(239 68 68) !important;
-}
+  .font-display {
+    font-family: var(--font-display), var(--font-geist-sans), system-ui,
+      sans-serif;
+    font-weight: 700;
+  }
 
-html:not(.dark) .bg-red-600,
-html:not(.dark) *[class*="bg-red-600"],
-html.dark .bg-red-600,
-html.dark *[class*="bg-red-600"] {
-  background-color: rgb(220 38 38) !important;
-}
+  .card {
+    --card-angle: 135deg;
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: 2px;
+    background: linear-gradient(
+      var(--card-angle),
+      #6366f1,
+      #8b5cf6 55%,
+      #ec4899
+    );
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
+    overflow: hidden;
+  }
 
-html:not(.dark) .hover\:bg-red-600:hover,
-html:not(.dark) *[class*="hover:bg-red-600"]:hover,
-html.dark .hover\:bg-red-600:hover,
-html.dark *[class*="hover:bg-red-600"]:hover {
-  background-color: rgb(220 38 38) !important;
-}
+  .card > * {
+    position: relative;
+  }
 
-html:not(.dark) .hover\:bg-red-700:hover,
-html:not(.dark) *[class*="hover:bg-red-700"]:hover,
-html.dark .hover\:bg-red-700:hover,
-html.dark *[class*="hover:bg-red-700"]:hover {
-  background-color: rgb(185 28 28) !important;
-}
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border-radius: calc(var(--radius-lg) - 2px);
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 0;
+  }
 
-/* PayPal blue button - stay blue in both themes */
-html:not(.dark) *[class*="bg-[#0070ba]"],
-html.dark *[class*="bg-[#0070ba]"] {
-  background-color: #0070ba !important;
-}
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(
+      110deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.3) 45%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.3) 55%,
+      transparent 75%
+    );
+    transform: translateX(-100%) skewX(-15deg);
+    animation: shimmer 3s infinite;
+    z-index: 1;
+    pointer-events: none;
+  }
 
-html:not(.dark) *[class*="hover:bg-[#005ea6]"]:hover,
-html.dark *[class*="hover:bg-[#005ea6]"]:hover {
-  background-color: #005ea6 !important;
-}
+  .dark .card::before {
+    background: rgba(23, 23, 23, 0.8);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  }
 
-/* Add to Wishlist and Add New Drink buttons - always white icons */
-html:not(.dark) .add-drink-card button,
-html:not(.dark) .add-drink-card button *,
-html.dark .add-drink-card button,
-html.dark .add-drink-card button * {
-  color: rgb(255 255 255) !important;
-}
+  .dark .card::after {
+    background: linear-gradient(
+      110deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.1) 45%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 55%,
+      transparent 75%
+    );
+  }
 
-html:not(.dark) .add-drink-card svg,
-html.dark .add-drink-card svg {
-  stroke: rgb(255 255 255) !important;
-}
+  .card:hover {
+    --card-angle: 315deg;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+  }
 
-/* Preserve other gray text colors */
-html:not(.dark) .text-gray-300:not(.add-drink-card *),
-html:not(.dark) *[class*="text-gray-300"]:not(.add-drink-card *),
-html.dark .text-gray-300:not(.add-drink-card *),
-html.dark *[class*="text-gray-300"]:not(.add-drink-card *) {
-  color: rgb(209 213 219) !important;
-}
+  .dark .card {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
+  }
 
-html:not(.dark) .hover\:text-white:hover:not(.add-drink-card *),
-html:not(.dark) *[class*="hover:text-white"]:hover:not(.add-drink-card *),
-html.dark .hover\:text-white:hover:not(.add-drink-card *),
-html.dark *[class*="hover:text-white"]:hover:not(.add-drink-card *) {
-  color: rgb(255 255 255) !important;
-}
+  .dark .card:hover {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.7);
+  }
 
-/* Fix input field borders and outlines */
-html:not(.dark) input,
-html:not(.dark) textarea,
-html:not(.dark) select {
-  border-width: 1px !important;
-  border-style: solid !important;
-  outline: none !important;
-}
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%) skewX(-15deg);
+    }
+    100% {
+      transform: translateX(200%) skewX(-15deg);
+    }
+  }
 
-html.dark input,
-html.dark textarea,
-html.dark select {
-  border-width: 1px !important;
-  border-style: solid !important;
-  outline: none !important;
-}
+  .card-no-shimmer {
+    --card-angle: 135deg;
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: 2px;
+    background: linear-gradient(
+      var(--card-angle),
+      #6366f1,
+      #8b5cf6 55%,
+      #ec4899
+    );
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
+    overflow: hidden;
+  }
 
-/* Focus states for inputs */
-html:not(.dark) input:focus,
-html:not(.dark) textarea:focus,
-html:not(.dark) select:focus {
-  outline: 2px solid rgb(99 102 241) !important;
-  outline-offset: 2px !important;
-  border-color: transparent !important;
-}
+  .card-no-shimmer > * {
+    position: relative;
+  }
 
-html.dark input:focus,
-html.dark textarea:focus,
-html.dark select:focus {
-  outline: 2px solid rgb(99 102 241) !important;
-  outline-offset: 2px !important;
-  border-color: transparent !important;
-}
+  .card-no-shimmer::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border-radius: calc(var(--radius-lg) - 2px);
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 0;
+  }
 
-/* Button focus states */
-html:not(.dark) button:focus,
-html.dark button:focus {
-  outline: none !important;
-}
+  .dark .card-no-shimmer::before {
+    background: rgba(23, 23, 23, 0.8);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  }
 
-html:not(.dark) button:focus-visible,
-html.dark button:focus-visible {
-  outline: 2px solid rgb(99 102 241) !important;
-  outline-offset: 2px !important;
-}
+  .card-no-shimmer:hover {
+    --card-angle: 315deg;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+  }
 
-/* Light mode specific 1px black borders */
+  .dark .card-no-shimmer {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
+  }
 
-/* Top Drinks and Recent Purchases individual items */
-html:not(.dark) .bg-neutral-50 {
-  border: 1px solid #000000 !important;
-}
+  .dark .card-no-shimmer:hover {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.7);
+  }
 
-/* Bank Transfer button */
-html:not(.dark) .bg-neutral-800 {
-  border: 1px solid #000000 !important;
-}
+  .add-drink-card {
+    --card-angle: 135deg;
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: 2px;
+    background: linear-gradient(135deg, #10b981, #059669 55%, #047857);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
+  }
 
-html:not(.dark) .hover\:bg-neutral-700:hover {
-  border: 1px solid #000000 !important;
-}
+  .add-drink-card::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border-radius: calc(var(--radius-lg) - 2px);
+    background: linear-gradient(
+      rgba(16, 185, 129, 0.2),
+      rgba(5, 150, 105, 0.2)
+    );
+    z-index: 0;
+  }
 
-/* Trash can icons - white color in light mode, keep red background */
-html:not(.dark) .bg-red-500 svg,
-html:not(.dark) .bg-red-600 svg,
-html:not(.dark) *[class*="bg-red-500"] svg,
-html:not(.dark) *[class*="bg-red-600"] svg {
-  stroke: rgb(255 255 255) !important;
-  color: rgb(255 255 255) !important;
-}
+  .dark .add-drink-card::before {
+    background: linear-gradient(
+      rgba(16, 185, 129, 0.15),
+      rgba(5, 150, 105, 0.15)
+    );
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  }
 
-html:not(.dark) .hover\:bg-red-600:hover svg,
-html:not(.dark) *[class*="hover:bg-red-600"]:hover svg {
-  stroke: rgb(255 255 255) !important;
-  color: rgb(255 255 255) !important;
-}
+  .add-drink-card > * {
+    position: relative;
+    z-index: 1;
+  }
 
-/* Ensure delete button text is also white in light mode */
-html:not(.dark) .bg-red-500,
-html:not(.dark) .bg-red-600,
-html:not(.dark) *[class*="bg-red-500"],
-html:not(.dark) *[class*="bg-red-600"] {
-  color: rgb(255 255 255) !important;
+  .add-drink-card:hover {
+    --card-angle: 315deg;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+  }
+
+  .dark .add-drink-card {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
+  }
+
+  .dark .add-drink-card:hover {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.7);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    padding: 0.7rem 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.25s, box-shadow 0.25s, transform 0.25s;
+    user-select: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(
+      90deg,
+      #6366f1,
+      #8b5cf6,
+      #ec4899,
+      #f97316,
+      #8b5cf6,
+      #6366f1
+    );
+    background-size: 200% 100%;
+    color: #fff;
+    animation: gradient-flow 4s linear infinite;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.45);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  .btn-outline:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .stock-badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 2px dashed;
+    border-color: rgba(16, 185, 129, 0.5);
+    background: transparent;
+    color: #10b981;
+    letter-spacing: 0.5px;
+    animation: blink 2s ease-in-out infinite;
+    transition: all 0.3s ease;
+  }
+
+  .dark .stock-badge {
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #34d399;
+  }
+
+  .stock-badge.out {
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+  }
+
+  .dark .stock-badge.out {
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #f87171;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fade-in {
+    animation: fade-in 0.5s ease;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Launch Animation */
+  .launch-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: transparent;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    animation: launch-exit 6s ease-in forwards;
+    pointer-events: none;
+    padding-bottom: 10vh;
+  }
+
+  .rocket {
+    position: relative;
+    animation: rocket-launch 6s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+  }
+
+  .flame {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 50px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 165, 0, 0.9),
+      rgba(255, 69, 0, 0.7),
+      transparent
+    );
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flame-grow 6s ease-in infinite;
+  }
+
+  @keyframes rocket-launch {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    16.67% {
+      /* Wait for 1 second (1/6 of 6s) */
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      /* Accelerate upwards for 5 seconds */
+      transform: translateY(-150vh) scale(0.3);
+      opacity: 0;
+    }
+  }
+
+  @keyframes flame-grow {
+    0%,
+    16.67% {
+      /* Idle flame during wait */
+      transform: translateX(-50%) scaleY(0.8);
+      opacity: 0.7;
+    }
+    30% {
+      /* Flame grows as rocket starts */
+      transform: translateX(-50%) scaleY(1.5);
+      opacity: 1;
+    }
+    100% {
+      /* Maximum flame during full acceleration */
+      transform: translateX(-50%) scaleY(2.5);
+      opacity: 1;
+    }
+  }
+
+  @keyframes launch-exit {
+    0% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
 }

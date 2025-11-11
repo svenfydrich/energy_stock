@@ -376,10 +376,10 @@ export default function DrinkRefillView() {
       <div className="mb-6 flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4 sm:gap-0">
         <div>
           <h2 className="text-xl sm:text-2xl font-bold text-neutral-800 dark:text-neutral-100">
-            Drink Inventory
+            Inventory
           </h2>
           <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
-            Manage stock levels for all drinks
+            Restock, add new drinks and manage the items.
           </p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
@@ -418,27 +418,31 @@ export default function DrinkRefillView() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className="add-drink-card p-5 flex flex-col h-full group relative cursor-pointer"
+                className="card bg-white text-neutral-900 p-5 flex flex-col h-full group relative cursor-pointer hover:scale-[1.02] transition-transform"
                 onClick={() => setIsAddModalOpen(true)}
               >
-                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-green-50/60 to-emerald-50/60 dark:from-green-950/40 dark:to-emerald-950/40 backdrop-blur-sm">
-                  <button className="text-base font-semibold bg-transparent text-gray-300 hover:text-white transition-colors px-6 py-3">
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="m-auto"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19" />
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                    </svg>
-                    Add new drink
-                  </button>
+                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/30 dark:to-purple-950/30 border-2 border-dashed border-indigo-300/40 dark:border-indigo-700/40 group-hover:border-indigo-400/60 dark:group-hover:border-indigo-600/60 transition-colors">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="p-3 rounded-full bg-indigo-100/80 dark:bg-indigo-900/50 group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800/70 transition-colors">
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-indigo-600 dark:text-indigo-400"
+                      >
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                      </svg>
+                    </div>
+                    <span className="text-base font-semibold text-neutral-700 dark:text-neutral-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      Add new drink
+                    </span>
+                  </div>
                 </div>
               </motion.div>
 
@@ -452,7 +456,7 @@ export default function DrinkRefillView() {
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    className="card bg-white text-neutral-900 p-5 flex flex-col h-full group relative"
+                    className="card-no-shimmer bg-white text-neutral-900 p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
                   >
                     {/* Action Buttons */}
                     <div className="absolute top-3 right-3 z-10 flex gap-2">
@@ -463,7 +467,7 @@ export default function DrinkRefillView() {
                           handleEditClick(d);
                         }}
                         disabled={isPending}
-                        className="p-2 rounded-full bg-blue-500/90 hover:bg-blue-600 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                        className="p-2 rounded-lg border-2 border-dashed border-indigo-300/50 dark:border-indigo-600/50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-indigo-500/70 dark:hover:border-indigo-400/70 hover:bg-indigo-50/80 dark:hover:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         aria-label="Edit drink"
                       >
                         <svg
@@ -488,7 +492,7 @@ export default function DrinkRefillView() {
                           handleDeleteClick(d.id, d.name);
                         }}
                         disabled={isPending}
-                        className="p-2 rounded-full bg-red-500/90 hover:bg-red-600 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                        className="p-2 rounded-lg border-2 border-dashed border-neutral-300/50 dark:border-neutral-600/50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-red-400/70 dark:hover:border-red-500/70 hover:bg-red-50/80 dark:hover:bg-red-950/30 text-neutral-600 dark:text-neutral-400 hover:text-red-600 dark:hover:text-red-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         aria-label="Delete drink"
                       >
                         <svg
@@ -568,7 +572,7 @@ export default function DrinkRefillView() {
                           }
                           disabled={isPending}
                           placeholder="Amount"
-                          className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                          className="flex-1 min-w-0 px-3 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed text-sm transition-colors"
                         />
                         <button
                           onClick={() => {
@@ -640,7 +644,7 @@ export default function DrinkRefillView() {
                   }
                   disabled={isAdding}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="Enter drink name"
                 />
               </div>
@@ -667,7 +671,7 @@ export default function DrinkRefillView() {
                     }
                     disabled={isAdding}
                     required
-                    className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     placeholder="0"
                   />
                 </div>
@@ -693,7 +697,7 @@ export default function DrinkRefillView() {
                     }
                     disabled={isAdding}
                     required
-                    className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     placeholder="0.00"
                   />
                 </div>
@@ -714,7 +718,7 @@ export default function DrinkRefillView() {
                     setNewDrink({ ...newDrink, imageUrl: e.target.value })
                   }
                   disabled={isAdding}
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="https://example.com/image.png"
                 />
               </div>

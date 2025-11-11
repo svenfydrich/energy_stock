@@ -38,7 +38,7 @@ const BUTTON_BASE =
 
 function SkeletonCard() {
   return (
-    <div className="card bg-white text-neutral-900 p-5 flex flex-col gap-4 h-full animate-pulse">
+    <div className="card bg-white dark:bg-neutral-900 p-5 flex flex-col gap-4 h-full animate-pulse">
       <div className="rounded-xl bg-neutral-200 dark:bg-neutral-800 h-64" />
       <div className="h-6 w-3/4 rounded bg-neutral-200 dark:bg-neutral-800" />
       <div className="h-4 w-1/2 rounded bg-neutral-200 dark:bg-neutral-800" />
@@ -159,7 +159,7 @@ export default function HomePage() {
             <p className="text-xs sm:text-sm uppercase tracking-wider text-indigo-600 font-semibold">
               {activeTab === "inventory" ? "Inventory Dashboard" : "Wishlist"}
             </p>
-            <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-extrabold gradient-text leading-tight">
+            <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-extrabold animated-gradient-text leading-tight">
               {activeTab === "inventory"
                 ? "Recharge and keep hacking."
                 : "Your wishlist"}
@@ -172,36 +172,55 @@ export default function HomePage() {
           </div>
           {activeTab === "inventory" && (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-end w-full sm:w-auto">
-              <div className="card bg-white text-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
+              <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
                 <span className="text-xs uppercase tracking-wide text-indigo-600">
                   Total Items
                 </span>
-                <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-800 dark:text-neutral-100">
+                <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
                   {drinks.length}
                 </span>
               </div>
-              <div className="card bg-white text-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
+              <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
                 <span className="text-xs uppercase tracking-wide text-indigo-600">
                   Total Stock
                 </span>
-                <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-800 dark:text-neutral-100">
+                <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
                   {totalStock}
                 </span>
               </div>
-              <div className="card bg-white text-neutral-900 px-5 py-4 flex flex-col items-start min-w-[12rem]">
+              <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-5 py-4 flex flex-col items-start min-w-[12rem]">
                 <span className="text-xs uppercase tracking-wide text-indigo-600">
                   Wishlisted Items
                 </span>
-                <span className="text-2xl font-bold mt-1 text-neutral-800 dark:text-neutral-100">
+                <span className="text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
                   {wishlistCount}
                 </span>
               </div>
               <button
                 onClick={hardRefresh}
-                className={`${BUTTON_BASE} btn-outline min-w-32 sm:min-w-40 text-xs sm:text-sm py-2 sm:py-3`}
+                className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-6 py-3 sm:py-4 flex flex-col items-center justify-center min-w-32 sm:min-w-40 text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:scale-105 group"
                 disabled={isRefreshing}
               >
-                {isRefreshing ? "Refreshing…" : "Refresh"}
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={`mb-1 text-indigo-600 dark:text-indigo-400 ${
+                    isRefreshing
+                      ? "animate-spin"
+                      : "group-hover:rotate-180 transition-transform duration-500"
+                  }`}
+                >
+                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
+                </svg>
+                <span className="text-neutral-900 dark:text-neutral-100">
+                  {isRefreshing ? "Refreshing…" : "Refresh"}
+                </span>
               </button>
             </div>
           )}
@@ -255,7 +274,7 @@ export default function HomePage() {
                         initial="initial"
                         animate="animate"
                         exit="exit"
-                        className="card bg-white text-neutral-900 p-5 flex flex-col h-full group relative"
+                        className="card bg-white dark:bg-neutral-900 p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
                       >
                         <div className="w-full h-64 rounded-xl overflow-hidden relative">
                           <Image
