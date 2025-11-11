@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@/app/generated/prisma/index.js";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export async function POST(req: Request) {
   try {
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, drink });
     } catch (err: unknown) {
       if (
-        err instanceof Prisma.PrismaClientKnownRequestError &&
+        err instanceof PrismaClientKnownRequestError &&
         err.code === "P2025"
       ) {
         return NextResponse.json(
@@ -71,4 +71,3 @@ export async function POST(req: Request) {
     );
   }
 }
-

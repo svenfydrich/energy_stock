@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@/app/generated/prisma/index.js";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 /**
  * Restock API
@@ -47,7 +47,7 @@ export async function GET(req: Request) {
       if (!Number.isInteger(drinkId) || drinkId <= 0) {
         return NextResponse.json(
           { success: false, error: "Invalid drinkId query parameter" },
-          { status: 400 },
+          { status: 400 }
         );
       }
 
@@ -65,7 +65,7 @@ export async function GET(req: Request) {
       if (!drink) {
         return NextResponse.json(
           { success: false, error: "Drink not found" },
-          { status: 404 },
+          { status: 404 }
         );
       }
 
@@ -89,7 +89,7 @@ export async function GET(req: Request) {
     console.error("GET /restock error:", err);
     return NextResponse.json(
       { success: false, error: "Unexpected server error" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -114,7 +114,7 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json(
       { success: false, error: "Invalid JSON body" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -128,13 +128,13 @@ export async function POST(req: Request) {
     if (!Number.isInteger(drinkId) || (drinkId as number) <= 0) {
       return NextResponse.json(
         { success: false, error: "Invalid or missing drinkId" },
-        { status: 400 },
+        { status: 400 }
       );
     }
     if (!Number.isInteger(amount) || (amount as number) <= 0) {
       return NextResponse.json(
         { success: false, error: "Amount must be a positive integer" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -147,18 +147,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, drink });
     } catch (err: unknown) {
       if (
-        err instanceof Prisma.PrismaClientKnownRequestError &&
+        err instanceof PrismaClientKnownRequestError &&
         err.code === "P2025"
       ) {
         return NextResponse.json(
           { success: false, error: "Drink not found" },
-          { status: 404 },
+          { status: 404 }
         );
       }
       console.error("Single restock error:", err);
       return NextResponse.json(
         { success: false, error: "Unexpected server error" },
-        { status: 500 },
+        { status: 500 }
       );
     }
   }
@@ -168,7 +168,7 @@ export async function POST(req: Request) {
   if (rawItems.length === 0) {
     return NextResponse.json(
       { success: false, error: "Items array must not be empty" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -184,7 +184,7 @@ export async function POST(req: Request) {
           success: false,
           error: `Invalid drinkId at items[${index}]`,
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
     if (!Number.isInteger(amount) || amount <= 0) {
@@ -193,7 +193,7 @@ export async function POST(req: Request) {
           success: false,
           error: `Invalid amount at items[${index}] - must be positive integer`,
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -204,7 +204,7 @@ export async function POST(req: Request) {
     ([drinkId, amount]) => ({
       drinkId,
       amount,
-    }),
+    })
   );
 
   try {
@@ -214,8 +214,8 @@ export async function POST(req: Request) {
         prisma.drink.update({
           where: { id: drinkId },
           data: { stock: { increment: amount } },
-        }),
-      ),
+        })
+      )
     );
 
     return NextResponse.json({
@@ -224,21 +224,18 @@ export async function POST(req: Request) {
       drinks: updatedDrinks,
     });
   } catch (err: unknown) {
-    if (
-      err instanceof Prisma.PrismaClientKnownRequestError &&
-      err.code === "P2025"
-    ) {
+    if (err instanceof PrismaClientKnownRequestError && err.code === "P2025") {
       // One of the drink updates failed due to missing record
       return NextResponse.json(
         { success: false, error: "One or more drinkIds not found" },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
     console.error("Batch restock error:", err);
     return NextResponse.json(
       { success: false, error: "Unexpected server error" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
