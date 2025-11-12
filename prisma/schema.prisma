@@ -11,9 +11,11 @@ datasource db {
 model Drink {
   id        Int        @id @default(autoincrement())
   name      String
+  brand     String     @default("")
   price     Float
   stock     Int
   imageUrl  String?
+  sugarFree Boolean    @default(false)
   purchases Purchase[]
 }
 
@@ -26,9 +28,11 @@ model Purchase {
 }
 
 model WishlistDrink {
-  id       Int      @id @default(autoincrement())
-  name     String
-  imageUrl String?
+  id        Int      @id @default(autoincrement())
+  name      String
+  brand     String   @default("")
+  imageUrl  String?
+  sugarFree Boolean  @default(false)
   createdAt DateTime @default(now())
 }
 

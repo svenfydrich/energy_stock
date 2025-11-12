@@ -37,31 +37,62 @@ const Images = {
     "https://dosenmatrosen.imgbolt.de/media/fd/18/1a/1682673837/GL007372-1-1-Monster-Ultra-Rosa.png?ts=1682673837",
   spezi:
     "https://getraenkeservice-muenchen.com/wp-content/uploads/2020/09/Spezi-03L.png",
+  monsterUlraWhite:
+    "https://www.bodyandfit.com/cdn/shop/files/1146183_Image_01.png?v=1752145836&width=1214",
 };
 
 type SeedDrink = {
+  brand?: string;
   name: string;
   stock: number;
+  sugarFree?: boolean;
   price: number;
   imageUrl?: string | null;
 };
 
 const drinks: SeedDrink[] = [
-  { name: "Monster", stock: 4, price: 1.0, imageUrl: Images.monster },
-  { name: "Redbull", stock: 5, price: 1.0, imageUrl: Images.redbull },
   {
-    name: "Redbull (sugar free)",
+    brand:"Monster Energy",
+    name: "Original",
+    stock: 4,
+    price: 1.0,
+    imageUrl: Images.monster },
+  {
+    brand: "Redbull",
+    name: "Regular",
+    stock: 10,
+    price: 1.0,
+    imageUrl: Images.redbull },
+  {
+    brand: "Redbull",
+    name: "Sugar Free",
     stock: 3,
+    sugarFree: true,
     price: 1.0,
     imageUrl: Images.redbullSugarFree,
   },
   {
-    name: "Monster Ultra Rosa",
+    brand: "Monster",
+    name: "Ultra Rosa",
     stock: 2,
+    sugarFree: true,
     price: 1.0,
     imageUrl: Images.monsterUltraRosa,
   },
-  { name: "Spezi", stock: 14, price: 1.0, imageUrl: Images.spezi },
+  {
+    brand: "Paulaner",
+    name: "Spezi",
+    stock: 6,
+    price: 1.0,
+    imageUrl: Images.spezi },
+  {
+    brand: "Monster",
+    name: "Ultra White",
+    stock: 5,
+    sugarFree: true,
+    price: 1.0,
+    imageUrl: Images.monsterUlraWhite,
+  },
 ];
 
 async function seedDrinks() {
