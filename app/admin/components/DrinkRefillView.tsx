@@ -8,9 +8,11 @@ import { useToasts } from "@/app/components/ToastProvider";
 type Drink = {
   id: number;
   name: string;
+  brand: string;
   price: number;
   stock: number;
   imageUrl: string | null;
+  sugarFree: boolean;
 };
 
 const CARD_ANIM = {
@@ -53,18 +55,22 @@ export default function DrinkRefillView() {
   const [isAdding, setIsAdding] = useState(false);
   const [newDrink, setNewDrink] = useState({
     name: "",
+    brand: "",
     stock: 0,
     price: 0,
     imageUrl: "",
+    sugarFree: false,
   });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingDrink, setEditingDrink] = useState<{
     id: number;
     name: string;
+    brand: string;
     stock: number;
     price: number;
     imageUrl: string;
+    sugarFree: boolean;
   } | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{
     isOpen: boolean;
@@ -170,9 +176,11 @@ export default function DrinkRefillView() {
     setEditingDrink({
       id: drink.id,
       name: drink.name,
+      brand: drink.brand,
       stock: drink.stock,
       price: drink.price,
       imageUrl: drink.imageUrl || "",
+      sugarFree: drink.sugarFree,
     });
     setIsEditModalOpen(true);
   };
@@ -204,9 +212,11 @@ export default function DrinkRefillView() {
         body: JSON.stringify({
           drinkId: editingDrink.id,
           name: editingDrink.name.trim(),
+          brand: editingDrink.brand.trim(),
           stock: editingDrink.stock,
           price: editingDrink.price,
           imageUrl: editingDrink.imageUrl.trim() || null,
+          sugarFree: editingDrink.sugarFree,
         }),
         headers: { "Content-Type": "application/json" },
       });
@@ -261,9 +271,11 @@ export default function DrinkRefillView() {
         method: "POST",
         body: JSON.stringify({
           name: newDrink.name.trim(),
+          brand: newDrink.brand.trim(),
           stock: newDrink.stock,
           price: newDrink.price,
           imageUrl: newDrink.imageUrl.trim() || null,
+          sugarFree: newDrink.sugarFree,
         }),
         headers: { "Content-Type": "application/json" },
       });
@@ -280,7 +292,7 @@ export default function DrinkRefillView() {
       setDrinks((prev) => [data.drink, ...prev]);
 
       // Reset form and close modal
-      setNewDrink({ name: "", stock: 0, price: 0, imageUrl: "" });
+      setNewDrink({ name: "", brand: "", stock: 0, price: 0, imageUrl: "", sugarFree: false });
       setIsAddModalOpen(false);
     } catch (e) {
       console.error(e);
@@ -291,7 +303,7 @@ export default function DrinkRefillView() {
   };
 
   const handleCancelAdd = () => {
-    setNewDrink({ name: "", stock: 0, price: 0, imageUrl: "" });
+    setNewDrink({ name: "", brand: "", stock: 0, price: 0, imageUrl: "", sugarFree: false });
     setIsAddModalOpen(false);
   };
 
@@ -544,9 +556,14 @@ export default function DrinkRefillView() {
                         </motion.div>
                       )}
                     </div>
-                    <h2 className="text-xl font-semibold mt-4 truncate text-neutral-800 dark:text-neutral-100">
-                      {d.name}
-                    </h2>
+                    <div className="mt-4">
+                      <p className="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                        {d.brand || 'Unknown'}
+                      </p>
+                      <h2 className="text-xl font-semibold mt-1 truncate text-neutral-800 dark:text-neutral-100">
+                        {d.name}
+                      </h2>
+                    </div>
                     <div className="mt-2 flex items-center justify-between gap-2">
                       <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
                         €{d.price.toFixed(2)}
@@ -649,6 +666,26 @@ export default function DrinkRefillView() {
                 />
               </div>
 
+              <div>
+                <label
+                  htmlFor="brand"
+                  className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
+                >
+                  Brand
+                </label>
+                <input
+                  id="brand"
+                  type="text"
+                  value={newDrink.brand}
+                  onChange={(e) =>
+                    setNewDrink({ ...newDrink, brand: e.target.value })
+                  }
+                  disabled={isAdding}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  placeholder="Enter brand name"
+                />
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label
@@ -722,6 +759,25 @@ export default function DrinkRefillView() {
                   placeholder="https://example.com/image.png"
                 />
               </div>
+
+              <div className="flex items-center gap-3">
+                <input
+                  id="sugarFree"
+                  type="checkbox"
+                  checked={newDrink.sugarFree}
+                  onChange={(e) =>
+                    setNewDrink({ ...newDrink, sugarFree: e.target.checked })
+                  }
+                  disabled={isAdding}
+                  className="w-5 h-5 rounded border-2 border-neutral-300 dark:border-neutral-600 text-indigo-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                />
+                <label
+                  htmlFor="sugarFree"
+                  className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 cursor-pointer"
+                >
+                  Sugar Free
+                </label>
+              </div>
             </div>
 
             <div className="flex gap-2 sm:gap-3 mt-4 sm:mt-6">
@@ -780,6 +836,26 @@ export default function DrinkRefillView() {
                   required
                   className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Enter drink name"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="edit-brand"
+                  className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
+                >
+                  Brand
+                </label>
+                <input
+                  id="edit-brand"
+                  type="text"
+                  value={editingDrink.brand}
+                  onChange={(e) =>
+                    setEditingDrink({ ...editingDrink, brand: e.target.value })
+                  }
+                  disabled={isEditing}
+                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  placeholder="Enter brand name"
                 />
               </div>
 
@@ -858,6 +934,25 @@ export default function DrinkRefillView() {
                   className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="https://example.com/image.png"
                 />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <input
+                  id="edit-sugarFree"
+                  type="checkbox"
+                  checked={editingDrink.sugarFree}
+                  onChange={(e) =>
+                    setEditingDrink({ ...editingDrink, sugarFree: e.target.checked })
+                  }
+                  disabled={isEditing}
+                  className="w-5 h-5 rounded border-2 border-neutral-300 dark:border-neutral-600 text-indigo-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                />
+                <label
+                  htmlFor="edit-sugarFree"
+                  className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 cursor-pointer"
+                >
+                  Sugar Free
+                </label>
               </div>
             </div>
 

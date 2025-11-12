@@ -15,12 +15,19 @@ export async function POST(req: Request) {
       );
     }
 
-    const { name, stock, price, imageUrl } = await req.json();
+    const { name, brand, stock, price, imageUrl, sugarFree } = await req.json();
 
     // Validate input
     if (!name || typeof name !== "string" || name.trim().length === 0) {
       return NextResponse.json(
         { success: false, error: "Name is required" },
+        { status: 400 }
+      );
+    }
+
+    if (brand !== undefined && typeof brand !== "string") {
+      return NextResponse.json(
+        { success: false, error: "Brand must be a string" },
         { status: 400 }
       );
     }
@@ -46,20 +53,31 @@ export async function POST(req: Request) {
       );
     }
 
+    if (sugarFree !== undefined && typeof sugarFree !== "boolean") {
+      return NextResponse.json(
+        { success: false, error: "SugarFree must be a boolean" },
+        { status: 400 }
+      );
+    }
+
     try {
       const drink = await prisma.drink.create({
         data: {
           name: name.trim(),
+          brand: brand?.trim() || "",
           stock,
           price,
           imageUrl: imageUrl?.trim() || null,
+          sugarFree: sugarFree || false,
         },
         select: {
           id: true,
           name: true,
+          brand: true,
           price: true,
           stock: true,
           imageUrl: true,
+          sugarFree: true,
         },
       });
 

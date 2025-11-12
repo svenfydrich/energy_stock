@@ -10,9 +10,11 @@ import PaymentModal from "./components/PaymentModal";
 type Drink = {
   id: number;
   name: string;
+  brand: string;
   price: number;
   stock: number;
   imageUrl: string | null;
+  sugarFree: boolean;
 };
 
 const CARD_ANIM = {
@@ -453,6 +455,11 @@ export default function HomePage() {
                         exit="exit"
                         className="card bg-white dark:bg-neutral-900 p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
                       >
+                        {d.sugarFree && (
+                          <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md border-2 border-dashed border-emerald-400/60 dark:border-emerald-500/60 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                            ZERO
+                          </div>
+                        )}
                         <div className="w-full h-64 rounded-xl overflow-hidden relative">
                           <Image
                             src={d.imageUrl || "/next.svg"}
@@ -486,9 +493,14 @@ export default function HomePage() {
                             </motion.div>
                           )}
                         </div>
-                        <h2 className="text-xl font-semibold mt-4 truncate text-neutral-900 dark:text-neutral-100">
-                          {d.name}
-                        </h2>
+                        <div className="mt-4">
+                          <p className="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                            {d.brand || 'Unknown'}
+                          </p>
+                          <h2 className="text-xl font-semibold mt-1 truncate text-neutral-900 dark:text-neutral-100">
+                            {d.name}
+                          </h2>
+                        </div>
                         <div className="mt-3 flex items-center justify-between">
                           <span className="text-3xl sm:text-4xl font-extrabold text-indigo-600 dark:text-indigo-400">
                             €{d.price.toFixed(2)}
