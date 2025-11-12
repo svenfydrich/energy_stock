@@ -56,9 +56,11 @@ export async function GET(req: Request) {
         select: {
           id: true,
           name: true,
+          brand: true,
           stock: true,
           price: true,
           imageUrl: true,
+          sugarFree: true,
         },
       });
 
@@ -77,9 +79,11 @@ export async function GET(req: Request) {
       select: {
         id: true,
         name: true,
+        brand: true,
         stock: true,
         price: true,
         imageUrl: true,
+        sugarFree: true,
       },
       orderBy: { id: "asc" },
     });
