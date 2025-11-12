@@ -20,6 +20,7 @@ type PurchaseStats = {
   recentPurchases: Array<{
     id: number;
     drinkName: string;
+    drinkBrand: string;
     customerName: string | null;
     createdAt: string;
   }>;
@@ -313,7 +314,7 @@ export default function AdminDashboard() {
                           >
                             <div>
                               <p className="text-xs sm:text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
-                                {purchase.drinkName}
+                                {purchase.drinkBrand} {purchase.drinkName}
                               </p>
                               <p className="text-xs text-neutral-500 dark:text-neutral-400 truncate">
                                 <span className="hidden sm:inline">

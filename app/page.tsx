@@ -69,6 +69,7 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
+  const [sugarFilter, setSugarFilter] = useState<"none" | "zero" | "sugary">("none");
   const { success, error, info } = useToasts();
 
   const fetchDrinks = useCallback(async () => {
@@ -162,6 +163,14 @@ export default function HomePage() {
     });
   };
 
+  const toggleSugarFilter = () => {
+    setSugarFilter((prev) => {
+      if (prev === "none") return "zero";
+      if (prev === "zero") return "sugary";
+      return "none";
+    });
+  };
+
   const toggleSearch = () => {
     setIsSearchOpen((prev) => !prev);
     if (isSearchOpen) {
@@ -175,7 +184,14 @@ export default function HomePage() {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       result = result.filter((drink) =>
-        drink.name.toLowerCase().includes(query)
+        drink.name.toLowerCase().includes(query) ||
+        drink.brand.toLowerCase().includes(query)
+      );
+    }
+
+    if (sugarFilter !== "none") {
+      result = result.filter((drink) =>
+        sugarFilter === "zero" ? drink.sugarFree : !drink.sugarFree
       );
     }
 
@@ -187,7 +203,7 @@ export default function HomePage() {
     }
 
     return result;
-  }, [drinks, searchQuery, sortOrder]);
+  }, [drinks, searchQuery, sortOrder, sugarFilter]);
 
   const totalStock = drinks.reduce((sum, d) => sum + d.stock, 0);
 
@@ -282,6 +298,8 @@ export default function HomePage() {
             <button
               onClick={() => {
                 setActiveTab("wishlist");
+                setIsSearchOpen(false);
+                setSearchQuery("");
                 fetchWishlistCount();
               }}
               className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
@@ -317,6 +335,41 @@ export default function HomePage() {
                   >
                     <circle cx="11" cy="11" r="8" />
                     <path d="m21 21-4.35-4.35" />
+                  </svg>
+                </button>
+                <button
+                  onClick={toggleSugarFilter}
+                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 ${
+                    sugarFilter !== "none"
+                      ? "border-indigo-600 text-indigo-600"
+                      : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                  }`}
+                  title={
+                    sugarFilter === "none"
+                      ? "Filter: Zero"
+                      : sugarFilter === "zero"
+                      ? "Filter: Sugary"
+                      : "Filter: None"
+                  }
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`transition-transform ${
+                      sugarFilter === "zero"
+                        ? "text-emerald-600 dark:text-emerald-400"
+                        : sugarFilter === "sugary"
+                        ? "text-pink-600 dark:text-pink-500"
+                        : ""
+                    }`}
+                  >
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                   </svg>
                 </button>
                 <button
