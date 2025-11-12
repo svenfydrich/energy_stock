@@ -175,7 +175,8 @@ export default function HomePage() {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       result = result.filter((drink) =>
-        drink.name.toLowerCase().includes(query)
+        drink.name.toLowerCase().includes(query) ||
+        drink.brand.toLowerCase().includes(query)
       );
     }
 
