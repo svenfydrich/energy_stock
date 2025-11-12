@@ -32,6 +32,7 @@ export async function GET() {
           select: {
             id: true,
             name: true,
+            brand: true,
           },
         },
       },
@@ -80,6 +81,7 @@ export async function GET() {
     const recentPurchases = allPurchases.slice(0, 20).map((purchase) => ({
       id: purchase.id,
       drinkName: purchase.drink.name,
+      drinkBrand: purchase.drink.brand,
       customerName: purchase.customerName,
       createdAt: purchase.createdAt.toISOString(),
     }));
