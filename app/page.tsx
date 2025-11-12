@@ -346,10 +346,10 @@ export default function HomePage() {
                   }`}
                   title={
                     sugarFilter === "none"
-                      ? "Filter: None"
+                      ? "Filter: Zero"
                       : sugarFilter === "zero"
-                      ? "Filter: Sugar free"
-                      : "Filter: Sugary"
+                      ? "Filter: Sugary"
+                      : "Filter: None"
                   }
                 >
                   <svg
