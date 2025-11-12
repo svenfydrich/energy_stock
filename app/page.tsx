@@ -56,14 +56,17 @@ export default function HomePage() {
     new Set()
   );
   const [isRefreshing, startRefresh] = useTransition();
-  const [activeTab, setActiveTab] = useState<"inventory" | "wishlist">(
-    "inventory"
+  const [activeTab, setActiveTab] = useState<"shop" | "wishlist">(
+    "shop"
   );
   const [paymentModal, setPaymentModal] = useState<{
     isOpen: boolean;
     drink: Drink | null;
   }>({ isOpen: false, drink: null });
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
   const { success, error, info } = useToasts();
 
   const fetchDrinks = useCallback(async () => {
@@ -149,6 +152,41 @@ export default function HomePage() {
     });
   };
 
+  const toggleSort = () => {
+    setSortOrder((prev) => {
+      if (prev === null) return "asc";
+      if (prev === "asc") return "desc";
+      return null;
+    });
+  };
+
+  const toggleSearch = () => {
+    setIsSearchOpen((prev) => !prev);
+    if (isSearchOpen) {
+      setSearchQuery("");
+    }
+  };
+
+  const filteredAndSortedDrinks = React.useMemo(() => {
+    let result = [...drinks];
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter((drink) =>
+        drink.name.toLowerCase().includes(query)
+      );
+    }
+
+    if (sortOrder) {
+      result.sort((a, b) => {
+        const comparison = a.name.localeCompare(b.name);
+        return sortOrder === "asc" ? comparison : -comparison;
+      });
+    }
+
+    return result;
+  }, [drinks, searchQuery, sortOrder]);
+
   const totalStock = drinks.reduce((sum, d) => sum + d.stock, 0);
 
   return (
@@ -157,20 +195,20 @@ export default function HomePage() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
           <div className="text-center sm:text-left">
             <p className="text-xs sm:text-sm uppercase tracking-wider text-indigo-600 font-semibold">
-              {activeTab === "inventory" ? "Inventory Dashboard" : "Wishlist"}
+              {activeTab === "shop" ? "Shop" : "Wishlist"}
             </p>
             <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-extrabold animated-gradient-text leading-tight">
-              {activeTab === "inventory"
-                ? "Recharge and keep hacking."
-                : "Your wishlist"}
+              {activeTab === "shop"
+                ? "Fuel for victory"
+                : "Letters to Santa"}
             </h2>
             <p className="mt-2 sm:mt-3 max-w-xl text-neutral-600 dark:text-neutral-300 text-sm md:text-base">
-              {activeTab === "inventory"
-                ? "Select a drink and pay with Paypal or bank transfer"
-                : "Add drinks you'd like to see in stock."}
+              {activeTab === "shop"
+                ? "Choose your Power! Select a drink and pay right away. 😎"
+                : "Up for something else? Add drinks and maybe you'll see them soon! 🎁"}
             </p>
           </div>
-          {activeTab === "inventory" && (
+          {activeTab === "shop" && (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-end w-full sm:w-auto">
               <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
                 <span className="text-xs uppercase tracking-wide text-indigo-600">
@@ -227,34 +265,173 @@ export default function HomePage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 border-b border-neutral-200 dark:border-neutral-800">
-          <button
-            onClick={() => setActiveTab("inventory")}
-            className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
-              activeTab === "inventory"
-                ? "border-indigo-600 text-indigo-600"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
-            }`}
-          >
-            Inventory
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab("wishlist");
-              fetchWishlistCount();
-            }}
-            className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
-              activeTab === "wishlist"
-                ? "border-indigo-600 text-indigo-600"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
-            }`}
-          >
-            Wishlist
-          </button>
+        <div className="flex flex-col gap-3 mb-6 sm:mb-8">
+          <div className="flex gap-1 sm:gap-2 border-b border-neutral-200 dark:border-neutral-800">
+            <button
+              onClick={() => setActiveTab("shop")}
+              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
+                activeTab === "shop"
+                  ? "border-indigo-600 text-indigo-600"
+                  : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+              }`}
+            >
+              Shop
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab("wishlist");
+                fetchWishlistCount();
+              }}
+              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
+                activeTab === "wishlist"
+                  ? "border-indigo-600 text-indigo-600"
+                  : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+              }`}
+            >
+              Wishlist
+            </button>
+
+            {activeTab === "shop" && (
+              <div className="ml-auto flex gap-2 items-center">
+                <button
+                  onClick={toggleSearch}
+                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 ${
+                    isSearchOpen
+                      ? "border-indigo-600 text-indigo-600"
+                      : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                  }`}
+                  title="Search"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="transition-transform"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                  </svg>
+                </button>
+                <button
+                  onClick={toggleSort}
+                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 ${
+                    sortOrder
+                      ? "border-indigo-600 text-indigo-600"
+                      : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                  }`}
+                  title={
+                    sortOrder === null
+                      ? "Sort A-Z"
+                      : sortOrder === "asc"
+                      ? "Sort Z-A"
+                      : "Clear sort"
+                  }
+                >
+                  {sortOrder === "desc" ? (
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="transition-transform"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  ) : (
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`transition-transform ${
+                        sortOrder === "asc" ? "rotate-180" : ""
+                      }`}
+                    >
+                      <path d="m3 16 4 4 4-4" />
+                      <path d="M7 20V4" />
+                      <path d="m21 8-4-4-4 4" />
+                      <path d="M17 4v16" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+
+          <AnimatePresence>
+            {isSearchOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search drinks..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full px-4 py-3 pl-10 text-sm border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg bg-transparent text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-indigo-400 dark:focus:border-indigo-500 transition-colors"
+                    autoFocus
+                  />
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                  </svg>
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300"
+                    >
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Content */}
-        {activeTab === "inventory" ? (
+        {activeTab === "shop" ? (
           <LayoutGroup>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
               {loading ? (
@@ -263,7 +440,7 @@ export default function HomePage() {
                 ))
               ) : (
                 <AnimatePresence>
-                  {drinks.map((d) => {
+                  {filteredAndSortedDrinks.map((d) => {
                     const isPending = pendingDrinkIds.has(d.id);
                     const outOfStock = d.stock <= 0;
                     return (
@@ -312,8 +489,8 @@ export default function HomePage() {
                         <h2 className="text-xl font-semibold mt-4 truncate text-neutral-900 dark:text-neutral-100">
                           {d.name}
                         </h2>
-                        <div className="mt-2 flex items-center justify-between">
-                          <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                        <div className="mt-3 flex items-center justify-between">
+                          <span className="text-3xl sm:text-4xl font-extrabold text-indigo-600 dark:text-indigo-400">
                             €{d.price.toFixed(2)}
                           </span>
                           <span
@@ -343,13 +520,15 @@ export default function HomePage() {
           <WishlistView />
         )}
 
-        {activeTab === "inventory" && !loading && drinks.length === 0 && (
+        {activeTab === "shop" && !loading && filteredAndSortedDrinks.length === 0 && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             className="mt-16 text-center text-sm text-neutral-500 dark:text-neutral-400"
           >
-            No drinks found. Seed the database or add new items.
+            {drinks.length === 0
+              ? "No drinks found. Seed the database or add new items."
+              : "No drinks match your search."}
           </motion.div>
         )}
       </div>
