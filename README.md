@@ -2,6 +2,8 @@
 
 A modern web application for managing and purchasing energy drinks. Track inventory, make purchases, manage payments, and handle restocking - all through an intuitive dashboard with smooth animations and responsive design.
 
+![Energy Stock Homepage](./public/homepage.png)
+
 ---
 
 ## Features
