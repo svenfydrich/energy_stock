@@ -282,6 +282,8 @@ export default function HomePage() {
             <button
               onClick={() => {
                 setActiveTab("wishlist");
+                setIsSearchOpen(false);
+                setSearchQuery("");
                 fetchWishlistCount();
               }}
               className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
