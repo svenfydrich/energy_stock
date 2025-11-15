@@ -109,7 +109,7 @@ const ErrorIcon = () => (
 const InfoIcon = () => (
   <span
     aria-hidden="true"
-    className="inline-block text-indigo-600 dark:text-indigo-400"
+    className="inline-block text-green-600 dark:text-green-400"
   >
     ⓘ
   </span>
@@ -260,7 +260,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 <div className="mt-2 flex gap-2">
                   <button
                     onClick={() => removeToast(toast.id)}
-                    className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition"
+                    className="text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition"
                   >
                     Close
                   </button>
@@ -270,7 +270,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                         removeToast(toast.id);
                         info("Issue acknowledged.");
                       }}
-                      className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition"
+                      className="text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition"
                     >
                       Okay
                     </button>

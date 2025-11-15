@@ -284,7 +284,14 @@ export default function WishlistAdminView(
                       <button
                         onClick={() => handleConvertClick(d.id, d.name)}
                         disabled={isPending}
-                        className="btn btn-primary flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                        className="btn flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32DE84] disabled:opacity-40 disabled:pointer-events-none"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
+                          backgroundSize: "200% 100%",
+                          color: "#fff",
+                          animation: "gradient-flow 4s linear infinite",
+                        }}
                       >
                         Add to Inventory
                       </button>
@@ -365,7 +372,7 @@ export default function WishlistAdminView(
                   onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
                   disabled={isConverting}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="0.00"
                 />
               </div>
@@ -386,7 +393,7 @@ export default function WishlistAdminView(
                   onChange={(e) => setStock(parseInt(e.target.value, 10) || 0)}
                   disabled={isConverting}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="0"
                 />
               </div>
@@ -396,7 +403,14 @@ export default function WishlistAdminView(
               <button
                 onClick={handleConvertConfirm}
                 disabled={isConverting || price <= 0 || stock < 0}
-                className="btn btn-primary flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                className="btn flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
+                  backgroundSize: "200% 100%",
+                  color: "#fff",
+                  animation: "gradient-flow 4s linear infinite",
+                }}
               >
                 {isConverting ? "Adding..." : "Add to Inventory"}
               </button>

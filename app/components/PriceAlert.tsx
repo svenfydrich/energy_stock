@@ -73,14 +73,14 @@ export function PriceAlert() {
           damping: 25,
           mass: 0.8,
         }}
-        className="relative w-full overflow-hidden py-2 mobile:py-1 z-40"
+        className="relative w-full overflow-hidden py-1 mobile:py-0.5 z-40"
       >
         {/* Animated Background */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899, #f97316, #eab308, #ec4899, #8b5cf6, #6366f1)",
+              "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #eafff4, #32de84, #229e5c, #6fffc2, #32de84)",
             backgroundSize: "200% 100%",
             animation: "gradient-flow 4s linear infinite",
           }}
@@ -97,11 +97,11 @@ export function PriceAlert() {
             repeat: Infinity,
             repeatDelay: 2,
           }}
-          className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent transform skew-x-12"
+          className="absolute inset-0 bg-linear-to-r from-transparent via-[#eafff4]/40 to-transparent transform skew-x-12"
         />
 
-        <div className="relative flex items-center text-white whitespace-nowrap">
-          <div className="flex items-center text-md mobile:text-xs p-3 mobile:px-2 mobile:py-1 w-full">
+        <div className="relative flex items-center text-black whitespace-nowrap">
+          <div className="flex items-center text-sm mobile:text-xs p-2 mobile:px-1 mobile:py-0.5 w-full">
             {/* Pulsing Prefix */}
             <motion.span
               animate={{

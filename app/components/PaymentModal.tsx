@@ -283,7 +283,7 @@ export default function PaymentModal({
                 className={`w-full px-4 py-3 border-2 border-dashed rounded-lg focus:outline-none focus:ring-2 transition-all ${
                   !customerName.trim()
                     ? "border-red-300/60 dark:border-red-700/60 focus:ring-red-500 focus:border-red-400/60 dark:focus:border-red-500/60 bg-red-50/30 dark:bg-red-950/10"
-                    : "border-neutral-300/40 dark:border-neutral-600/40 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 bg-transparent"
+                    : "border-neutral-300/40 dark:border-neutral-600/40 focus:ring-[#32DE84] focus:border-[#32DE84] dark:focus:border-[#32DE84] bg-transparent"
                 } dark:text-white`}
                 required
               />

@@ -2,11 +2,11 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
-    --foreground: #171717;
-    --accent: #6366f1;
-    --accent-muted: #818cf8;
-    --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6 55%, #ec4899);
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --accent: #32de84;
+    --accent-muted: #6fffc2;
+    --accent-gradient: linear-gradient(135deg, #32de84, #229e5c 55%, #6fffc2);
     --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 20px;
@@ -14,7 +14,7 @@
 
   .dark {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #b3ffb3;
   }
 
   body {
@@ -32,25 +32,15 @@
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
+    color: #32de84;
+    -webkit-text-fill-color: #32de84;
   }
 
   .animated-gradient-text {
-    background: linear-gradient(
-      90deg,
-      #6366f1,
-      #8b5cf6,
-      #ec4899,
-      #f97316,
-      #eab308,
-      #ec4899,
-      #8b5cf6,
-      #6366f1
-    );
+    background: linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84);
     background-size: 200% 100%;
-    -webkit-background-clip: text;
     background-clip: text;
+    -webkit-background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
     animation: gradient-flow 4s linear infinite;
@@ -78,11 +68,11 @@
     padding: 2px;
     background: linear-gradient(
       var(--card-angle),
-      #6366f1,
-      #8b5cf6 55%,
-      #ec4899
+      #32de84,
+      #229e5c 55%,
+      #6fffc2
     );
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 255, 0, 0.08);
     transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
     overflow: hidden;
   }
@@ -166,11 +156,11 @@
     padding: 2px;
     background: linear-gradient(
       var(--card-angle),
-      #6366f1,
-      #8b5cf6 55%,
-      #ec4899
+      #32de84,
+      #229e5c 55%,
+      #6fffc2
     );
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 255, 0, 0.08);
     transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
     overflow: hidden;
   }
@@ -213,7 +203,7 @@
     position: relative;
     border-radius: var(--radius-lg);
     padding: 2px;
-    background: linear-gradient(135deg, #10b981, #059669 55%, #047857);
+    background: linear-gradient(135deg, #32de84, #229e5c 55%, #6fffc2);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.25s, transform 0.25s, --card-angle 0.6s;
   }
@@ -224,16 +214,16 @@
     inset: 2px;
     border-radius: calc(var(--radius-lg) - 2px);
     background: linear-gradient(
-      rgba(16, 185, 129, 0.2),
-      rgba(5, 150, 105, 0.2)
+      rgba(50, 222, 132, 0.2),
+      rgba(111, 255, 194, 0.2)
     );
     z-index: 0;
   }
 
   .dark .add-drink-card::before {
     background: linear-gradient(
-      rgba(16, 185, 129, 0.15),
-      rgba(5, 150, 105, 0.15)
+      rgba(50, 222, 132, 0.15),
+      rgba(111, 255, 194, 0.15)
     );
     backdrop-filter: blur(12px) saturate(1.2);
     -webkit-backdrop-filter: blur(12px) saturate(1.2);

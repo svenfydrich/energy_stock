@@ -47,9 +47,7 @@ export default function AdminLoginPage() {
         className="card-no-shimmer bg-white dark:bg-neutral-900 p-8 w-full max-w-md"
       >
         <h1 className="text-3xl font-extrabold mb-2 text-center">
-          <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Admin Login
-          </span>
+          <span className="animated-gradient-text">Admin Login</span>
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-400 text-center mb-8">
           Enter your password to access the admin dashboard
@@ -70,7 +68,7 @@ export default function AdminLoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={isLoading}
-              className="w-full px-4 py-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full px-4 py-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 dark:focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               placeholder="Enter admin password"
             />
           </div>
@@ -78,7 +76,14 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={isLoading || !password}
-            className="btn btn-primary w-full text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+            className="btn w-full text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #eafff4, #32de84)",
+              backgroundSize: "200% 100%",
+              color: "#fff",
+              animation: "gradient-flow 4s linear infinite",
+            }}
           >
             {isLoading ? "Logging in..." : "Login"}
           </button>

@@ -194,9 +194,9 @@ export default function WishlistView() {
                 className="card bg-white dark:bg-neutral-900 p-5 flex flex-col h-full group relative cursor-pointer hover:scale-[1.02] transition-transform"
                 onClick={() => setIsAddModalOpen(true)}
               >
-                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/30 dark:to-purple-950/30 border-2 border-dashed border-indigo-300/40 dark:border-indigo-700/40 group-hover:border-indigo-400/60 dark:group-hover:border-indigo-600/60 transition-colors">
+                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-green-400/30 to-black/60 dark:from-green-900/40 dark:to-black/80 border-2 border-dashed border-green-400/40 dark:border-green-700/40 group-hover:border-green-500/60 dark:group-hover:border-green-600/60 transition-colors">
                   <div className="flex flex-col items-center gap-3">
-                    <div className="p-3 rounded-full bg-indigo-100/80 dark:bg-indigo-900/50 group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800/70 transition-colors">
+                    <div className="p-3 rounded-full bg-green-100/80 dark:bg-green-900/50 group-hover:bg-green-200 dark:group-hover:bg-green-800/70 transition-colors">
                       <svg
                         width="32"
                         height="32"
@@ -206,13 +206,13 @@ export default function WishlistView() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-indigo-600 dark:text-indigo-400"
+                        className="text-green-600 dark:text-green-400"
                       >
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />
                       </svg>
                     </div>
-                    <span className="text-base font-semibold text-neutral-700 dark:text-neutral-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <span className="text-base font-semibold text-green-700 dark:text-green-300 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                       Add to Wishlist
                     </span>
                   </div>
@@ -272,9 +272,9 @@ export default function WishlistView() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                         >
-                          <div className="flex items-center gap-2 text-sm font-medium text-indigo-700 dark:text-indigo-300">
+                          <div className="flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-300">
                             <motion.span
-                              className="inline-block h-3 w-3 rounded-full bg-indigo-500"
+                              className="inline-block h-3 w-3 rounded-full bg-green-500"
                               animate={{
                                 scale: [1, 0.7, 1],
                               }}
@@ -347,7 +347,7 @@ export default function WishlistView() {
                   }
                   disabled={isAdding}
                   required
-                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-green-300/40 dark:border-green-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-400/60 dark:focus:border-green-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="Enter drink name"
                 />
               </div>
@@ -370,7 +370,7 @@ export default function WishlistView() {
                     })
                   }
                   disabled={isAdding}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-green-300/40 dark:border-green-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-400/60 dark:focus:border-green-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="https://example.com/image.png"
                 />
               </div>
@@ -380,7 +380,14 @@ export default function WishlistView() {
               <button
                 onClick={handleAddWishlist}
                 disabled={isAdding || !newWishlistItem.name.trim()}
-                className="btn btn-primary flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                className="btn flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
+                  backgroundSize: "200% 100%",
+                  color: "#fff",
+                  animation: "gradient-flow 4s linear infinite",
+                }}
               >
                 {isAdding ? "Adding..." : "Add"}
               </button>
@@ -427,7 +434,7 @@ export default function WishlistView() {
               <button
                 onClick={handleDeleteCancel}
                 disabled={isDeleting}
-                className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400 disabled:opacity-40 disabled:pointer-events-none"
               >
                 Cancel
               </button>

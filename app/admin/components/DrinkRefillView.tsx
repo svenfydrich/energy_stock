@@ -292,7 +292,14 @@ export default function DrinkRefillView() {
       setDrinks((prev) => [data.drink, ...prev]);
 
       // Reset form and close modal
-      setNewDrink({ name: "", brand: "", stock: 0, price: 0, imageUrl: "", sugarFree: false });
+      setNewDrink({
+        name: "",
+        brand: "",
+        stock: 0,
+        price: 0,
+        imageUrl: "",
+        sugarFree: false,
+      });
       setIsAddModalOpen(false);
     } catch (e) {
       console.error(e);
@@ -303,7 +310,14 @@ export default function DrinkRefillView() {
   };
 
   const handleCancelAdd = () => {
-    setNewDrink({ name: "", brand: "", stock: 0, price: 0, imageUrl: "", sugarFree: false });
+    setNewDrink({
+      name: "",
+      brand: "",
+      stock: 0,
+      price: 0,
+      imageUrl: "",
+      sugarFree: false,
+    });
     setIsAddModalOpen(false);
   };
 
@@ -433,9 +447,9 @@ export default function DrinkRefillView() {
                 className="card bg-white text-neutral-900 p-5 flex flex-col h-full group relative cursor-pointer hover:scale-[1.02] transition-transform"
                 onClick={() => setIsAddModalOpen(true)}
               >
-                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/30 dark:to-purple-950/30 border-2 border-dashed border-indigo-300/40 dark:border-indigo-700/40 group-hover:border-indigo-400/60 dark:group-hover:border-indigo-600/60 transition-colors">
+                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-green-400/30 to-black/60 dark:from-green-900/40 dark:to-black/80 border-2 border-dashed border-green-400/40 dark:border-green-700/40 group-hover:border-green-500/60 dark:group-hover:border-green-600/60 transition-colors">
                   <div className="flex flex-col items-center gap-3">
-                    <div className="p-3 rounded-full bg-indigo-100/80 dark:bg-indigo-900/50 group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800/70 transition-colors">
+                    <div className="p-3 rounded-full bg-green-100/80 dark:bg-green-900/50 group-hover:bg-green-200 dark:group-hover:bg-green-800/70 transition-colors">
                       <svg
                         width="32"
                         height="32"
@@ -445,13 +459,13 @@ export default function DrinkRefillView() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-indigo-600 dark:text-indigo-400"
+                        className="text-green-600 dark:text-green-400"
                       >
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />
                       </svg>
                     </div>
-                    <span className="text-base font-semibold text-neutral-700 dark:text-neutral-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <span className="text-base font-semibold text-green-700 dark:text-green-300 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                       Add new drink
                     </span>
                   </div>
@@ -479,7 +493,7 @@ export default function DrinkRefillView() {
                           handleEditClick(d);
                         }}
                         disabled={isPending}
-                        className="p-2 rounded-lg border-2 border-dashed border-indigo-300/50 dark:border-indigo-600/50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-indigo-500/70 dark:hover:border-indigo-400/70 hover:bg-indigo-50/80 dark:hover:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="p-2 rounded-lg border-2 border-dashed border-[#32DE84]/70 dark:border-[#32DE84]/70 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-[#32DE84] dark:hover:border-[#32DE84] hover:bg-[#32DE84] hover:bg-opacity-10 dark:hover:bg-opacity-10 text-[#32DE84] dark:text-[#32DE84] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         aria-label="Edit drink"
                       >
                         <svg
@@ -558,7 +572,9 @@ export default function DrinkRefillView() {
                     </div>
                     <div className="mt-4">
                       <p className="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-                        {d.brand || 'Unknown'}
+                        <span style={{ color: "#32DE84" }}>
+                          {d.brand || "Unknown"}
+                        </span>
                       </p>
                       <h2 className="text-xl font-semibold mt-1 truncate text-neutral-800 dark:text-neutral-100">
                         {d.name}
@@ -603,7 +619,14 @@ export default function DrinkRefillView() {
                             !restockAmounts.get(d.id) ||
                             (restockAmounts.get(d.id) ?? 0) <= 0
                           }
-                          className="btn btn-primary text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none whitespace-nowrap px-2 sm:px-3 py-2 w-16 sm:w-20 shrink-0"
+                          className="btn text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32DE84] disabled:opacity-40 disabled:pointer-events-none whitespace-nowrap px-2 sm:px-3 py-2 w-16 sm:w-20 shrink-0"
+                          style={{
+                            background:
+                              "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
+                            backgroundSize: "200% 100%",
+                            color: "#fff",
+                            animation: "gradient-flow 4s linear infinite",
+                          }}
                         >
                           Restock
                         </button>
@@ -661,7 +684,7 @@ export default function DrinkRefillView() {
                   }
                   disabled={isAdding}
                   required
-                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-green-300/40 dark:border-green-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 dark:focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="Enter drink name"
                 />
               </div>
@@ -681,7 +704,7 @@ export default function DrinkRefillView() {
                     setNewDrink({ ...newDrink, brand: e.target.value })
                   }
                   disabled={isAdding}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 dark:focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="Enter brand name"
                 />
               </div>
@@ -708,7 +731,7 @@ export default function DrinkRefillView() {
                     }
                     disabled={isAdding}
                     required
-                    className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 dark:focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     placeholder="0"
                   />
                 </div>
@@ -734,7 +757,7 @@ export default function DrinkRefillView() {
                     }
                     disabled={isAdding}
                     required
-                    className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 dark:focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     placeholder="0.00"
                   />
                 </div>
@@ -755,7 +778,7 @@ export default function DrinkRefillView() {
                     setNewDrink({ ...newDrink, imageUrl: e.target.value })
                   }
                   disabled={isAdding}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 dark:focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="https://example.com/image.png"
                 />
               </div>
@@ -769,7 +792,7 @@ export default function DrinkRefillView() {
                     setNewDrink({ ...newDrink, sugarFree: e.target.checked })
                   }
                   disabled={isAdding}
-                  className="w-5 h-5 rounded border-2 border-neutral-300 dark:border-neutral-600 text-indigo-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  className="w-5 h-5 rounded border-2 border-[#32de84] dark:border-[#32de84] text-[#32de84] bg-[#32de84] focus:ring-2 focus:ring-[#32de84] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
                 />
                 <label
                   htmlFor="sugarFree"
@@ -784,7 +807,14 @@ export default function DrinkRefillView() {
               <button
                 onClick={handleAddDrink}
                 disabled={isAdding || !newDrink.name.trim()}
-                className="btn btn-primary flex-1 text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none py-2 sm:py-2"
+                className="btn flex-1 text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none py-2 sm:py-2"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
+                  backgroundSize: "200% 100%",
+                  color: "#fff",
+                  animation: "gradient-flow 4s linear infinite",
+                }}
               >
                 {isAdding ? "Adding..." : "Add"}
               </button>
@@ -834,7 +864,7 @@ export default function DrinkRefillView() {
                   }
                   disabled={isEditing}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Enter drink name"
                 />
               </div>
@@ -854,7 +884,7 @@ export default function DrinkRefillView() {
                     setEditingDrink({ ...editingDrink, brand: e.target.value })
                   }
                   disabled={isEditing}
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Enter brand name"
                 />
               </div>
@@ -881,7 +911,7 @@ export default function DrinkRefillView() {
                     }
                     disabled={isEditing}
                     required
-                    className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="0"
                   />
                 </div>
@@ -907,7 +937,7 @@ export default function DrinkRefillView() {
                     }
                     disabled={isEditing}
                     required
-                    className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="0.00"
                   />
                 </div>
@@ -931,7 +961,7 @@ export default function DrinkRefillView() {
                     })
                   }
                   disabled={isEditing}
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="https://example.com/image.png"
                 />
               </div>
@@ -942,10 +972,13 @@ export default function DrinkRefillView() {
                   type="checkbox"
                   checked={editingDrink.sugarFree}
                   onChange={(e) =>
-                    setEditingDrink({ ...editingDrink, sugarFree: e.target.checked })
+                    setEditingDrink({
+                      ...editingDrink,
+                      sugarFree: e.target.checked,
+                    })
                   }
                   disabled={isEditing}
-                  className="w-5 h-5 rounded border-2 border-neutral-300 dark:border-neutral-600 text-indigo-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  className="w-5 h-5 rounded border-2 border-neutral-300 dark:border-neutral-600 text-[#32DE84] focus:ring-2 focus:ring-[#32DE84] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
                 />
                 <label
                   htmlFor="edit-sugarFree"
@@ -960,7 +993,14 @@ export default function DrinkRefillView() {
               <button
                 onClick={handleEditDrink}
                 disabled={isEditing || !editingDrink.name.trim()}
-                className="btn btn-primary flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                className="btn flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32DE84] disabled:opacity-40 disabled:pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
+                  backgroundSize: "200% 100%",
+                  color: "#fff",
+                  animation: "gradient-flow 4s linear infinite",
+                }}
               >
                 {isEditing ? "Saving..." : "Save Changes"}
               </button>

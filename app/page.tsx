@@ -58,9 +58,7 @@ export default function HomePage() {
     new Set()
   );
   const [isRefreshing, startRefresh] = useTransition();
-  const [activeTab, setActiveTab] = useState<"shop" | "wishlist">(
-    "shop"
-  );
+  const [activeTab, setActiveTab] = useState<"shop" | "wishlist">("shop");
   const [paymentModal, setPaymentModal] = useState<{
     isOpen: boolean;
     drink: Drink | null;
@@ -69,7 +67,9 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
-  const [sugarFilter, setSugarFilter] = useState<"none" | "zero" | "sugary">("none");
+  const [sugarFilter, setSugarFilter] = useState<"none" | "zero" | "sugary">(
+    "none"
+  );
   const { success, error, info } = useToasts();
 
   const fetchDrinks = useCallback(async () => {
@@ -183,9 +183,10 @@ export default function HomePage() {
 
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      result = result.filter((drink) =>
-        drink.name.toLowerCase().includes(query) ||
-        drink.brand.toLowerCase().includes(query)
+      result = result.filter(
+        (drink) =>
+          drink.name.toLowerCase().includes(query) ||
+          drink.brand.toLowerCase().includes(query)
       );
     }
 
@@ -213,12 +214,12 @@ export default function HomePage() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
           <div className="text-center sm:text-left">
             <p className="text-xs sm:text-sm uppercase tracking-wider text-indigo-600 font-semibold">
-              {activeTab === "shop" ? "Shop" : "Wishlist"}
+              <span className="animated-gradient-text font-semibold">
+                {activeTab === "shop" ? "Shop" : "Wishlist"}
+              </span>
             </p>
             <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-extrabold animated-gradient-text leading-tight">
-              {activeTab === "shop"
-                ? "Fuel for victory"
-                : "Letters to Santa"}
+              {activeTab === "shop" ? "Fuel for victory" : "Letters to Santa"}
             </h2>
             <p className="mt-2 sm:mt-3 max-w-xl text-neutral-600 dark:text-neutral-300 text-sm md:text-base">
               {activeTab === "shop"
@@ -229,7 +230,7 @@ export default function HomePage() {
           {activeTab === "shop" && (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-end w-full sm:w-auto">
               <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
-                <span className="text-xs uppercase tracking-wide text-indigo-600">
+                <span className="text-xs uppercase tracking-wide text-[#32de84]">
                   Total Items
                 </span>
                 <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
@@ -237,7 +238,7 @@ export default function HomePage() {
                 </span>
               </div>
               <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
-                <span className="text-xs uppercase tracking-wide text-indigo-600">
+                <span className="text-xs uppercase tracking-wide text-[#32de84]">
                   Total Stock
                 </span>
                 <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
@@ -245,7 +246,7 @@ export default function HomePage() {
                 </span>
               </div>
               <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-5 py-4 flex flex-col items-start min-w-[12rem]">
-                <span className="text-xs uppercase tracking-wide text-indigo-600">
+                <span className="text-xs uppercase tracking-wide text-[#32de84]">
                   Wishlisted Items
                 </span>
                 <span className="text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
@@ -254,7 +255,7 @@ export default function HomePage() {
               </div>
               <button
                 onClick={hardRefresh}
-                className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-6 py-3 sm:py-4 flex flex-col items-center justify-center min-w-32 sm:min-w-40 text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:scale-105 group"
+                className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-6 py-3 sm:py-4 flex flex-col items-center justify-center min-w-32 sm:min-w-40 text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:scale-105 group"
                 disabled={isRefreshing}
               >
                 <svg
@@ -266,7 +267,7 @@ export default function HomePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className={`mb-1 text-indigo-600 dark:text-indigo-400 ${
+                  className={`mb-1 text-[#32de84] dark:text-[#32de84] ${
                     isRefreshing
                       ? "animate-spin"
                       : "group-hover:rotate-180 transition-transform duration-500"
@@ -287,11 +288,13 @@ export default function HomePage() {
           <div className="flex gap-1 sm:gap-2 border-b border-neutral-200 dark:border-neutral-800">
             <button
               onClick={() => setActiveTab("shop")}
-              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
-                activeTab === "shop"
-                  ? "border-indigo-600 text-indigo-600"
-                  : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
-              }`}
+              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${(
+                <span className="animated-gradient-text">
+                  {activeTab === "shop"
+                    ? "Fuel for victory"
+                    : "Letters to Santa"}
+                </span>
+              )}`}
             >
               Shop
             </button>
@@ -304,7 +307,7 @@ export default function HomePage() {
               }}
               className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
                 activeTab === "wishlist"
-                  ? "border-indigo-600 text-indigo-600"
+                  ? "border-[#32de84] text-[#32de84]"
                   : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
               }`}
             >
@@ -315,9 +318,9 @@ export default function HomePage() {
               <div className="ml-auto flex gap-2 items-center">
                 <button
                   onClick={toggleSearch}
-                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 ${
+                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] ${
                     isSearchOpen
-                      ? "border-indigo-600 text-indigo-600"
+                      ? "border-[#32de84] text-[#32de84]"
                       : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
                   }`}
                   title="Search"
@@ -339,9 +342,9 @@ export default function HomePage() {
                 </button>
                 <button
                   onClick={toggleSugarFilter}
-                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 ${
+                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] ${
                     sugarFilter !== "none"
-                      ? "border-indigo-600 text-indigo-600"
+                      ? "border-[#32de84] text-[#32de84]"
                       : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
                   }`}
                   title={
@@ -374,9 +377,9 @@ export default function HomePage() {
                 </button>
                 <button
                   onClick={toggleSort}
-                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 ${
+                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] ${
                     sortOrder
-                      ? "border-indigo-600 text-indigo-600"
+                      ? "border-[#32de84] text-[#32de84]"
                       : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
                   }`}
                   title={
@@ -442,7 +445,7 @@ export default function HomePage() {
                     placeholder="Search drinks..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-3 pl-10 text-sm border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg bg-transparent text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-indigo-400 dark:focus:border-indigo-500 transition-colors"
+                    className="w-full px-4 py-3 pl-10 text-sm border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg bg-transparent text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#32de84] dark:focus:border-[#32de84] transition-colors"
                     autoFocus
                   />
                   <svg
@@ -547,15 +550,21 @@ export default function HomePage() {
                           )}
                         </div>
                         <div className="mt-4">
-                          <p className="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-                            {d.brand || 'Unknown'}
+                          <p
+                            className="text-xs uppercase tracking-wider font-semibold"
+                            style={{ color: "#32de84" }}
+                          >
+                            {d.brand || "Unknown"}
                           </p>
                           <h2 className="text-xl font-semibold mt-1 truncate text-neutral-900 dark:text-neutral-100">
                             {d.name}
                           </h2>
                         </div>
                         <div className="mt-3 flex items-center justify-between">
-                          <span className="text-3xl sm:text-4xl font-extrabold text-indigo-600 dark:text-indigo-400">
+                          <span
+                            className="text-3xl sm:text-4xl font-extrabold"
+                            style={{ color: "#32de84" }}
+                          >
                             €{d.price.toFixed(2)}
                           </span>
                           <span
@@ -569,7 +578,14 @@ export default function HomePage() {
                           <button
                             onClick={() => buyDrink(d.id)}
                             disabled={outOfStock || isPending}
-                            className={`${BUTTON_BASE} btn-primary w-full`}
+                            className={`${BUTTON_BASE} w-full text-white font-extrabold text-base sm:text-lg`}
+                            style={{
+                              background:
+                                "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
+                              backgroundSize: "200% 100%",
+                              color: "#fff",
+                              animation: "gradient-flow 4s linear infinite",
+                            }}
                           >
                             {outOfStock ? "Out of Stock" : "Buy"}
                           </button>
@@ -585,17 +601,19 @@ export default function HomePage() {
           <WishlistView />
         )}
 
-        {activeTab === "shop" && !loading && filteredAndSortedDrinks.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-16 text-center text-sm text-neutral-500 dark:text-neutral-400"
-          >
-            {drinks.length === 0
-              ? "No drinks found. Seed the database or add new items."
-              : "No drinks match your search."}
-          </motion.div>
-        )}
+        {activeTab === "shop" &&
+          !loading &&
+          filteredAndSortedDrinks.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-16 text-center text-sm text-neutral-500 dark:text-neutral-400"
+            >
+              {drinks.length === 0
+                ? "No drinks found. Seed the database or add new items."
+                : "No drinks match your search."}
+            </motion.div>
+          )}
       </div>
 
       {/* Payment Modal */}

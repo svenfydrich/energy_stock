@@ -121,9 +121,7 @@ export default function AdminDashboard() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2">
-              <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Admin Dashboard
-              </span>
+              <span className="animated-gradient-text">Admin Dashboard</span>
             </h1>
             <p className="text-sm text-neutral-600 dark:text-neutral-400">
               Manage inventory and view purchase statistics
@@ -143,7 +141,7 @@ export default function AdminDashboard() {
             onClick={() => setActiveTab("stats")}
             className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg whitespace-nowrap ${
               activeTab === "stats"
-                ? "border-indigo-600 text-indigo-600"
+                ? "border-[#32de84] text-[#32de84]"
                 : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
@@ -153,7 +151,7 @@ export default function AdminDashboard() {
             onClick={() => setActiveTab("refill")}
             className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg whitespace-nowrap ${
               activeTab === "refill"
-                ? "border-indigo-600 text-indigo-600"
+                ? "border-[#32de84] text-[#32de84]"
                 : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
@@ -164,7 +162,7 @@ export default function AdminDashboard() {
             onClick={() => setActiveTab("wishlist")}
             className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg whitespace-nowrap ${
               activeTab === "wishlist"
-                ? "border-indigo-600 text-indigo-600"
+                ? "border-[#32de84] text-[#32de84]"
                 : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
@@ -199,8 +197,15 @@ export default function AdminDashboard() {
                     className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
-                      <span className="hidden sm:inline">Total Purchases</span>
-                      <span className="sm:hidden">Total</span>
+                      <span
+                        className="hidden sm:inline"
+                        style={{ color: "#32DE84" }}
+                      >
+                        Total Purchases
+                      </span>
+                      <span className="sm:hidden" style={{ color: "#32DE84" }}>
+                        Total
+                      </span>
                     </p>
                     <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                       {stats.totalPurchases}
@@ -214,7 +219,7 @@ export default function AdminDashboard() {
                     className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
-                      Today
+                      <span style={{ color: "#32DE84" }}>Today</span>
                     </p>
                     <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                       {stats.purchasesToday}
@@ -228,8 +233,15 @@ export default function AdminDashboard() {
                     className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
-                      <span className="hidden sm:inline">This Week</span>
-                      <span className="sm:hidden">Week</span>
+                      <span
+                        className="hidden sm:inline"
+                        style={{ color: "#32DE84" }}
+                      >
+                        This Week
+                      </span>
+                      <span className="sm:hidden" style={{ color: "#32DE84" }}>
+                        Week
+                      </span>
                     </p>
                     <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                       {stats.purchasesThisWeek}
@@ -243,8 +255,15 @@ export default function AdminDashboard() {
                     className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
-                      <span className="hidden sm:inline">This Month</span>
-                      <span className="sm:hidden">Month</span>
+                      <span
+                        className="hidden sm:inline"
+                        style={{ color: "#32DE84" }}
+                      >
+                        This Month
+                      </span>
+                      <span className="sm:hidden" style={{ color: "#32DE84" }}>
+                        Month
+                      </span>
                     </p>
                     <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                       {stats.purchasesThisMonth}
@@ -269,11 +288,13 @@ export default function AdminDashboard() {
                         {stats.topDrinks.map((drink, index) => (
                           <div
                             key={drink.drinkId}
-                            className="flex items-center justify-between p-2 sm:p-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 hover:border-indigo-400/60 dark:hover:border-indigo-500/60 transition-colors"
+                            className="flex items-center justify-between p-2 sm:p-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 hover:border-[#32DE84] focus:border-[#32DE84] transition-colors"
                           >
                             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                               <span className="text-xs sm:text-sm font-semibold text-indigo-600 w-4 sm:w-6 shrink-0">
-                                #{index + 1}
+                                <span style={{ color: "#32DE84" }}>
+                                  #{index + 1}
+                                </span>
                               </span>
                               <span className="text-xs sm:text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
                                 {drink.drinkName}
@@ -310,7 +331,7 @@ export default function AdminDashboard() {
                         {stats.recentPurchases.map((purchase) => (
                           <div
                             key={purchase.id}
-                            className="p-2 sm:p-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 hover:border-indigo-400/60 dark:hover:border-indigo-500/60 transition-colors"
+                            className="p-2 sm:p-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 hover:border-[#32DE84] focus:border-[#32DE84] transition-colors"
                           >
                             <div>
                               <p className="text-xs sm:text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">

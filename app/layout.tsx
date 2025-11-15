@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} font-display antialiased min-h-screen bg-gradient-to-br from-indigo-50/80 via-purple-50/60 via-pink-50/70 via-orange-50/60 to-yellow-50/80 dark:from-neutral-950 dark:via-indigo-950/40 dark:via-purple-950/60 dark:via-pink-950/50 dark:to-orange-950/40 text-neutral-800 dark:text-neutral-100 selection:bg-indigo-300/60 selection:text-indigo-900`}
+        className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} font-display antialiased min-h-screen bg-gradient-to-br from-green-900/80 via-black/80 to-green-900/80 dark:from-black dark:via-green-900/60 dark:to-green-900/80 text-neutral-100 dark:text-green-100 selection:bg-green-300/60 selection:text-green-900`}
         suppressHydrationWarning
       >
         <LaunchAnimation />
@@ -48,11 +48,11 @@ export default function RootLayout({
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 overflow-hidden"
               >
-                <div className="absolute -top-32 -left-32 h-80 w-80 rounded-full bg-indigo-400/60 blur-3xl dark:bg-indigo-500/30" />
-                <div className="absolute top-1/2 -right-24 h-96 w-96 rounded-full bg-purple-400/60 blur-3xl dark:bg-purple-500/30" />
-                <div className="absolute bottom-0 left-1/2 h-64 w-64 rounded-full bg-pink-400/50 blur-3xl dark:bg-pink-500/20" />
-                <div className="absolute top-1/4 left-1/3 h-72 w-72 rounded-full bg-orange-400/40 blur-3xl dark:bg-orange-500/20" />
-                <div className="absolute bottom-1/4 right-1/3 h-80 w-80 rounded-full bg-yellow-400/35 blur-3xl dark:bg-yellow-500/15" />
+                <div className="absolute -top-32 -left-32 h-80 w-80 rounded-full bg-green-400/60 blur-3xl dark:bg-green-500/30" />
+                <div className="absolute top-1/2 -right-24 h-96 w-96 rounded-full bg-green-700/60 blur-3xl dark:bg-green-800/30" />
+                <div className="absolute bottom-0 left-1/2 h-64 w-64 rounded-full bg-green-500/40 blur-3xl dark:bg-green-700/20" />
+                <div className="absolute top-1/4 left-1/3 h-72 w-72 rounded-full bg-green-600/40 blur-3xl dark:bg-green-800/20" />
+                <div className="absolute bottom-1/4 right-1/3 h-80 w-80 rounded-full bg-green-400/35 blur-3xl dark:bg-green-700/15" />
               </div>
               <header className="sticky top-0 z-50 w-full py-4 sm:py-6 px-4 lg:px-10 flex items-center justify-between bg-white/60 dark:bg-neutral-950/60 backdrop-blur-sm border-b border-neutral-200/30 dark:border-neutral-800/30">
                 <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight flex items-center cursor-pointer">
