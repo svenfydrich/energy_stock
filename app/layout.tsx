@@ -64,10 +64,10 @@ export default function RootLayout({
                   <a href="/">
                     <Image
                       src="/logo.png"
-                      alt="Kodee"
+                      alt="Logo"
                       width={100}
                       height={100}
-                      className="mx-0 h-12 w-12 sm:h-16 sm:w-16 inline-block"
+                      className="mx-2 h-10 w-10 sm:h-10 sm:w-10 inline-block"
                       priority
                     />
                   </a>
