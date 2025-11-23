@@ -216,7 +216,7 @@ export default function WishlistAdminView(
         </div>
         <button
           onClick={fetchWishlist}
-          className="btn btn-outline text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 px-3 py-2 sm:px-4 sm:py-2 self-start sm:self-auto"
+          className="btn btn-outline text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 px-3 py-2 sm:px-4 sm:py-2 self-start sm:self-auto rounded-full"
         >
           <span className="hidden sm:inline">Refresh</span>
           <span className="sm:hidden">↻</span>
@@ -280,41 +280,21 @@ export default function WishlistAdminView(
                       {d.name}
                     </h2>
 
-                    <div className="mt-5 flex gap-2">
+                    <div className="mt-5 flex flex-col gap-2 items-center">
                       <button
                         onClick={() => handleConvertClick(d.id, d.name)}
                         disabled={isPending}
-                        className="btn flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32DE84] disabled:opacity-40 disabled:pointer-events-none"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
-                          backgroundSize: "200% 100%",
-                          color: "#fff",
-                          animation: "gradient-flow 4s linear infinite",
-                        }}
+                        className="btn px-6 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32DE84] disabled:opacity-40 disabled:pointer-events-none rounded-full"
+                        style={{ backgroundColor: '#32de84', color: '#fff', boxShadow: 'none', animation: 'none', transition: 'none' }}
                       >
                         Add to Inventory
                       </button>
                       <button
                         onClick={() => handleDeleteClick(d.id, d.name)}
                         disabled={isPending}
-                        className="p-2 w-12 h-10 flex items-center justify-center rounded-lg border-2 border-dashed border-neutral-300/50 dark:border-neutral-600/50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-red-400/70 dark:hover:border-red-500/70 hover:bg-red-50/80 dark:hover:bg-red-950/30 text-neutral-600 dark:text-neutral-400 hover:text-red-600 dark:hover:text-red-400 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none"
-                        title="Delete wishlist item"
+                        className="btn bg-red-500 hover:bg-red-600 text-white border-red-500 hover:border-red-600 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none px-4 py-2 rounded-full"
                       >
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
+                        Delete
                       </button>
                     </div>
                   </motion.div>

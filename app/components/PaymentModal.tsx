@@ -158,16 +158,16 @@ export default function PaymentModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
+        className="card-black bg-black p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+          <h2 className="text-2xl font-bold text-white">
             Complete Payment
           </h2>
           <button
             onClick={onClose}
-            className="text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+            className="text-neutral-400 hover:text-neutral-200"
             aria-label="Close"
           >
             <svg
@@ -187,58 +187,58 @@ export default function PaymentModal({
         </div>
 
         <div className="mb-4">
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
-            Item: <strong>{drink.name}</strong>
+          <p className="text-sm text-neutral-300">
+            Item: <strong className="text-white">{drink.name}</strong>
           </p>
-          <p className="text-lg font-bold text-neutral-900 dark:text-neutral-100 mt-1">
+          <p className="text-lg font-bold text-white mt-1">
             €{drink.price.toFixed(2)}
           </p>
         </div>
 
         {paymentMethod === "bank" ? (
           <div>
-            <div className="bg-neutral-50 dark:bg-neutral-900 p-4 rounded-lg mb-4">
-              <h3 className="font-semibold mb-3 text-neutral-900 dark:text-neutral-100">
+            <div className="bg-neutral-900 p-4 rounded-lg mb-4 border border-neutral-800">
+              <h3 className="font-semibold mb-3 text-white">
                 Bank Transfer Details
               </h3>
               {bankDetails && (
                 <div className="space-y-2 text-sm">
                   <div>
-                    <span className="text-neutral-600 dark:text-neutral-400">
+                    <span className="text-neutral-400">
                       Account Holder:
                     </span>{" "}
-                    <strong className="text-neutral-900 dark:text-neutral-100">
+                    <strong className="text-white">
                       {bankDetails.accountHolder}
                     </strong>
                   </div>
                   <div>
-                    <span className="text-neutral-600 dark:text-neutral-400">
+                    <span className="text-neutral-400">
                       IBAN:
                     </span>{" "}
-                    <strong className="text-neutral-900 dark:text-neutral-100 font-mono">
+                    <strong className="text-white font-mono">
                       {bankDetails.iban}
                     </strong>
                   </div>
                   <div>
-                    <span className="text-neutral-600 dark:text-neutral-400">
+                    <span className="text-neutral-400">
                       BIC:
                     </span>{" "}
-                    <strong className="text-neutral-900 dark:text-neutral-100 font-mono">
+                    <strong className="text-white font-mono">
                       {bankDetails.bic}
                     </strong>
                   </div>
                   <div>
-                    <span className="text-neutral-600 dark:text-neutral-400">
+                    <span className="text-neutral-400">
                       Amount:
                     </span>{" "}
-                    <strong className="text-neutral-900 dark:text-neutral-100">
+                    <strong className="text-white">
                       €{bankDetails.amount} {bankDetails.currency}
                     </strong>
                   </div>
                 </div>
               )}
             </div>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-4">
+            <p className="text-xs text-neutral-400 mb-4">
               Please transfer the amount to the account above, then confirm your
               purchase below.
             </p>
@@ -263,14 +263,14 @@ export default function PaymentModal({
           </div>
         ) : (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold mb-4 text-neutral-900 dark:text-neutral-100">
+            <h3 className="text-lg font-semibold mb-4 text-white">
               Choose Payment Method
             </h3>
 
             <div className="mb-6">
               <label
                 htmlFor="customerName"
-                className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
+                className="block text-sm font-semibold text-neutral-300 mb-2"
               >
                 Your Name <span className="text-red-500">*</span>
               </label>
@@ -280,15 +280,15 @@ export default function PaymentModal({
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="Enter your name (required)"
-                className={`w-full px-4 py-3 border-2 border-dashed rounded-lg focus:outline-none focus:ring-2 transition-all ${
+                className={`w-full px-4 py-3 border-2 border-dashed rounded-lg focus:outline-none focus:ring-2 transition-all text-white ${
                   !customerName.trim()
-                    ? "border-red-300/60 dark:border-red-700/60 focus:ring-red-500 focus:border-red-400/60 dark:focus:border-red-500/60 bg-red-50/30 dark:bg-red-950/10"
-                    : "border-neutral-300/40 dark:border-neutral-600/40 focus:ring-[#32DE84] focus:border-[#32DE84] dark:focus:border-[#32DE84] bg-transparent"
-                } dark:text-white`}
+                    ? "border-red-500/60 focus:ring-red-500 focus:border-red-500/60 bg-red-950/20"
+                    : "border-neutral-600/40 focus:ring-[#32DE84] focus:border-[#32DE84] bg-transparent"
+                }`}
                 required
               />
               {!customerName.trim() && (
-                <p className="mt-2 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                <p className="mt-2 text-xs text-red-400 flex items-center gap-1">
                   <svg
                     width="12"
                     height="12"
@@ -348,13 +348,13 @@ export default function PaymentModal({
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-sm"
+              className="card-black bg-black p-6 w-full max-w-sm"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
+              <h3 className="text-xl font-bold mb-4 text-white">
                 Confirm Purchase
               </h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
+              <p className="text-sm text-neutral-300 mb-6">
                 I confirm that I have paid{" "}
                 <strong>€{drink.price.toFixed(2)}</strong> to{" "}
                 <strong>Michael Flathe</strong> via{" "}

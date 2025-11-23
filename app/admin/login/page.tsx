@@ -46,8 +46,8 @@ export default function AdminLoginPage() {
         animate={{ opacity: 1, y: 0 }}
         className="card-no-shimmer bg-white dark:bg-neutral-900 p-8 w-full max-w-md"
       >
-        <h1 className="text-3xl font-extrabold mb-2 text-center">
-          <span className="animated-gradient-text">Admin Login</span>
+        <h1 className="text-3xl font-extrabold mb-2 text-center" style={{ color: '#32de84' }}>
+          Admin Login
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-400 text-center mb-8">
           Enter your password to access the admin dashboard
@@ -73,20 +73,16 @@ export default function AdminLoginPage() {
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={isLoading || !password}
-            className="btn w-full text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #eafff4, #32de84)",
-              backgroundSize: "200% 100%",
-              color: "#fff",
-              animation: "gradient-flow 4s linear infinite",
-            }}
-          >
-            {isLoading ? "Logging in..." : "Login"}
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={isLoading || !password}
+              className="px-7 py-2 rounded-full border border-black text-black text-lg font-semibold disabled:opacity-40 disabled:pointer-events-none"
+              style={{ backgroundColor: '#32de84', boxShadow: 'none', animation: 'none', transition: 'none' }}
+            >
+              {isLoading ? "Logging in..." : "Login"}
+            </button>
+          </div>
         </form>
       </motion.div>
     </div>

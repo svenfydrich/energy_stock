@@ -411,7 +411,7 @@ export default function DrinkRefillView() {
         <div className="flex gap-2 w-full sm:w-auto">
           <button
             onClick={fetchDrinks}
-            className="btn btn-outline text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 px-3 py-2 sm:px-4 sm:py-2 flex-1 sm:flex-initial"
+            className="btn btn-outline text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 px-3 py-2 sm:px-4 sm:py-2 flex-1 sm:flex-initial rounded-full"
           >
             <span className="hidden sm:inline">Refresh</span>
             <span className="sm:hidden">↻</span>
@@ -419,7 +419,7 @@ export default function DrinkRefillView() {
           <button
             onClick={handleResetClick}
             disabled={isResetting}
-            className="btn bg-red-500 hover:bg-red-600 text-white border-red-500 hover:border-red-600 text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none px-3 py-2 sm:px-4 sm:py-2 flex-1 sm:flex-initial"
+            className="btn bg-red-500 hover:bg-red-600 text-white border-red-500 hover:border-red-600 text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none px-3 py-2 sm:px-4 sm:py-2 flex-1 sm:flex-initial rounded-full"
           >
             <span className="hidden sm:inline">
               {isResetting ? "Resetting..." : "Reset Stock"}
@@ -444,10 +444,10 @@ export default function DrinkRefillView() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className="card bg-white text-neutral-900 p-5 flex flex-col h-full group relative cursor-pointer hover:scale-[1.02] transition-transform"
+                className="card p-5 flex flex-col h-full group relative cursor-pointer hover:scale-[1.02] transition-transform"
                 onClick={() => setIsAddModalOpen(true)}
               >
-                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-green-400/30 to-black/60 dark:from-green-900/40 dark:to-black/80 border-2 border-dashed border-green-400/40 dark:border-green-700/40 group-hover:border-green-500/60 dark:group-hover:border-green-600/60 transition-colors">
+                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-linear-to-br from-green-400/30 to-black/60 dark:from-green-900/40 dark:to-black/80 border-2 border-dashed border-green-400/40 dark:border-green-700/40 group-hover:border-green-500/60 dark:group-hover:border-green-600/60 transition-colors">
                   <div className="flex flex-col items-center gap-3">
                     <div className="p-3 rounded-full bg-green-100/80 dark:bg-green-900/50 group-hover:bg-green-200 dark:group-hover:bg-green-800/70 transition-colors">
                       <svg
@@ -482,7 +482,7 @@ export default function DrinkRefillView() {
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    className="card-no-shimmer bg-white text-neutral-900 p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
+                    className="card-no-shimmer p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
                   >
                     {/* Action Buttons */}
                     <div className="absolute top-3 right-3 z-10 flex gap-2">
@@ -493,7 +493,8 @@ export default function DrinkRefillView() {
                           handleEditClick(d);
                         }}
                         disabled={isPending}
-                        className="p-2 rounded-lg border-2 border-dashed border-[#32DE84]/70 dark:border-[#32DE84]/70 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-[#32DE84] dark:hover:border-[#32DE84] hover:bg-[#32DE84] hover:bg-opacity-10 dark:hover:bg-opacity-10 text-[#32DE84] dark:text-[#32DE84] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="buy-btn w-10 h-10 flex items-center justify-center rounded-full border border-black text-black text-lg font-semibold disabled:opacity-40 disabled:pointer-events-none shadow-none"
+                        style={{ boxShadow: 'none', animation: 'none', transition: 'none' }}
                         aria-label="Edit drink"
                       >
                         <svg
@@ -518,7 +519,8 @@ export default function DrinkRefillView() {
                           handleDeleteClick(d.id, d.name);
                         }}
                         disabled={isPending}
-                        className="p-2 rounded-lg border-2 border-dashed border-neutral-300/50 dark:border-neutral-600/50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-red-400/70 dark:hover:border-red-500/70 hover:bg-red-50/80 dark:hover:bg-red-950/30 text-neutral-600 dark:text-neutral-400 hover:text-red-600 dark:hover:text-red-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="buy-btn w-10 h-10 flex items-center justify-center rounded-full border border-black text-black text-lg font-semibold disabled:opacity-40 disabled:pointer-events-none shadow-none"
+                        style={{ boxShadow: 'none', animation: 'none', transition: 'none' }}
                         aria-label="Delete drink"
                       >
                         <svg
@@ -605,7 +607,7 @@ export default function DrinkRefillView() {
                           }
                           disabled={isPending}
                           placeholder="Amount"
-                          className="flex-1 min-w-0 px-3 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400/60 dark:focus:border-indigo-500/60 disabled:opacity-50 disabled:cursor-not-allowed text-sm transition-colors"
+                          className="flex-1 min-w-0 px-3 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 dark:focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed text-sm transition-colors"
                         />
                         <button
                           onClick={() => {
@@ -619,14 +621,8 @@ export default function DrinkRefillView() {
                             !restockAmounts.get(d.id) ||
                             (restockAmounts.get(d.id) ?? 0) <= 0
                           }
-                          className="btn text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32DE84] disabled:opacity-40 disabled:pointer-events-none whitespace-nowrap px-2 sm:px-3 py-2 w-16 sm:w-20 shrink-0"
-                          style={{
-                            background:
-                              "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
-                            backgroundSize: "200% 100%",
-                            color: "#fff",
-                            animation: "gradient-flow 4s linear infinite",
-                          }}
+                          className="btn text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none whitespace-nowrap px-2 sm:px-3 py-2 w-16 sm:w-20 shrink-0 rounded-full bg-[#32de84] text-white border-none shadow-none"
+                          style={{ boxShadow: 'none', animation: 'none', transition: 'none' }}
                         >
                           Restock
                         </button>
@@ -807,21 +803,16 @@ export default function DrinkRefillView() {
               <button
                 onClick={handleAddDrink}
                 disabled={isAdding || !newDrink.name.trim()}
-                className="btn flex-1 text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none py-2 sm:py-2"
-                style={{
-                  background:
-                    "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
-                  backgroundSize: "200% 100%",
-                  color: "#fff",
-                  animation: "gradient-flow 4s linear infinite",
-                }}
+                className="btn flex-1 text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none py-2 sm:py-2 rounded-full bg-[#32de84] text-white border-none shadow-none"
+                style={{ boxShadow: 'none', animation: 'none', transition: 'none' }}
               >
                 {isAdding ? "Adding..." : "Add"}
               </button>
               <button
                 onClick={handleCancelAdd}
                 disabled={isAdding}
-                className="btn btn-outline flex-1 text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none py-2 sm:py-2"
+                className="btn btn-outline flex-1 text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-40 disabled:pointer-events-none py-2 sm:py-2 rounded-full border shadow-none"
+                style={{ boxShadow: 'none', animation: 'none', transition: 'none' }}
               >
                 Cancel
               </button>
@@ -993,21 +984,16 @@ export default function DrinkRefillView() {
               <button
                 onClick={handleEditDrink}
                 disabled={isEditing || !editingDrink.name.trim()}
-                className="btn flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32DE84] disabled:opacity-40 disabled:pointer-events-none"
-                style={{
-                  background:
-                    "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
-                  backgroundSize: "200% 100%",
-                  color: "#fff",
-                  animation: "gradient-flow 4s linear infinite",
-                }}
+                className="btn flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none rounded-full bg-[#32de84] text-white border-none shadow-none py-2"
+                style={{ boxShadow: 'none', animation: 'none', transition: 'none' }}
               >
                 {isEditing ? "Saving..." : "Save Changes"}
               </button>
               <button
                 onClick={handleCancelEdit}
                 disabled={isEditing}
-                className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-40 disabled:pointer-events-none rounded-full border shadow-none py-2"
+                style={{ boxShadow: 'none', animation: 'none', transition: 'none' }}
               >
                 Cancel
               </button>
@@ -1041,14 +1027,16 @@ export default function DrinkRefillView() {
               <button
                 onClick={handleDeleteConfirm}
                 disabled={isDeleting}
-                className="btn btn-primary flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none bg-red-600 hover:bg-red-700"
+                className="btn bg-red-500 hover:bg-red-600 text-white border-red-500 hover:border-red-600 flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none rounded-full border shadow-none py-2"
+                style={{ boxShadow: 'none', animation: 'none', transition: 'none' }}
               >
                 {isDeleting ? "Deleting..." : "Delete"}
               </button>
               <button
                 onClick={handleDeleteCancel}
                 disabled={isDeleting}
-                className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-40 disabled:pointer-events-none rounded-full border shadow-none py-2"
+                style={{ boxShadow: 'none', animation: 'none', transition: 'none' }}
               >
                 Cancel
               </button>

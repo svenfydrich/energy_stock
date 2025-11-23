@@ -376,25 +376,20 @@ export default function WishlistView() {
               </div>
             </div>
 
-            <div className="flex gap-3 mt-6">
+            <div className="flex justify-between gap-3 mt-6">
               <button
                 onClick={handleAddWishlist}
                 disabled={isAdding || !newWishlistItem.name.trim()}
-                className="btn flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none"
-                style={{
-                  background:
-                    "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
-                  backgroundSize: "200% 100%",
-                  color: "#fff",
-                  animation: "gradient-flow 4s linear infinite",
-                }}
+                className="flex-1 px-7 py-2 rounded-full border border-black text-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none shadow-none"
+                style={{ backgroundColor: '#32de84' }}
               >
                 {isAdding ? "Adding..." : "Add"}
               </button>
               <button
                 onClick={handleCancelAdd}
                 disabled={isAdding}
-                className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
+                className="flex-1 px-7 py-2 rounded-full border border-black text-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none shadow-none"
+                style={{ background: '#000000', color: '#32de84', boxShadow: 'none' }}
               >
                 Cancel
               </button>

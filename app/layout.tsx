@@ -1,26 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "./components/ToastProvider";
 import { ThemeProvider } from "./components/ThemeProvider";
-import { PriceAlert } from "./components/PriceAlert";
+import { AnimatedBar } from "./components/AnimatedBar";
 import LaunchAnimation from "./components/LaunchAnimation";
 import Image from "next/image";
+import Link from "next/link";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const displayFont = Plus_Jakarta_Sans({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -36,32 +26,26 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} font-display antialiased min-h-screen bg-gradient-to-br from-green-900/80 via-black/80 to-green-900/80 dark:from-black dark:via-green-900/60 dark:to-green-900/80 text-neutral-100 dark:text-green-100 selection:bg-green-300/60 selection:text-green-900`}
+        className={`${jetbrainsMono.variable} font-mono antialiased min-h-screen text-neutral-100 dark:text-green-100 selection:bg-green-300/60 selection:text-green-900`}
+        style={{ 
+          background: 'linear-gradient(to bottom, #000000 0%, #000000 10%, #32de84 70%, #000000 90%, #000000 100%)',
+          backgroundColor: '#000000'
+        }}
         suppressHydrationWarning
       >
         <LaunchAnimation />
         <ThemeProvider>
           <ToastProvider>
             <div className="relative isolate min-h-screen flex flex-col">
-              <PriceAlert />
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 overflow-hidden"
+              <header 
+                className="relative z-50 w-full py-4 sm:py-6 px-4 lg:px-10 flex items-center justify-between border-b border-neutral-800/30"
+                style={{ backgroundColor: '#0a0a0a' }}
               >
-                <div className="absolute -top-32 -left-32 h-80 w-80 rounded-full bg-green-400/60 blur-3xl dark:bg-green-500/30" />
-                <div className="absolute top-1/2 -right-24 h-96 w-96 rounded-full bg-green-700/60 blur-3xl dark:bg-green-800/30" />
-                <div className="absolute bottom-0 left-1/2 h-64 w-64 rounded-full bg-green-500/40 blur-3xl dark:bg-green-700/20" />
-                <div className="absolute top-1/4 left-1/3 h-72 w-72 rounded-full bg-green-600/40 blur-3xl dark:bg-green-800/20" />
-                <div className="absolute bottom-1/4 right-1/3 h-80 w-80 rounded-full bg-green-400/35 blur-3xl dark:bg-green-700/15" />
-              </div>
-              <header className="sticky top-0 z-50 w-full py-4 sm:py-6 px-4 lg:px-10 flex items-center justify-between bg-white/60 dark:bg-neutral-950/60 backdrop-blur-sm border-b border-neutral-200/30 dark:border-neutral-800/30">
-                <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight flex items-center cursor-pointer">
-                  <span className="animated-gradient-text">
-                    <a href="/" className="cursor-pointer">
-                      Energy
-                    </a>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight flex items-center cursor-pointer">
+                  <span className="text-[#32de84]">
+                    <Link href="/">Energy</Link>
                   </span>
-                  <a href="/">
+                  <Link href="/">
                     <Image
                       src="/logo.png"
                       alt="Logo"
@@ -70,143 +54,88 @@ export default function RootLayout({
                       className="mx-2 h-10 w-10 sm:h-10 sm:w-10 inline-block"
                       priority
                     />
-                  </a>
-                  <span className="animated-gradient-text">
-                    <a href="/" className="cursor-pointer">
+                  </Link>
+                  <span className="text-[#32de84]">
+                    <Link href="/" className="cursor-pointer">
                       Stock
-                    </a>
+                    </Link>
                   </span>
                 </h1>
               </header>
+              <AnimatedBar />
               <main className="z-10 flex-1 w-full px-7 pb-12 lg:px-10 pt-4">
                 {children}
               </main>
-              <footer className="z-10 w-full py-6 text-center text-s text-neutral-500 dark:text-neutral-400">
-                <ul>
+              <footer className="z-10 w-full pb-12 my-5 text-center text-s text-white">
+                <ul className="space-y-4">
                   <li>
                     <span>
                       © {new Date().getFullYear()} waipu.tv engineering
                     </span>
                   </li>
-                  <li>
-                    <span>
-                      <a
-                        href="/admin/login"
-                        className="py-4 underline cursor-pointer text-xs animated-gradient-text transition-all hover:scale-105 inline-block"
-                      >
-                        Admin
-                      </a>
-                    </span>
+                  <li className="flex justify-center items-center gap-4">
+                    <Link
+                      href="/admin/login"
+                      className="inline-block p-6 py-2 rounded-full border border-black text-black text-lg transition-all hover:bg-neutral-800"
+                      style={{ backgroundColor: '#32de84' }}
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      href="/"
+                      className="inline-block p-6 py-2 rounded-full border border-white text-white text-lg"
+                      style={{ backgroundColor: '#000000' }}
+                    >
+                      Back to top
+                    </Link>
                   </li>
                 </ul>
 
-                <div className="mt-2 flex flex-wrap justify-center gap-3 text-[10px] tracking-wide text-neutral-500 dark:text-neutral-500">
-                  <span className="flex items-center gap-1">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M4 4h7v7H4V4zm9 9h7v7h-7v-7zm0-9h7v7h-7V4zM4 13h7v7H4v-7z"
-                        fill="#6366f1"
-                      />
-                    </svg>
+                <div className="mt-6 flex flex-wrap justify-center items-center text-[10px] tracking-wide text-white">
+                  <a
+                    href="https://nextjs.org/docs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-2 transition-all hover:decoration-[#32de84]"
+                  >
                     Next.js
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="#8b5cf6"
-                        strokeWidth="2"
-                      />
-                      <path
-                        d="M12 6v6l4 4"
-                        stroke="#8b5cf6"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                  </a>
+                  <span className="px-2">|</span>
+                  <a
+                    href="https://www.prisma.io/docs/getting-started"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-2 transition-all hover:decoration-[#32de84]"
+                  >
                     Prisma
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M4 7l8-4 8 4-8 10-8-10z"
-                        stroke="#0ea5e9"
-                        strokeWidth="2"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M12 13v7"
-                        stroke="#0ea5e9"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                    </svg>
+                  </a>
+                  <span className="px-2">|</span>
+                  <a
+                    href="https://supabase.com/docs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-2 transition-all hover:decoration-[#32de84]"
+                  >
                     Supabase
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <rect
-                        x="3"
-                        y="5"
-                        width="18"
-                        height="14"
-                        rx="3"
-                        stroke="#14b8a6"
-                        strokeWidth="2"
-                      />
-                      <path
-                        d="M7 9h10M7 13h6"
-                        stroke="#14b8a6"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                    </svg>
+                  </a>
+                  <span className="px-2">|</span>
+                  <a
+                    href="https://tailwindcss.com/docs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-2 transition-all hover:decoration-[#32de84]"
+                  >
                     Tailwind CSS
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M12 3l7 7-7 7-7-7 7-7z"
-                        stroke="#ec4899"
-                        strokeWidth="2"
-                      />
-                      <circle cx="12" cy="12" r="3" fill="#ec4899" />
-                    </svg>
+                  </a>
+                  <span className="px-2">|</span>
+                  <a
+                    href="https://www.framer.com/motion/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-2 transition-all hover:decoration-[#32de84]"
+                  >
                     Framer Motion
-                  </span>
+                  </a>
                 </div>
               </footer>
             </div>

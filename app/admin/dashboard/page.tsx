@@ -120,8 +120,8 @@ export default function AdminDashboard() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2">
-              <span className="animated-gradient-text">Admin Dashboard</span>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2 gradient-text">
+              Admin Dashboard
             </h1>
             <p className="text-sm text-neutral-600 dark:text-neutral-400">
               Manage inventory and view purchase statistics
@@ -129,7 +129,8 @@ export default function AdminDashboard() {
           </div>
           <button
             onClick={handleLogout}
-            className="btn btn-outline text-xs sm:text-sm font-medium sm:font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 px-3 py-2 sm:px-4 sm:py-2 self-start sm:self-auto"
+            className="px-7 py-2 rounded-full border border-black text-black text-lg font-semibold disabled:opacity-40 disabled:pointer-events-none"
+            style={{ backgroundColor: '#32de84', boxShadow: 'none', animation: 'none', transition: 'none' }}
           >
             Logout
           </button>
@@ -194,7 +195,7 @@ export default function AdminDashboard() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
+                    className="card-no-shimmer p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       <span
@@ -216,7 +217,7 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
+                    className="card-no-shimmer p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       <span style={{ color: "#32DE84" }}>Today</span>
@@ -230,7 +231,7 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
+                    className="card-no-shimmer p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       <span
@@ -252,7 +253,7 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-3 sm:p-6"
+                    className="card-no-shimmer p-3 sm:p-6"
                   >
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       <span
@@ -278,7 +279,7 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-4 sm:p-6"
+                    className="card-no-shimmer p-4 sm:p-6"
                   >
                     <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-900 dark:text-neutral-100">
                       Top Drinks
@@ -321,7 +322,7 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="card-no-shimmer bg-white dark:bg-neutral-900 p-4 sm:p-6"
+                    className="card-no-shimmer p-4 sm:p-6"
                   >
                     <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-900 dark:text-neutral-100">
                       Recent Purchases

@@ -40,12 +40,12 @@ const BUTTON_BASE =
 
 function SkeletonCard() {
   return (
-    <div className="card bg-white dark:bg-neutral-900 p-5 flex flex-col gap-4 h-full animate-pulse">
-      <div className="rounded-xl bg-neutral-200 dark:bg-neutral-800 h-64" />
-      <div className="h-6 w-3/4 rounded bg-neutral-200 dark:bg-neutral-800" />
-      <div className="h-4 w-1/2 rounded bg-neutral-200 dark:bg-neutral-800" />
+    <div className="card bg-black p-5 flex flex-col gap-4 h-full animate-pulse">
+      <div className="rounded-xl bg-neutral-800 h-64" />
+      <div className="h-6 w-3/4 rounded bg-neutral-800" />
+      <div className="h-4 w-1/2 rounded bg-neutral-800" />
       <div className="mt-auto">
-        <div className="h-10 w-full rounded bg-neutral-200 dark:bg-neutral-800" />
+        <div className="h-10 w-full rounded bg-neutral-800" />
       </div>
     </div>
   );
@@ -214,13 +214,19 @@ export default function HomePage() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
           <div className="text-center sm:text-left">
             <p className="text-xs sm:text-sm uppercase tracking-wider text-indigo-600 font-semibold">
-              <span className="animated-gradient-text font-semibold">
+              <span className="text-white font-semibold">
                 {activeTab === "shop" ? "Shop" : "Wishlist"}
               </span>
             </p>
-            <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-extrabold animated-gradient-text leading-tight">
+            <h1 
+              className="mt-2 font-extrabold text-[#32de84]"
+              style={{ 
+                fontSize: '60px',
+                lineHeight: '1.1'
+              }}
+            >
               {activeTab === "shop" ? "Fuel for victory" : "Letters to Santa"}
-            </h2>
+            </h1>
             <p className="mt-2 sm:mt-3 max-w-xl text-neutral-600 dark:text-neutral-300 text-sm md:text-base">
               {activeTab === "shop"
                 ? "Choose your Power! Select a drink and pay right away. 😎"
@@ -229,33 +235,33 @@ export default function HomePage() {
           </div>
           {activeTab === "shop" && (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-end w-full sm:w-auto">
-              <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
+              <div className="card-no-shimmer bg-black px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
                 <span className="text-xs uppercase tracking-wide text-[#32de84]">
                   Total Items
                 </span>
-                <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
+                <span className="text-xl sm:text-2xl font-bold mt-1 text-white">
                   {drinks.length}
                 </span>
               </div>
-              <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
+              <div className="card-no-shimmer bg-black px-4 sm:px-5 py-3 sm:py-4 flex flex-col items-start min-w-[10rem] sm:min-w-[12rem]">
                 <span className="text-xs uppercase tracking-wide text-[#32de84]">
                   Total Stock
                 </span>
-                <span className="text-xl sm:text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
+                <span className="text-xl sm:text-2xl font-bold mt-1 text-white">
                   {totalStock}
                 </span>
               </div>
-              <div className="card-no-shimmer bg-white dark:bg-neutral-900 px-5 py-4 flex flex-col items-start min-w-[12rem]">
+              <div className="card-no-shimmer bg-black px-5 py-4 flex flex-col items-start min-w-[12rem]">
                 <span className="text-xs uppercase tracking-wide text-[#32de84]">
                   Wishlisted Items
                 </span>
-                <span className="text-2xl font-bold mt-1 text-neutral-900 dark:text-neutral-100">
+                <span className="text-2xl font-bold mt-1 text-white">
                   {wishlistCount}
                 </span>
               </div>
               <button
                 onClick={hardRefresh}
-                className="card-no-shimmer bg-white dark:bg-neutral-900 px-4 sm:px-6 py-3 sm:py-4 flex flex-col items-center justify-center min-w-32 sm:min-w-40 text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:scale-105 group"
+                className="card-no-shimmer bg-black px-4 sm:px-6 py-3 sm:py-4 flex flex-col items-center justify-center min-w-32 sm:min-w-40 text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:scale-105 group"
                 disabled={isRefreshing}
               >
                 <svg
@@ -275,7 +281,7 @@ export default function HomePage() {
                 >
                   <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
                 </svg>
-                <span className="text-neutral-900 dark:text-neutral-100">
+                <span className="text-white">
                   {isRefreshing ? "Refreshing…" : "Refresh"}
                 </span>
               </button>
@@ -288,8 +294,8 @@ export default function HomePage() {
           <div className="flex gap-1 sm:gap-2 border-b border-neutral-200 dark:border-neutral-800">
             <button
               onClick={() => setActiveTab("shop")}
-              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${(
-                <span className="animated-gradient-text">
+              className={`text-p[#32de84] px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${(
+                <span className="text-[#32de84]">
                   {activeTab === "shop"
                     ? "Fuel for victory"
                     : "Letters to Santa"}
@@ -509,10 +515,10 @@ export default function HomePage() {
                         initial="initial"
                         animate="animate"
                         exit="exit"
-                        className="card bg-white dark:bg-neutral-900 p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
+                        className="card bg-black p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
                       >
                         {d.sugarFree && (
-                          <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md border-2 border-dashed border-emerald-400/60 dark:border-emerald-500/60 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                          <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md border-2 border-dashed border-emerald-400/60 bg-black text-emerald-400 text-xs font-bold uppercase tracking-wider">
                             ZERO
                           </div>
                         )}
@@ -528,11 +534,11 @@ export default function HomePage() {
                           {isPending && (
                             <motion.div
                               layoutId={`pending-overlay-${d.id}`}
-                              className="absolute inset-0 bg-white/60 dark:bg-neutral-950/50 backdrop-blur-sm flex items-center justify-center"
+                              className="absolute inset-0 bg-black/80 flex items-center justify-center"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                             >
-                              <div className="flex items-center gap-2 text-sm font-medium text-indigo-700 dark:text-indigo-300">
+                              <div className="flex items-center gap-2 text-sm font-medium text-indigo-300">
                                 <motion.span
                                   className="inline-block h-3 w-3 rounded-full bg-indigo-500"
                                   animate={{
@@ -556,14 +562,14 @@ export default function HomePage() {
                           >
                             {d.brand || "Unknown"}
                           </p>
-                          <h2 className="text-xl font-semibold mt-1 truncate text-neutral-900 dark:text-neutral-100">
+                          <h2 className="text-xl font-semibold mt-1 truncate text-white">
                             {d.name}
                           </h2>
                         </div>
                         <div className="mt-3 flex items-center justify-between">
                           <span
-                            className="text-3xl sm:text-4xl font-extrabold"
-                            style={{ color: "#32de84" }}
+                            className="text-4xl sm:text-4xl font-extrabold"
+                            style={{ color: "#ffffff" }}
                           >
                             €{d.price.toFixed(2)}
                           </span>
@@ -574,18 +580,11 @@ export default function HomePage() {
                           </span>
                         </div>
 
-                        <div className="mt-5">
+                        <div className="mt-5 flex justify-center">
                           <button
                             onClick={() => buyDrink(d.id)}
                             disabled={outOfStock || isPending}
-                            className={`${BUTTON_BASE} w-full text-white font-extrabold text-base sm:text-lg`}
-                            style={{
-                              background:
-                                "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
-                              backgroundSize: "200% 100%",
-                              color: "#fff",
-                              animation: "gradient-flow 4s linear infinite",
-                            }}
+                            className="buy-btn px-7 py-2 rounded-full text-[#32de84] bg-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none"
                           >
                             {outOfStock ? "Out of Stock" : "Buy"}
                           </button>
