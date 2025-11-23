@@ -43,35 +43,30 @@ export function AnimatedBar() {
 
   const getDisplayContent = () => {
     if (offers.length === 0) {
-      return {
-        prefix: "",
-        content: "",
-      };
+      return { prefix: "", content: "" };
     }
-
-//     const formattedOffers = offers
-//       .map((offer) => `${offer.title}: ${offer.price}`)
-//       .join(" // ");
-
-//     return {
-//       prefix: "!!! Price Alert: ",
-//       content: formattedOffers,
-//     };
+    // Uncomment and adjust below if you want to show offers
+    // const formattedOffers = offers
+    //   .map((offer) => `${offer.title}: ${offer.price}`)
+    //   .join(" // ");
+    // return { prefix: "!!! Price Alert: ", content: formattedOffers };
+    return { prefix: "", content: "" };
   };
 
-  const { prefix, content } = getDisplayContent();
+  const display = getDisplayContent() || { prefix: "", content: "" };
+  const { prefix, content } = display;
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        initial={{ opacity: 0, y: -50, scale: 0.95 }}
+        initial={{ opacity: 0, y: -12, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: -50, scale: 0.95 }}
+        exit={{ opacity: 0, y: -12, scale: 0.98 }}
         transition={{
           type: "spring",
-          stiffness: 100,
-          damping: 5,
-          mass: 2,
+          stiffness: 80,
+          damping: 18,
+          mass: 1.5,
         }}
         className="relative w-full overflow-hidden py-1"
       >

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BackToTopButton from "./components/BackToTopButton";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "./components/ToastProvider";
@@ -81,13 +82,10 @@ export default function RootLayout({
                     >
                       Dashboard
                     </Link>
-                    <Link
-                      href="/"
-                      className="inline-block p-6 py-2 rounded-full border border-white text-white text-lg"
-                      style={{ backgroundColor: '#000000' }}
-                    >
-                      Back to top
-                    </Link>
+                      <BackToTopButton
+                        className="inline-block p-6 py-2 rounded-full border border-white text-white text-lg transition-all hover:bg-neutral-800"
+                        style={{ backgroundColor: '#000000' }}
+                      />
                   </li>
                 </ul>
 

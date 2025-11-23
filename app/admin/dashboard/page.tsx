@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useToasts } from "@/app/components/ToastProvider";
 import DrinkRefillView from "../components/DrinkRefillView";
+import BackToTopButton from "@/app/components/BackToTopButton";
 import WishlistAdminView from "../components/WishlistAdminView";
 
 type PurchaseStats = {
@@ -115,7 +116,8 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen py-8 relative">
+      <BackToTopButton />
       <div className="w-full max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
@@ -233,7 +235,7 @@ export default function AdminDashboard() {
                     transition={{ delay: 0.2 }}
                     className="card-no-shimmer p-3 sm:p-6"
                   >
-                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
+                    <p className="text-xs uppercase tracking-wide text-[#32DE84] mb-1 sm:mb-2">
                       <span
                         className="hidden sm:inline"
                         style={{ color: "#32DE84" }}
