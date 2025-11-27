@@ -285,14 +285,14 @@ export default function WishlistAdminView(
                         onClick={() => handleConvertClick(d.id, d.name)}
                         disabled={isPending}
                         className="btn px-6 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32DE84] disabled:opacity-40 disabled:pointer-events-none rounded-full"
-                        style={{ backgroundColor: '#32de84', color: '#fff', boxShadow: 'none', animation: 'none', transition: 'none' }}
+                        style={{ backgroundColor: '#32de84', color: '#000', boxShadow: 'none', animation: 'none', transition: 'none' }}
                       >
                         Add to Inventory
                       </button>
                       <button
                         onClick={() => handleDeleteClick(d.id, d.name)}
                         disabled={isPending}
-                        className="btn bg-red-500 hover:bg-red-600 text-white border-red-500 hover:border-red-600 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none px-4 py-2 rounded-full"
+                        className="btn bg-red-500 hover:bg-red-600 text-black border-red-500 hover:border-red-600 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none px-4 py-2 rounded-full"
                       >
                         Delete
                       </button>

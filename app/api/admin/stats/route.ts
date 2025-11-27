@@ -54,7 +54,7 @@ export async function GET() {
     ).length;
 
     // Get top drinks
-    const drinkCounts = new Map<number, { name: string; count: number }>();
+    const drinkCounts = new Map<number, { name: string; brand: string; count: number }>();
     allPurchases.forEach((purchase) => {
       const drinkId = purchase.drinkId;
       const existing = drinkCounts.get(drinkId);
@@ -63,6 +63,7 @@ export async function GET() {
       } else {
         drinkCounts.set(drinkId, {
           name: purchase.drink.name,
+          brand: purchase.drink.brand,
           count: 1,
         });
       }
@@ -72,6 +73,7 @@ export async function GET() {
       .map(([drinkId, data]) => ({
         drinkId,
         drinkName: data.name,
+        drinkBrand: data.brand,
         count: data.count,
       }))
       .sort((a, b) => b.count - a.count)

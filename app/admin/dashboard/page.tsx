@@ -16,6 +16,7 @@ type PurchaseStats = {
   topDrinks: Array<{
     drinkId: number;
     drinkName: string;
+    drinkBrand: string;
     count: number;
   }>;
   recentPurchases: Array<{
@@ -97,8 +98,8 @@ export default function AdminDashboard() {
   // Show loading while checking authentication
   if (authenticated === null) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-50 dark:bg-neutral-900">
-        <div className="flex items-center gap-3 text-sm font-medium text-neutral-600 dark:text-neutral-400">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-900 dark:bg-neutral-900">
+        <div className="flex items-center gap-3 text-sm font-medium text-neutral-400 dark:text-neutral-400">
           <div className="animate-spin rounded-full h-4 w-4 border-2 border-indigo-500 border-t-transparent"></div>
           Verifying access...
         </div>
@@ -109,8 +110,8 @@ export default function AdminDashboard() {
   // Don't render dashboard if not authenticated (will redirect)
   if (!authenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-50 dark:bg-neutral-900">
-        <div className="text-sm text-neutral-500">Redirecting to login...</div>
+      <div className="min-h-screen flex items-center justify-center bg-neutral-900 dark:bg-neutral-900">
+        <div className="text-sm text-neutral-400">Redirecting to login...</div>
       </div>
     );
   }
@@ -125,7 +126,7 @@ export default function AdminDashboard() {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2 gradient-text">
               Admin Dashboard
             </h1>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            <p className="text-sm text-neutral-400 dark:text-neutral-400">
               Manage inventory and view purchase statistics
             </p>
           </div>
@@ -139,13 +140,13 @@ export default function AdminDashboard() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 border-b border-neutral-200 dark:border-neutral-800 overflow-x-auto">
+        <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 border-b border-neutral-800 dark:border-neutral-800 overflow-x-auto">
           <button
             onClick={() => setActiveTab("stats")}
             className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg whitespace-nowrap ${
               activeTab === "stats"
                 ? "border-[#32de84] text-[#32de84]"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                : "border-transparent text-neutral-500 hover:text-neutral-300 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
             Statistics
@@ -155,7 +156,7 @@ export default function AdminDashboard() {
             className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg whitespace-nowrap ${
               activeTab === "refill"
                 ? "border-[#32de84] text-[#32de84]"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                : "border-transparent text-neutral-500 hover:text-neutral-300 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
             <span className="hidden sm:inline">Restock</span>
@@ -166,7 +167,7 @@ export default function AdminDashboard() {
             className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg whitespace-nowrap ${
               activeTab === "wishlist"
                 ? "border-[#32de84] text-[#32de84]"
-                : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                : "border-transparent text-neutral-500 hover:text-neutral-300 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
             }`}
           >
             Wishlist
@@ -199,7 +200,7 @@ export default function AdminDashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     className="card-no-shimmer p-3 sm:p-6"
                   >
-                    <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
+                    <p className="text-xs uppercase tracking-wide text-neutral-100 mb-1 sm:mb-2">
                       <span
                         className="hidden sm:inline"
                         style={{ color: "#32DE84" }}
@@ -210,7 +211,7 @@ export default function AdminDashboard() {
                         Total
                       </span>
                     </p>
-                    <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-100 dark:text-neutral-100">
                       {stats.totalPurchases}
                     </p>
                   </motion.div>
@@ -224,7 +225,7 @@ export default function AdminDashboard() {
                     <p className="text-xs uppercase tracking-wide text-indigo-600 mb-1 sm:mb-2">
                       <span style={{ color: "#32DE84" }}>Today</span>
                     </p>
-                    <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-100 dark:text-neutral-100">
                       {stats.purchasesToday}
                     </p>
                   </motion.div>
@@ -246,7 +247,7 @@ export default function AdminDashboard() {
                         Week
                       </span>
                     </p>
-                    <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-100 dark:text-neutral-100">
                       {stats.purchasesThisWeek}
                     </p>
                   </motion.div>
@@ -268,7 +269,7 @@ export default function AdminDashboard() {
                         Month
                       </span>
                     </p>
-                    <p className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-xl sm:text-3xl font-bold text-neutral-100 dark:text-neutral-100">
                       {stats.purchasesThisMonth}
                     </p>
                   </motion.div>
@@ -283,7 +284,7 @@ export default function AdminDashboard() {
                     transition={{ delay: 0.4 }}
                     className="card-no-shimmer p-4 sm:p-6"
                   >
-                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-100 dark:text-neutral-100">
                       Top Drinks
                     </h2>
                     {stats.topDrinks.length > 0 ? (
@@ -299,11 +300,11 @@ export default function AdminDashboard() {
                                   #{index + 1}
                                 </span>
                               </span>
-                              <span className="text-xs sm:text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
-                                {drink.drinkName}
+                              <span className="text-xs sm:text-sm font-medium text-neutral-100 dark:text-neutral-100 truncate">
+                                {drink.drinkBrand ? `${drink.drinkBrand} ` : ""}{drink.drinkName}
                               </span>
                             </div>
-                            <span className="text-xs sm:text-sm font-bold text-neutral-800 dark:text-neutral-300 whitespace-nowrap ml-2">
+                            <span className="text-xs sm:text-sm font-bold text-neutral-300 dark:text-neutral-300 whitespace-nowrap ml-2">
                               <span className="hidden sm:inline">
                                 {drink.count} purchases
                               </span>
@@ -313,7 +314,7 @@ export default function AdminDashboard() {
                         ))}
                       </div>
                     ) : (
-                      <p className="text-sm text-neutral-500 dark:text-neutral-400">
+                      <p className="text-sm text-neutral-400 dark:text-neutral-400">
                         No purchases yet
                       </p>
                     )}
@@ -326,7 +327,7 @@ export default function AdminDashboard() {
                     transition={{ delay: 0.5 }}
                     className="card-no-shimmer p-4 sm:p-6"
                   >
-                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-neutral-100 dark:text-neutral-100">
                       Recent Purchases
                     </h2>
                     {stats.recentPurchases.length > 0 ? (
@@ -337,10 +338,10 @@ export default function AdminDashboard() {
                             className="p-2 sm:p-3 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 hover:border-[#32DE84] focus:border-[#32DE84] transition-colors"
                           >
                             <div>
-                              <p className="text-xs sm:text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
+                              <p className="text-xs sm:text-sm font-medium text-neutral-100 dark:text-neutral-100 truncate">
                                 {purchase.drinkBrand} {purchase.drinkName}
                               </p>
-                              <p className="text-xs text-neutral-500 dark:text-neutral-400 truncate">
+                              <p className="text-xs text-neutral-400 dark:text-neutral-400 truncate">
                                 <span className="hidden sm:inline">
                                   {purchase.customerName
                                     ? `by ${purchase.customerName}`
@@ -362,7 +363,7 @@ export default function AdminDashboard() {
                         ))}
                       </div>
                     ) : (
-                      <p className="text-sm text-neutral-500 dark:text-neutral-400">
+                      <p className="text-sm text-neutral-400 dark:text-neutral-400">
                         No recent purchases
                       </p>
                     )}
