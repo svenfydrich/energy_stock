@@ -1,8 +1,9 @@
+https://github.com/user-attachments/assets/f771634f-0cfb-456f-9ff7-c4e04d17ee8a
+https://github.com/user-attachments/assets/ccdbb171-cea8-4a8c-82b3-26fcc94206f7
+
 # Energy Stock
 
 A modern web application for managing and purchasing energy drinks. Track inventory, make purchases, manage payments, and handle restocking - all through an intuitive dashboard with smooth animations and responsive design.
-
-![Energy Stock Homepage](./public/homepage.png)
 
 ---
 
