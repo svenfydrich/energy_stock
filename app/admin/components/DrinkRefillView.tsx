@@ -401,10 +401,10 @@ export default function DrinkRefillView() {
     <div>
       <div className="mb-6 flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4 sm:gap-0">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-neutral-800 dark:text-neutral-100">
+          <h2 className="text-xl sm:text-2xl font-bold text-white">
             Inventory
           </h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+          <p className="text-sm text-neutral-400 mt-1">
             Restock, add new drinks and manage the items.
           </p>
         </div>

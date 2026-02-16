@@ -14,9 +14,11 @@ export default function BackToTopButton({ className = "", style }: BackToTopButt
     }
   };
 
+  const combinedClassName = `cursor-pointer ${className}`.trim();
+
   return (
     <button
-      className={className}
+      className={combinedClassName}
       style={style}
       onClick={handleClick}
       aria-label="Back to top"

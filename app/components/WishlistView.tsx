@@ -304,7 +304,7 @@ export default function WishlistView() {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-16 text-center text-sm text-neutral-500 dark:text-neutral-400"
+          className="mt-16 text-center text-sm text-white"
         >
           No wishlist items yet. Add your first wishlist item!
         </motion.div>
@@ -323,7 +323,7 @@ export default function WishlistView() {
             className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-2xl font-bold mb-4 text-white">
               Add to Wishlist
             </h2>
 
@@ -331,7 +331,7 @@ export default function WishlistView() {
               <div>
                 <label
                   htmlFor="wishlist-name"
-                  className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
+                  className="block text-sm font-semibold text-white mb-2"
                 >
                   Name *
                 </label>
@@ -347,7 +347,7 @@ export default function WishlistView() {
                   }
                   disabled={isAdding}
                   required
-                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-green-300/40 dark:border-green-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-400/60 dark:focus:border-green-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full text-white px-4 py-2 rounded-lg border-2 border-dashed border-green-300/40 dark:border-green-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-400/60 dark:focus:border-green-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="Enter drink name"
                 />
               </div>
@@ -355,7 +355,7 @@ export default function WishlistView() {
               <div>
                 <label
                   htmlFor="wishlist-imageUrl"
-                  className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
+                  className="block text-sm font-semibold text-white mb-2"
                 >
                   Image URL
                 </label>
@@ -370,7 +370,7 @@ export default function WishlistView() {
                     })
                   }
                   disabled={isAdding}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-dashed border-green-300/40 dark:border-green-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-400/60 dark:focus:border-green-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full text-white px-4 py-2 rounded-lg border-2 border-dashed border-green-300/40 dark:border-green-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-400/60 dark:focus:border-green-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="https://example.com/image.png"
                 />
               </div>
@@ -380,7 +380,7 @@ export default function WishlistView() {
               <button
                 onClick={handleAddWishlist}
                 disabled={isAdding || !newWishlistItem.name.trim()}
-                className="flex-1 px-7 py-2 rounded-full border border-black text-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none shadow-none"
+                className="flex-1 px-7 py-2 cursor-pointer rounded-full border border-black text-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none shadow-none"
                 style={{ backgroundColor: '#32de84' }}
               >
                 {isAdding ? "Adding..." : "Add"}
@@ -388,7 +388,7 @@ export default function WishlistView() {
               <button
                 onClick={handleCancelAdd}
                 disabled={isAdding}
-                className="flex-1 px-7 py-2 rounded-full border border-black text-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none shadow-none"
+                className="flex-1 px-7 py-2 cursor-pointer rounded-full border border-black text-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none shadow-none"
                 style={{ background: '#000000', color: '#32de84', boxShadow: 'none' }}
               >
                 Cancel

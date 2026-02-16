@@ -207,10 +207,10 @@ export default function WishlistAdminView(
     <div>
       <div className="mb-6 flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4 sm:gap-0">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+          <h2 className="text-xl sm:text-2xl font-bold text-white">
             Wishlist Items
           </h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+          <p className="text-sm text-neutral-400 mt-1">
             Convert wishlist items to drinks by adding price and stock
           </p>
         </div>

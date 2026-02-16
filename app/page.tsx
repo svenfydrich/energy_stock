@@ -213,7 +213,7 @@ export default function HomePage() {
       <div className="w-full max-w-6xl">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
           <div className="text-center sm:text-left">
-            <p className="text-xs sm:text-sm uppercase tracking-wider text-indigo-600 font-semibold">
+            <p className="text-xs sm:text-sm uppercase tracking-wider text-[#32de84] font-semibold">
               <span className="text-white font-semibold">
                 {activeTab === "shop" ? "Shop" : "Wishlist"}
               </span>
@@ -227,7 +227,7 @@ export default function HomePage() {
             >
               {activeTab === "shop" ? "Fuel for victory" : "Letters to Santa"}
             </h1>
-            <p className="mt-2 sm:mt-3 max-w-xl text-neutral-600 dark:text-neutral-300 text-sm md:text-base">
+            <p className="mt-2 sm:mt-3 max-w-xl text-white text-sm md:text-base">
               {activeTab === "shop"
                 ? "Choose your Power! Select a drink and pay right away. 😎"
                 : "Up for something else? Add drinks and maybe you'll see them soon! 🎁"}
@@ -294,13 +294,11 @@ export default function HomePage() {
           <div className="flex gap-1 sm:gap-2 border-b border-neutral-200 dark:border-neutral-800">
             <button
               onClick={() => setActiveTab("shop")}
-              className={`text-p[#32de84] px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${(
-                <span className="text-[#32de84]">
-                  {activeTab === "shop"
-                    ? "Fuel for victory"
-                    : "Letters to Santa"}
-                </span>
-              )}`}
+              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
+                activeTab === "shop"
+                  ? "border-[#32de84] text-[#32de84]"
+                  : "border-transparent text-white dark:hover:text-white hover:border-neutral-300"
+              }`}
             >
               Shop
             </button>
@@ -314,7 +312,7 @@ export default function HomePage() {
               className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
                 activeTab === "wishlist"
                   ? "border-[#32de84] text-[#32de84]"
-                  : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                  : "border-transparent text-white hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
               }`}
             >
               Wishlist
@@ -586,7 +584,7 @@ export default function HomePage() {
                             disabled={outOfStock || isPending}
                             className="buy-btn px-7 py-2 rounded-full text-[#32de84] bg-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none"
                           >
-                            {outOfStock ? "Out of Stock" : "Buy"}
+                            {outOfStock ? "No stock" : "Buy"}
                           </button>
                         </div>
                       </motion.div>
@@ -606,7 +604,7 @@ export default function HomePage() {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-16 text-center text-sm text-neutral-500 dark:text-neutral-400"
+              className="mt-16 text-center text-sm text-white"
             >
               {drinks.length === 0
                 ? "No drinks found. Seed the database or add new items."
