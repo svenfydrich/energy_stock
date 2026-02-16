@@ -5,7 +5,6 @@ import "./globals.css";
 import { ToastProvider } from "./components/ToastProvider";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { AnimatedBar } from "./components/AnimatedBar";
-import LaunchAnimation from "./components/LaunchAnimation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -34,7 +33,6 @@ export default function RootLayout({
         }}
         suppressHydrationWarning
       >
-        <LaunchAnimation />
         <ThemeProvider>
           <ToastProvider>
             <div className="relative isolate min-h-screen flex flex-col">
