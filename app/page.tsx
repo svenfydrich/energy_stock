@@ -10,12 +10,13 @@ import { SkeletonCard } from "./components/SkeletonCard";
 import { CARD_ANIM } from "@/lib/animations";
 import type { Drink } from "@/lib/types";
 
+const TAB_ACTIVE = "border-[#32de84] text-[#32de84]";
+const TAB_INACTIVE =
+  "border-transparent text-white hover:text-neutral-300 hover:border-neutral-600 hover:bg-neutral-800/50";
+
 export default function HomePage() {
   const [drinks, setDrinks] = useState<Drink[]>([]);
   const [loading, setLoading] = useState(true);
-  const [pendingDrinkIds, setPendingDrinkIds] = useState<Set<number>>(
-    new Set(),
-  );
   const [isRefreshing, startRefresh] = useTransition();
   const [activeTab, setActiveTab] = useState<"shop" | "wishlist">("shop");
   const [paymentModal, setPaymentModal] = useState<{
@@ -26,10 +27,8 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
-  const [sugarFilter, setSugarFilter] = useState<"none" | "zero" | "sugary">(
-    "none",
-  );
-  const { success, error, info } = useToasts();
+  const [sugarFilter, setSugarFilter] = useState<"none" | "zero" | "sugary">("none");
+  const { error, info } = useToasts();
 
   const fetchDrinks = useCallback(async () => {
     try {
@@ -70,21 +69,6 @@ export default function HomePage() {
     fetchWishlistCount();
   }, [fetchDrinks, fetchWishlistCount]);
 
-  const markPending = (id: number, add: boolean) => {
-    setPendingDrinkIds((prev) => {
-      const next = new Set(prev);
-      if (add) next.add(id);
-      else next.delete(id);
-      return next;
-    });
-  };
-
-  const optimisticUpdate = (id: number, delta: number) => {
-    setDrinks((prev) =>
-      prev.map((d) => (d.id === id ? { ...d, stock: d.stock + delta } : d)),
-    );
-  };
-
   const buyDrink = (id: number) => {
     const drink = drinks.find((d) => d.id === id);
     if (!drink) return;
@@ -93,11 +77,6 @@ export default function HomePage() {
       return;
     }
     setPaymentModal({ isOpen: true, drink });
-  };
-
-  const handlePaymentSuccess = () => {
-    fetchDrinks();
-    setPaymentModal({ isOpen: false, drink: null });
   };
 
   const hardRefresh = () => {
@@ -238,13 +217,11 @@ export default function HomePage() {
 
         {/* Tabs */}
         <div className="flex flex-col gap-3 mb-6 sm:mb-8">
-          <div className="flex gap-1 sm:gap-2 border-b border-neutral-200 dark:border-neutral-800">
+          <div className="flex gap-1 sm:gap-2 border-b border-neutral-800">
             <button
               onClick={() => setActiveTab("shop")}
-              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
-                activeTab === "shop"
-                  ? "border-[#32de84] text-[#32de84]"
-                  : "border-transparent text-white dark:hover:text-white hover:border-neutral-300"
+              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer rounded-t-lg ${
+                activeTab === "shop" ? TAB_ACTIVE : TAB_INACTIVE
               }`}
             >
               Shop
@@ -256,10 +233,8 @@ export default function HomePage() {
                 setSearchQuery("");
                 fetchWishlistCount();
               }}
-              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg ${
-                activeTab === "wishlist"
-                  ? "border-[#32de84] text-[#32de84]"
-                  : "border-transparent text-white hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer rounded-t-lg ${
+                activeTab === "wishlist" ? TAB_ACTIVE : TAB_INACTIVE
               }`}
             >
               Wishlist
@@ -269,10 +244,10 @@ export default function HomePage() {
               <div className="ml-auto flex gap-2 items-center">
                 <button
                   onClick={toggleSearch}
-                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] ${
+                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] ${
                     isSearchOpen
-                      ? "border-[#32de84] text-[#32de84]"
-                      : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                      ? TAB_ACTIVE
+                      : "border-transparent text-neutral-400 hover:text-neutral-300 hover:border-neutral-600 hover:bg-neutral-800/50"
                   }`}
                   title="Search"
                 >
@@ -292,10 +267,10 @@ export default function HomePage() {
                 </button>
                 <button
                   onClick={toggleSugarFilter}
-                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] ${
+                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] ${
                     sugarFilter !== "none"
-                      ? "border-[#32de84] text-[#32de84]"
-                      : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                      ? TAB_ACTIVE
+                      : "border-transparent text-neutral-400 hover:text-neutral-300 hover:border-neutral-600 hover:bg-neutral-800/50"
                   }`}
                   title={
                     sugarFilter === "none"
@@ -316,9 +291,9 @@ export default function HomePage() {
                     strokeLinejoin="round"
                     className={`transition-transform ${
                       sugarFilter === "zero"
-                        ? "text-emerald-600 dark:text-emerald-400"
+                        ? "text-emerald-400"
                         : sugarFilter === "sugary"
-                          ? "text-pink-600 dark:text-pink-500"
+                          ? "text-pink-500"
                           : ""
                     }`}
                   >
@@ -327,10 +302,10 @@ export default function HomePage() {
                 </button>
                 <button
                   onClick={toggleSort}
-                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] ${
+                  className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium sm:font-semibold border-b-2 transition-all duration-200 cursor-pointer rounded-t-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] ${
                     sortOrder
-                      ? "border-[#32de84] text-[#32de84]"
-                      : "border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-600"
+                      ? TAB_ACTIVE
+                      : "border-transparent text-neutral-400 hover:text-neutral-300 hover:border-neutral-600 hover:bg-neutral-800/50"
                   }`}
                   title={
                     sortOrder === null
@@ -392,7 +367,7 @@ export default function HomePage() {
                     placeholder="Search drinks..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-3 pl-10 text-sm border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg bg-transparent text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#32de84] dark:focus:border-[#32de84] transition-colors"
+                    className="w-full px-4 py-3 pl-10 text-sm border-2 border-dashed border-neutral-700 rounded-lg bg-transparent text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-[#32de84] transition-colors"
                     autoFocus
                   />
                   <svg
@@ -404,7 +379,7 @@ export default function HomePage() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500"
                   >
                     <circle cx="11" cy="11" r="8" />
                     <path d="m21 21-4.35-4.35" />
@@ -412,7 +387,7 @@ export default function HomePage() {
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery("")}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-300"
                     >
                       <svg
                         width="18"
@@ -446,7 +421,6 @@ export default function HomePage() {
               ) : (
                 <AnimatePresence>
                   {filteredAndSortedDrinks.map((d) => {
-                    const isPending = pendingDrinkIds.has(d.id);
                     const outOfStock = d.stock <= 0;
                     return (
                       <motion.div
@@ -472,27 +446,6 @@ export default function HomePage() {
                             className="w-full h-full object-contain"
                             priority
                           />
-                          {isPending && (
-                            <motion.div
-                              layoutId={`pending-overlay-${d.id}`}
-                              className="absolute inset-0 bg-black/80 flex items-center justify-center"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                            >
-                              <div className="flex items-center gap-2 text-sm font-medium text-indigo-300">
-                                <motion.span
-                                  className="inline-block h-3 w-3 rounded-full bg-indigo-500"
-                                  animate={{ scale: [1, 0.7, 1] }}
-                                  transition={{
-                                    repeat: Infinity,
-                                    duration: 0.9,
-                                    ease: "easeInOut",
-                                  }}
-                                />
-                                Processing…
-                              </div>
-                            </motion.div>
-                          )}
                         </div>
                         <div className="mt-4">
                           <p
@@ -509,9 +462,7 @@ export default function HomePage() {
                           <span className="text-4xl font-extrabold text-white">
                             €{d.price.toFixed(2)}
                           </span>
-                          <span
-                            className={`stock-badge ${outOfStock ? "out" : ""}`}
-                          >
+                          <span className={`stock-badge ${outOfStock ? "out" : ""}`}>
                             {outOfStock ? "Out" : `${d.stock} left`}
                           </span>
                         </div>
@@ -519,7 +470,7 @@ export default function HomePage() {
                         <div className="mt-5 flex justify-center">
                           <button
                             onClick={() => buyDrink(d.id)}
-                            disabled={outOfStock || isPending}
+                            disabled={outOfStock}
                             className="buy-btn px-7 py-2 rounded-full text-[#32de84] bg-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none"
                           >
                             {outOfStock ? "No stock" : "Buy"}
@@ -536,19 +487,17 @@ export default function HomePage() {
           <WishlistView />
         )}
 
-        {activeTab === "shop" &&
-          !loading &&
-          filteredAndSortedDrinks.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-16 text-center text-sm text-white"
-            >
-              {drinks.length === 0
-                ? "No drinks found. Seed the database or add new items."
-                : "No drinks match your search."}
-            </motion.div>
-          )}
+        {activeTab === "shop" && !loading && filteredAndSortedDrinks.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-16 text-center text-sm text-white"
+          >
+            {drinks.length === 0
+              ? "No drinks found. Seed the database or add new items."
+              : "No drinks match your search."}
+          </motion.div>
+        )}
       </div>
 
       {paymentModal.drink && (
@@ -556,7 +505,10 @@ export default function HomePage() {
           isOpen={paymentModal.isOpen}
           onClose={() => setPaymentModal({ isOpen: false, drink: null })}
           drink={paymentModal.drink}
-          onPaymentSuccess={handlePaymentSuccess}
+          onPaymentSuccess={() => {
+            fetchDrinks();
+            setPaymentModal({ isOpen: false, drink: null });
+          }}
         />
       )}
     </div>

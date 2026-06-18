@@ -37,15 +37,11 @@ export function ConfirmModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-md"
+        className="card bg-neutral-900 p-6 w-full max-w-md"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
-          {title}
-        </h2>
-        <div className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
-          {description}
-        </div>
+        <h2 className="text-2xl font-bold mb-4 text-neutral-100">{title}</h2>
+        <div className="text-sm text-neutral-400 mb-6">{description}</div>
         <div className="flex gap-3">
           <button
             onClick={onConfirm}

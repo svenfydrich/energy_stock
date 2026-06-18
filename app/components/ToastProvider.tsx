@@ -59,13 +59,13 @@ const toastVariants = {
 };
 
 const SuccessIcon = () => (
-  <span aria-hidden="true" className="inline-block text-green-600 dark:text-green-400">✓</span>
+  <span aria-hidden="true" className="inline-block text-green-400">✓</span>
 );
 const ErrorIcon = () => (
-  <span aria-hidden="true" className="inline-block text-red-600 dark:text-red-500">⚠</span>
+  <span aria-hidden="true" className="inline-block text-red-500">⚠</span>
 );
 const InfoIcon = () => (
-  <span aria-hidden="true" className="inline-block text-green-600 dark:text-green-400">ⓘ</span>
+  <span aria-hidden="true" className="inline-block text-green-400">ⓘ</span>
 );
 
 function defaultIcon(type: ToastType): ReactNode {
@@ -167,16 +167,16 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 "pointer-events-auto w-full sm:w-80 rounded-xl shadow-lg p-4 flex gap-3",
                 "backdrop-blur-md border",
                 toast.type === "success"
-                  ? "bg-green-50/80 dark:bg-green-900/30 border-green-200 dark:border-green-700"
+                  ? "bg-green-900/30 border-green-700"
                   : toast.type === "error"
-                  ? "bg-red-50/80 dark:bg-red-900/30 border-red-200 dark:border-red-700"
-                  : "bg-indigo-50/80 dark:bg-indigo-900/30 border-indigo-200 dark:border-indigo-700",
+                  ? "bg-red-900/30 border-red-700"
+                  : "bg-indigo-900/30 border-indigo-700",
               ].join(" ")}
             >
               <div className="text-xl flex items-start pt-0.5">{toast.icon}</div>
               <div className="flex-1">
                 <p
-                  className="text-sm font-medium leading-snug text-neutral-800 dark:text-neutral-100"
+                  className="text-sm font-medium leading-snug text-neutral-100"
                   style={{ wordBreak: "break-word" }}
                 >
                   {toast.message}
@@ -184,7 +184,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 <div className="mt-2 flex gap-2">
                   <button
                     onClick={() => removeToast(toast.id)}
-                    className="text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition"
+                    className="text-xs font-semibold uppercase tracking-wide text-green-400 hover:text-green-300 transition"
                   >
                     Close
                   </button>
@@ -194,7 +194,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                         removeToast(toast.id);
                         info("Issue acknowledged.");
                       }}
-                      className="text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition"
+                      className="text-xs font-semibold uppercase tracking-wide text-green-400 hover:text-green-300 transition"
                     >
                       Okay
                     </button>

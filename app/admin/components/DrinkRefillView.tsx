@@ -326,9 +326,9 @@ export default function DrinkRefillView() {
                 className="card p-5 flex flex-col h-full group relative cursor-pointer hover:scale-[1.02] transition-transform"
                 onClick={() => setIsAddModalOpen(true)}
               >
-                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-linear-to-br from-green-400/30 to-black/60 dark:from-green-900/40 dark:to-black/80 border-2 border-dashed border-green-400/40 dark:border-green-700/40 group-hover:border-green-500/60 dark:group-hover:border-green-600/60 transition-colors">
+                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-green-900/40 to-black/80 border-2 border-dashed border-green-700/40 group-hover:border-green-600/60 transition-colors">
                   <div className="flex flex-col items-center gap-3">
-                    <div className="p-3 rounded-full bg-green-100/80 dark:bg-green-900/50 group-hover:bg-green-200 dark:group-hover:bg-green-800/70 transition-colors">
+                    <div className="p-3 rounded-full bg-green-900/50 group-hover:bg-green-800/70 transition-colors">
                       <svg
                         width="32"
                         height="32"
@@ -338,13 +338,13 @@ export default function DrinkRefillView() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-green-600 dark:text-green-400"
+                        className="text-green-400"
                       >
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />
                       </svg>
                     </div>
-                    <span className="text-base font-semibold text-green-700 dark:text-green-300 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                    <span className="text-base font-semibold text-green-300 group-hover:text-green-400 transition-colors">
                       Add new drink
                     </span>
                   </div>
@@ -426,11 +426,11 @@ export default function DrinkRefillView() {
                       {isPending && (
                         <motion.div
                           layoutId={`pending-overlay-${d.id}`}
-                          className="absolute inset-0 bg-white/60 dark:bg-neutral-950/50 backdrop-blur-sm flex items-center justify-center"
+                          className="absolute inset-0 bg-neutral-950/60 backdrop-blur-sm flex items-center justify-center"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                         >
-                          <div className="flex items-center gap-2 text-sm font-medium text-indigo-700 dark:text-indigo-300">
+                          <div className="flex items-center gap-2 text-sm font-medium text-indigo-300">
                             <motion.span
                               className="inline-block h-3 w-3 rounded-full bg-indigo-500"
                               animate={{ scale: [1, 0.7, 1] }}
@@ -445,12 +445,12 @@ export default function DrinkRefillView() {
                       <p className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#32DE84" }}>
                         {d.brand || "Unknown"}
                       </p>
-                      <h2 className="text-xl font-semibold mt-1 truncate text-neutral-800 dark:text-neutral-100">
+                      <h2 className="text-xl font-semibold mt-1 truncate text-neutral-100">
                         {d.name}
                       </h2>
                     </div>
                     <div className="mt-2 flex items-center justify-between gap-2">
-                      <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                      <span className="text-sm font-semibold text-neutral-300">
                         €{d.price.toFixed(2)}
                       </span>
                       <span className={`stock-badge whitespace-nowrap ${d.stock === 0 ? "out" : ""}`}>
@@ -468,7 +468,7 @@ export default function DrinkRefillView() {
                           onChange={(e) => handleAmountChange(d.id, e.target.value)}
                           disabled={isPending}
                           placeholder="Amount"
-                          className="flex-1 min-w-0 px-3 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed text-sm transition-colors"
+                          className="flex-1 min-w-0 px-3 py-2 rounded-lg border-2 border-dashed border-neutral-600/40 bg-transparent text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed text-sm transition-colors"
                         />
                         <button
                           onClick={() => {
@@ -499,7 +499,7 @@ export default function DrinkRefillView() {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-16 text-center text-sm text-neutral-500 dark:text-neutral-400"
+          className="mt-16 text-center text-sm text-neutral-400"
         >
           No drinks found.
         </motion.div>

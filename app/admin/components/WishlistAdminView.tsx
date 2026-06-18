@@ -166,7 +166,7 @@ export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewPro
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    className="card bg-white dark:bg-neutral-900 p-5 flex flex-col h-full group relative"
+                    className="card bg-neutral-900 p-5 flex flex-col h-full group relative"
                   >
                     <div className="w-full h-64 rounded-xl overflow-hidden relative">
                       <Image
@@ -180,11 +180,11 @@ export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewPro
                       {isPending && (
                         <motion.div
                           layoutId={`pending-overlay-${d.id}`}
-                          className="absolute inset-0 bg-white/60 dark:bg-neutral-950/50 backdrop-blur-sm flex items-center justify-center"
+                          className="absolute inset-0 bg-neutral-950/60 backdrop-blur-sm flex items-center justify-center"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                         >
-                          <div className="flex items-center gap-2 text-sm font-medium text-indigo-700 dark:text-indigo-300">
+                          <div className="flex items-center gap-2 text-sm font-medium text-indigo-300">
                             <motion.span
                               className="inline-block h-3 w-3 rounded-full bg-indigo-500"
                               animate={{ scale: [1, 0.7, 1] }}
@@ -195,7 +195,7 @@ export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewPro
                         </motion.div>
                       )}
                     </div>
-                    <h2 className="text-xl font-semibold mt-4 truncate text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-xl font-semibold mt-4 truncate text-neutral-100">
                       {d.name}
                     </h2>
 
@@ -232,7 +232,7 @@ export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewPro
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-16 text-center text-sm text-neutral-500 dark:text-neutral-400"
+          className="mt-16 text-center text-sm text-neutral-400"
         >
           No wishlist items found.
         </motion.div>
@@ -248,13 +248,13 @@ export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewPro
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-md"
+            className="card bg-neutral-900 p-6 w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-2xl font-bold mb-4 text-neutral-100">
               Add to Inventory
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
+            <p className="text-sm text-neutral-400 mb-6">
               Add price and stock for <strong>{convertModal.drinkName}</strong>
             </p>
 
@@ -262,7 +262,7 @@ export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewPro
               <div>
                 <label
                   htmlFor="convert-price"
-                  className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
+                  className="block text-sm font-semibold text-neutral-300 mb-2"
                 >
                   Price (€) *
                 </label>
@@ -275,7 +275,7 @@ export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewPro
                   onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
                   disabled={isConverting}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border border-neutral-700 bg-neutral-900 text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="0.00"
                 />
               </div>
@@ -283,7 +283,7 @@ export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewPro
               <div>
                 <label
                   htmlFor="convert-stock"
-                  className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
+                  className="block text-sm font-semibold text-neutral-300 mb-2"
                 >
                   Stock *
                 </label>
@@ -296,7 +296,7 @@ export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewPro
                   onChange={(e) => setStock(parseInt(e.target.value, 10) || 0)}
                   disabled={isConverting}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border border-neutral-700 bg-neutral-900 text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32DE84] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="0"
                 />
               </div>

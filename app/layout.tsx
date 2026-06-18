@@ -24,9 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth dark">
       <body
-        className={`${jetbrainsMono.variable} font-mono antialiased min-h-screen text-neutral-100 dark:text-green-100 selection:bg-green-300/60 selection:text-green-900`}
+        className={`${jetbrainsMono.variable} font-mono antialiased min-h-screen text-green-100 selection:bg-green-300/60 selection:text-green-900`}
         style={{ 
           background: 'linear-gradient(to bottom, #000000 0%, #000000 10%, #32de84 70%, #000000 90%, #000000 100%)',
           backgroundColor: '#000000'

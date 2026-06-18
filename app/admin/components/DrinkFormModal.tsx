@@ -15,7 +15,9 @@ type DrinkFormModalProps = {
 };
 
 const INPUT_CLASS =
-  "w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-300/40 dark:border-neutral-600/40 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors";
+  "w-full px-4 py-2 rounded-lg border-2 border-dashed border-neutral-600/40 bg-transparent text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#32de84] focus:border-[#32de84]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors";
+
+const LABEL_CLASS = "block text-sm font-semibold text-neutral-300 mb-2";
 
 export function DrinkFormModal({
   isOpen,
@@ -38,19 +40,16 @@ export function DrinkFormModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="card bg-white text-neutral-900 p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
+        className="card bg-neutral-900 p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-neutral-900 dark:text-neutral-100">
+        <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-neutral-100">
           {title}
         </h2>
 
         <div className="space-y-3 sm:space-y-4">
           <div>
-            <label
-              htmlFor="drink-name"
-              className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
-            >
+            <label htmlFor="drink-name" className={LABEL_CLASS}>
               Name *
             </label>
             <input
@@ -66,10 +65,7 @@ export function DrinkFormModal({
           </div>
 
           <div>
-            <label
-              htmlFor="drink-brand"
-              className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
-            >
+            <label htmlFor="drink-brand" className={LABEL_CLASS}>
               Brand
             </label>
             <input
@@ -85,10 +81,7 @@ export function DrinkFormModal({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label
-                htmlFor="drink-stock"
-                className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
-              >
+              <label htmlFor="drink-stock" className={LABEL_CLASS}>
                 Stock *
               </label>
               <input
@@ -108,10 +101,7 @@ export function DrinkFormModal({
             </div>
 
             <div>
-              <label
-                htmlFor="drink-price"
-                className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
-              >
+              <label htmlFor="drink-price" className={LABEL_CLASS}>
                 Price (€) *
               </label>
               <input
@@ -132,10 +122,7 @@ export function DrinkFormModal({
           </div>
 
           <div>
-            <label
-              htmlFor="drink-imageUrl"
-              className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2"
-            >
+            <label htmlFor="drink-imageUrl" className={LABEL_CLASS}>
               Image URL
             </label>
             <input
@@ -160,7 +147,7 @@ export function DrinkFormModal({
             />
             <label
               htmlFor="drink-sugarFree"
-              className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 cursor-pointer"
+              className="text-sm font-semibold text-neutral-300 cursor-pointer"
             >
               Sugar Free
             </label>
@@ -171,7 +158,7 @@ export function DrinkFormModal({
           <button
             onClick={onSubmit}
             disabled={isSubmitting || !value.name.trim()}
-            className="btn flex-1 text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none rounded-full bg-[#32de84] text-white border-none"
+            className="btn flex-1 text-xs sm:text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none rounded-full bg-[#32de84] text-black border-none"
             style={{ boxShadow: "none" }}
           >
             {submitLabel}

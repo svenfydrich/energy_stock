@@ -127,12 +127,12 @@ export default function WishlistView() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className="card bg-white dark:bg-neutral-900 p-5 flex flex-col h-full group relative cursor-pointer hover:scale-[1.02] transition-transform"
+                className="card bg-neutral-900 p-5 flex flex-col h-full group relative cursor-pointer hover:scale-[1.02] transition-transform"
                 onClick={() => setIsAddModalOpen(true)}
               >
-                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-green-400/30 to-black/60 dark:from-green-900/40 dark:to-black/80 border-2 border-dashed border-green-400/40 dark:border-green-700/40 group-hover:border-green-500/60 dark:group-hover:border-green-600/60 transition-colors">
+                <div className="w-full h-64 rounded-xl overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-green-900/40 to-black/80 border-2 border-dashed border-green-700/40 group-hover:border-green-600/60 transition-colors">
                   <div className="flex flex-col items-center gap-3">
-                    <div className="p-3 rounded-full bg-green-100/80 dark:bg-green-900/50 group-hover:bg-green-200 dark:group-hover:bg-green-800/70 transition-colors">
+                    <div className="p-3 rounded-full bg-green-900/50 group-hover:bg-green-800/70 transition-colors">
                       <svg
                         width="32"
                         height="32"
@@ -142,13 +142,13 @@ export default function WishlistView() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-green-600 dark:text-green-400"
+                        className="text-green-400"
                       >
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />
                       </svg>
                     </div>
-                    <span className="text-base font-semibold text-green-700 dark:text-green-300 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                    <span className="text-base font-semibold text-green-300 group-hover:text-green-400 transition-colors">
                       Add to Wishlist
                     </span>
                   </div>
@@ -165,7 +165,7 @@ export default function WishlistView() {
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    className="card bg-white dark:bg-neutral-900 p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
+                    className="card bg-neutral-900 p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
                   >
                     <button
                       onClick={(e) => {
@@ -173,7 +173,7 @@ export default function WishlistView() {
                         setDeleteConfirm({ isOpen: true, drinkId: d.id, drinkName: d.name });
                       }}
                       disabled={isPending}
-                      className="absolute top-3 right-3 z-10 p-2 rounded-lg border-2 border-dashed border-neutral-300/50 dark:border-neutral-600/50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-red-400/70 dark:hover:border-red-500/70 hover:bg-red-50/80 dark:hover:bg-red-950/30 text-neutral-600 dark:text-neutral-400 hover:text-red-600 dark:hover:text-red-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="absolute top-3 right-3 z-10 p-2 rounded-lg border-2 border-dashed border-neutral-600/50 bg-neutral-900/80 backdrop-blur-sm hover:border-red-500/70 hover:bg-red-950/30 text-neutral-400 hover:text-red-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       aria-label="Delete wishlist item"
                     >
                       <svg
@@ -203,11 +203,11 @@ export default function WishlistView() {
                       {isPending && (
                         <motion.div
                           layoutId={`pending-overlay-${d.id}`}
-                          className="absolute inset-0 bg-white/60 dark:bg-neutral-950/50 backdrop-blur-sm flex items-center justify-center"
+                          className="absolute inset-0 bg-neutral-950/60 backdrop-blur-sm flex items-center justify-center"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                         >
-                          <div className="flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-300">
+                          <div className="flex items-center gap-2 text-sm font-medium text-green-300">
                             <motion.span
                               className="inline-block h-3 w-3 rounded-full bg-green-500"
                               animate={{ scale: [1, 0.7, 1] }}
@@ -218,7 +218,7 @@ export default function WishlistView() {
                         </motion.div>
                       )}
                     </div>
-                    <h2 className="text-xl font-semibold mt-4 truncate text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-xl font-semibold mt-4 truncate text-neutral-100">
                       {d.name}
                     </h2>
                   </motion.div>
@@ -252,7 +252,7 @@ export default function WishlistView() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-md"
+            className="card bg-neutral-900 p-6 w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-2xl font-bold mb-4 text-white">Add to Wishlist</h2>
@@ -274,7 +274,7 @@ export default function WishlistView() {
                   }
                   disabled={isAdding}
                   required
-                  className="w-full text-white px-4 py-2 rounded-lg border-2 border-dashed border-green-300/40 dark:border-green-600/40 bg-transparent focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-400/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full text-white px-4 py-2 rounded-lg border-2 border-dashed border-green-600/40 bg-transparent focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="Enter drink name"
                 />
               </div>
@@ -294,7 +294,7 @@ export default function WishlistView() {
                     setNewWishlistItem({ ...newWishlistItem, imageUrl: e.target.value })
                   }
                   disabled={isAdding}
-                  className="w-full text-white px-4 py-2 rounded-lg border-2 border-dashed border-green-300/40 dark:border-green-600/40 bg-transparent focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-400/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full text-white px-4 py-2 rounded-lg border-2 border-dashed border-green-600/40 bg-transparent focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   placeholder="https://example.com/image.png"
                 />
               </div>
