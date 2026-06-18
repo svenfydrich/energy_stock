@@ -6,56 +6,15 @@ import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { useToasts } from "./components/ToastProvider";
 import WishlistView from "./components/WishlistView";
 import PaymentModal from "./components/PaymentModal";
-
-type Drink = {
-  id: number;
-  name: string;
-  brand: string;
-  price: number;
-  stock: number;
-  imageUrl: string | null;
-  sugarFree: boolean;
-};
-
-const CARD_ANIM = {
-  initial: { opacity: 0, y: 24, scale: 0.94, filter: "blur(6px)" },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 300, damping: 28 },
-  },
-  exit: {
-    opacity: 0,
-    y: -16,
-    scale: 0.9,
-    filter: "blur(4px)",
-    transition: { duration: 0.25, ease: "easeInOut" },
-  },
-};
-
-const BUTTON_BASE =
-  "btn w-full text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none";
-
-function SkeletonCard() {
-  return (
-    <div className="card bg-black p-5 flex flex-col gap-4 h-full animate-pulse">
-      <div className="rounded-xl bg-neutral-800 h-64" />
-      <div className="h-6 w-3/4 rounded bg-neutral-800" />
-      <div className="h-4 w-1/2 rounded bg-neutral-800" />
-      <div className="mt-auto">
-        <div className="h-10 w-full rounded bg-neutral-800" />
-      </div>
-    </div>
-  );
-}
+import { SkeletonCard } from "./components/SkeletonCard";
+import { CARD_ANIM } from "@/lib/animations";
+import type { Drink } from "@/lib/types";
 
 export default function HomePage() {
   const [drinks, setDrinks] = useState<Drink[]>([]);
   const [loading, setLoading] = useState(true);
   const [pendingDrinkIds, setPendingDrinkIds] = useState<Set<number>>(
-    new Set()
+    new Set(),
   );
   const [isRefreshing, startRefresh] = useTransition();
   const [activeTab, setActiveTab] = useState<"shop" | "wishlist">("shop");
@@ -68,7 +27,7 @@ export default function HomePage() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
   const [sugarFilter, setSugarFilter] = useState<"none" | "zero" | "sugary">(
-    "none"
+    "none",
   );
   const { success, error, info } = useToasts();
 
@@ -80,9 +39,7 @@ export default function HomePage() {
         headers: { "Content-Type": "application/json" },
         cache: "no-store",
       });
-      if (!res.ok) {
-        throw new Error(`Failed to load drinks (${res.status})`);
-      }
+      if (!res.ok) throw new Error(`Failed to load drinks (${res.status})`);
       const data = await res.json();
       setDrinks(data.drinks ?? []);
     } catch (e) {
@@ -100,14 +57,11 @@ export default function HomePage() {
         headers: { "Content-Type": "application/json" },
         cache: "no-store",
       });
-      if (!res.ok) {
-        throw new Error(`Failed to load wishlist (${res.status})`);
-      }
+      if (!res.ok) throw new Error(`Failed to load wishlist (${res.status})`);
       const data = await res.json();
       setWishlistCount(data.drinks?.length ?? 0);
-    } catch (e) {
-      console.error(e);
-      // Don't show error for wishlist count failure, it's not critical
+    } catch {
+      // Non-critical — swallow silently
     }
   }, []);
 
@@ -127,7 +81,7 @@ export default function HomePage() {
 
   const optimisticUpdate = (id: number, delta: number) => {
     setDrinks((prev) =>
-      prev.map((d) => (d.id === id ? { ...d, stock: d.stock + delta } : d))
+      prev.map((d) => (d.id === id ? { ...d, stock: d.stock + delta } : d)),
     );
   };
 
@@ -138,12 +92,10 @@ export default function HomePage() {
       info("This drink is out of stock.");
       return;
     }
-
     setPaymentModal({ isOpen: true, drink });
   };
 
   const handlePaymentSuccess = () => {
-    // Refresh drinks list
     fetchDrinks();
     setPaymentModal({ isOpen: false, drink: null });
   };
@@ -173,9 +125,7 @@ export default function HomePage() {
 
   const toggleSearch = () => {
     setIsSearchOpen((prev) => !prev);
-    if (isSearchOpen) {
-      setSearchQuery("");
-    }
+    if (isSearchOpen) setSearchQuery("");
   };
 
   const filteredAndSortedDrinks = React.useMemo(() => {
@@ -186,13 +136,13 @@ export default function HomePage() {
       result = result.filter(
         (drink) =>
           drink.name.toLowerCase().includes(query) ||
-          drink.brand.toLowerCase().includes(query)
+          drink.brand.toLowerCase().includes(query),
       );
     }
 
     if (sugarFilter !== "none") {
       result = result.filter((drink) =>
-        sugarFilter === "zero" ? drink.sugarFree : !drink.sugarFree
+        sugarFilter === "zero" ? drink.sugarFree : !drink.sugarFree,
       );
     }
 
@@ -218,12 +168,9 @@ export default function HomePage() {
                 {activeTab === "shop" ? "Shop" : "Wishlist"}
               </span>
             </p>
-            <h1 
+            <h1
               className="mt-2 font-extrabold text-[#32de84]"
-              style={{ 
-                fontSize: '60px',
-                lineHeight: '1.1'
-              }}
+              style={{ fontSize: "60px", lineHeight: "1.1" }}
             >
               {activeTab === "shop" ? "Fuel for victory" : "Letters to Santa"}
             </h1>
@@ -273,7 +220,7 @@ export default function HomePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className={`mb-1 text-[#32de84] dark:text-[#32de84] ${
+                  className={`mb-1 text-[#32de84] ${
                     isRefreshing
                       ? "animate-spin"
                       : "group-hover:rotate-180 transition-transform duration-500"
@@ -338,7 +285,6 @@ export default function HomePage() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="transition-transform"
                   >
                     <circle cx="11" cy="11" r="8" />
                     <path d="m21 21-4.35-4.35" />
@@ -355,8 +301,8 @@ export default function HomePage() {
                     sugarFilter === "none"
                       ? "Filter: Zero"
                       : sugarFilter === "zero"
-                      ? "Filter: Sugary"
-                      : "Filter: None"
+                        ? "Filter: Sugary"
+                        : "Filter: None"
                   }
                 >
                   <svg
@@ -372,8 +318,8 @@ export default function HomePage() {
                       sugarFilter === "zero"
                         ? "text-emerald-600 dark:text-emerald-400"
                         : sugarFilter === "sugary"
-                        ? "text-pink-600 dark:text-pink-500"
-                        : ""
+                          ? "text-pink-600 dark:text-pink-500"
+                          : ""
                     }`}
                   >
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
@@ -390,8 +336,8 @@ export default function HomePage() {
                     sortOrder === null
                       ? "Sort A-Z"
                       : sortOrder === "asc"
-                      ? "Sort Z-A"
-                      : "Clear sort"
+                        ? "Sort Z-A"
+                        : "Clear sort"
                   }
                 >
                   {sortOrder === "desc" ? (
@@ -404,7 +350,6 @@ export default function HomePage() {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="transition-transform"
                     >
                       <line x1="18" y1="6" x2="6" y2="18" />
                       <line x1="6" y1="6" x2="18" y2="18" />
@@ -419,9 +364,7 @@ export default function HomePage() {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className={`transition-transform ${
-                        sortOrder === "asc" ? "rotate-180" : ""
-                      }`}
+                      className={`transition-transform ${sortOrder === "asc" ? "rotate-180" : ""}`}
                     >
                       <path d="m3 16 4 4 4-4" />
                       <path d="M7 20V4" />
@@ -539,9 +482,7 @@ export default function HomePage() {
                               <div className="flex items-center gap-2 text-sm font-medium text-indigo-300">
                                 <motion.span
                                   className="inline-block h-3 w-3 rounded-full bg-indigo-500"
-                                  animate={{
-                                    scale: [1, 0.7, 1],
-                                  }}
+                                  animate={{ scale: [1, 0.7, 1] }}
                                   transition={{
                                     repeat: Infinity,
                                     duration: 0.9,
@@ -565,10 +506,7 @@ export default function HomePage() {
                           </h2>
                         </div>
                         <div className="mt-3 flex items-center justify-between">
-                          <span
-                            className="text-4xl sm:text-4xl font-extrabold"
-                            style={{ color: "#ffffff" }}
-                          >
+                          <span className="text-4xl font-extrabold text-white">
                             €{d.price.toFixed(2)}
                           </span>
                           <span
@@ -613,7 +551,6 @@ export default function HomePage() {
           )}
       </div>
 
-      {/* Payment Modal */}
       {paymentModal.drink && (
         <PaymentModal
           isOpen={paymentModal.isOpen}

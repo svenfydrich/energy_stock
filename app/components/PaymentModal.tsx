@@ -21,9 +21,7 @@ export default function PaymentModal({
   drink,
   onPaymentSuccess,
 }: PaymentModalProps) {
-  const [paymentMethod, setPaymentMethod] = useState<"paypal" | "bank" | null>(
-    null
-  );
+  const [selectedMethod, setSelectedMethod] = useState<"paypal" | "bank_transfer" | null>(null);
   const [bankDetails, setBankDetails] = useState<{
     iban: string;
     bic: string;
@@ -34,31 +32,16 @@ export default function PaymentModal({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [customerName, setCustomerName] = useState("");
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    "paypal" | "bank_transfer" | null
-  >(null);
-  const [paypalAccountHolder, setPaypalAccountHolder] =
-    useState("@MichaelFlathe");
+  const [paypalAccountHolder, setPaypalAccountHolder] = useState("@MichaelFlathe");
   const { success, error } = useToasts();
 
-  // Fetch PayPal account holder from config
   useEffect(() => {
-    const fetchConfig = async () => {
-      try {
-        const res = await fetch("/api/config");
-        if (res.ok) {
-          const config = await res.json();
-          if (config.paypalAccountHolder) {
-            setPaypalAccountHolder(config.paypalAccountHolder);
-          }
-        }
-      } catch (err) {
-        console.error("Failed to fetch config:", err);
-        // Continue with default value
-      }
-    };
-
-    fetchConfig();
+    fetch("/api/config")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((config) => {
+        if (config?.paypalAccountHolder) setPaypalAccountHolder(config.paypalAccountHolder);
+      })
+      .catch(() => {});
   }, []);
 
   const handlePayPalPayment = () => {
@@ -67,15 +50,11 @@ export default function PaymentModal({
       return;
     }
 
-    // Remove @ symbol if present for the URL
     const accountName = paypalAccountHolder.startsWith("@")
       ? paypalAccountHolder.slice(1)
       : paypalAccountHolder;
-    const paypalUrl = `https://paypal.me/${accountName}/${drink.price.toFixed(
-      2
-    )}EUR`;
-    window.open(paypalUrl, "_blank");
-    setSelectedPaymentMethod("paypal");
+    window.open(`https://paypal.me/${accountName}/${drink.price.toFixed(2)}EUR`, "_blank");
+    setSelectedMethod("paypal");
     setShowConfirmDialog(true);
   };
 
@@ -85,8 +64,7 @@ export default function PaymentModal({
       return;
     }
 
-    setPaymentMethod("bank");
-    setSelectedPaymentMethod("bank_transfer");
+    setSelectedMethod("bank_transfer");
 
     try {
       const res = await fetch("/api/payments/create-bank-transfer-intent", {
@@ -106,15 +84,9 @@ export default function PaymentModal({
 
       const data = await res.json();
       setBankDetails(data.bankDetails);
-
-      // Only show the bank details, don't complete the purchase yet
-      // Purchase will be completed when user clicks "Buy Now" button
     } catch (err) {
-      error(
-        err instanceof Error ? err.message : "Failed to create bank transfer"
-      );
-      setPaymentMethod(null);
-      setSelectedPaymentMethod(null);
+      error(err instanceof Error ? err.message : "Failed to create bank transfer");
+      setSelectedMethod(null);
     }
   };
 
@@ -124,16 +96,11 @@ export default function PaymentModal({
     try {
       const res = await fetch("/api/buy", {
         method: "POST",
-        body: JSON.stringify({
-          drinkId: drink.id,
-          customerName: customerName.trim(),
-        }),
+        body: JSON.stringify({ drinkId: drink.id, customerName: customerName.trim() }),
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!res.ok) {
-        throw new Error("Purchase failed");
-      }
+      if (!res.ok) throw new Error("Purchase failed");
 
       success(`Purchased ${drink.name} successfully!`);
       onPaymentSuccess();
@@ -162,24 +129,9 @@ export default function PaymentModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-white">
-            Complete Payment
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-neutral-400 hover:text-neutral-200"
-            aria-label="Close"
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+          <h2 className="text-2xl font-bold text-white">Complete Payment</h2>
+          <button onClick={onClose} className="text-neutral-400 hover:text-neutral-200" aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -190,47 +142,29 @@ export default function PaymentModal({
           <p className="text-sm text-neutral-300">
             Item: <strong className="text-white">{drink.name}</strong>
           </p>
-          <p className="text-lg font-bold text-white mt-1">
-            €{drink.price.toFixed(2)}
-          </p>
+          <p className="text-lg font-bold text-white mt-1">€{drink.price.toFixed(2)}</p>
         </div>
 
-        {paymentMethod === "bank" ? (
+        {selectedMethod === "bank_transfer" ? (
           <div>
             <div className="bg-neutral-900 p-4 rounded-lg mb-4 border border-neutral-800">
-              <h3 className="font-semibold mb-3 text-white">
-                Bank Transfer Details
-              </h3>
+              <h3 className="font-semibold mb-3 text-white">Bank Transfer Details</h3>
               {bankDetails && (
                 <div className="space-y-2 text-sm">
                   <div>
-                    <span className="text-neutral-400">
-                      Account Holder:
-                    </span>{" "}
-                    <strong className="text-white">
-                      {bankDetails.accountHolder}
-                    </strong>
+                    <span className="text-neutral-400">Account Holder:</span>{" "}
+                    <strong className="text-white">{bankDetails.accountHolder}</strong>
                   </div>
                   <div>
-                    <span className="text-neutral-400">
-                      IBAN:
-                    </span>{" "}
-                    <strong className="text-white font-mono">
-                      {bankDetails.iban}
-                    </strong>
+                    <span className="text-neutral-400">IBAN:</span>{" "}
+                    <strong className="text-white font-mono">{bankDetails.iban}</strong>
                   </div>
                   <div>
-                    <span className="text-neutral-400">
-                      BIC:
-                    </span>{" "}
-                    <strong className="text-white font-mono">
-                      {bankDetails.bic}
-                    </strong>
+                    <span className="text-neutral-400">BIC:</span>{" "}
+                    <strong className="text-white font-mono">{bankDetails.bic}</strong>
                   </div>
                   <div>
-                    <span className="text-neutral-400">
-                      Amount:
-                    </span>{" "}
+                    <span className="text-neutral-400">Amount:</span>{" "}
                     <strong className="text-white">
                       €{bankDetails.amount} {bankDetails.currency}
                     </strong>
@@ -239,8 +173,7 @@ export default function PaymentModal({
               )}
             </div>
             <p className="text-xs text-neutral-400 mb-4">
-              Please transfer the amount to the account above, then confirm your
-              purchase below.
+              Please transfer the amount to the account above, then confirm your purchase below.
             </p>
             <div className="space-y-3">
               <button
@@ -252,7 +185,7 @@ export default function PaymentModal({
               </button>
               <button
                 onClick={() => {
-                  setPaymentMethod(null);
+                  setSelectedMethod(null);
                   setBankDetails(null);
                 }}
                 className="btn btn-outline w-full text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400"
@@ -263,9 +196,7 @@ export default function PaymentModal({
           </div>
         ) : (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold mb-4 text-white">
-              Choose Payment Method
-            </h3>
+            <h3 className="text-lg font-semibold mb-4 text-white">Choose Payment Method</h3>
 
             <div className="mb-6">
               <label
@@ -289,14 +220,7 @@ export default function PaymentModal({
               />
               {!customerName.trim() && (
                 <p className="mt-2 text-xs text-red-400 flex items-center gap-1">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <circle cx="12" cy="12" r="10" />
                     <line x1="12" y1="8" x2="12" y2="12" />
                     <line x1="12" y1="16" x2="12.01" y2="16" />
@@ -310,11 +234,11 @@ export default function PaymentModal({
               <button
                 onClick={handlePayPalPayment}
                 disabled={isProcessing || !customerName.trim()}
-                className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-semibold py-3 px-4 rounded-lg transition-all disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0070ba] relative"
+                className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-semibold py-3 px-4 rounded-lg transition-all disabled:opacity-40 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0070ba] relative"
               >
                 {!customerName.trim() && (
                   <span className="absolute -top-2 -right-2 flex h-5 w-5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-5 w-5 bg-red-500 items-center justify-center text-white text-xs font-bold">
                       !
                     </span>
@@ -326,11 +250,11 @@ export default function PaymentModal({
               <button
                 onClick={handleBankTransferPayment}
                 disabled={isProcessing || !customerName.trim()}
-                className="w-full bg-neutral-800 hover:bg-neutral-700 text-white font-semibold py-3 px-4 rounded-lg transition-all disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-800 relative"
+                className="w-full bg-neutral-800 hover:bg-neutral-700 text-white font-semibold py-3 px-4 rounded-lg transition-all disabled:opacity-40 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-800 relative"
               >
                 {!customerName.trim() && (
                   <span className="absolute -top-2 -right-2 flex h-5 w-5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-5 w-5 bg-red-500 items-center justify-center text-white text-xs font-bold">
                       !
                     </span>
@@ -351,17 +275,13 @@ export default function PaymentModal({
               className="card-black bg-black p-6 w-full max-w-sm"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-bold mb-4 text-white">
-                Confirm Purchase
-              </h3>
+              <h3 className="text-xl font-bold mb-4 text-white">Confirm Purchase</h3>
               <p className="text-sm text-neutral-300 mb-6">
                 I confirm that I have paid{" "}
                 <strong>€{drink.price.toFixed(2)}</strong> to{" "}
-                <strong>Michael Flathe</strong> via{" "}
+                <strong>{paypalAccountHolder}</strong> via{" "}
                 <strong>
-                  {selectedPaymentMethod === "bank_transfer"
-                    ? "bank transfer"
-                    : "PayPal"}
+                  {selectedMethod === "bank_transfer" ? "bank transfer" : "PayPal"}
                 </strong>{" "}
                 and want to purchase <strong>{drink.name}</strong>.
               </p>

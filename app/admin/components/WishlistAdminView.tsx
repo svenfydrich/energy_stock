@@ -4,59 +4,30 @@ import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToasts } from "@/app/components/ToastProvider";
-
-type WishlistDrink = {
-  id: number;
-  name: string;
-  imageUrl: string | null;
-  createdAt: string;
-};
-
-const CARD_ANIM = {
-  initial: { opacity: 0, y: 24, scale: 0.94 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { type: "spring", stiffness: 300, damping: 28 },
-  },
-  exit: {
-    opacity: 0,
-    y: -16,
-    scale: 0.9,
-    transition: { duration: 0.25 },
-  },
-};
-
-function SkeletonCard() {
-  return (
-    <div className="card bg-white dark:bg-neutral-900 p-5 flex flex-col gap-4 h-full animate-pulse">
-      <div className="rounded-xl bg-neutral-200 dark:bg-neutral-800 h-64" />
-      <div className="h-6 w-3/4 rounded bg-neutral-200 dark:bg-neutral-800" />
-    </div>
-  );
-}
+import { SkeletonCard } from "@/app/components/SkeletonCard";
+import { ConfirmModal } from "@/app/components/ConfirmModal";
+import { CARD_ANIM } from "@/lib/animations";
+import type { WishlistDrink, ConfirmState } from "@/lib/types";
+import { usePendingSet } from "@/app/hooks/usePendingSet";
 
 type WishlistAdminViewProps = {
   onDrinkAdded?: () => void;
 };
 
-export default function WishlistAdminView(
-  { onDrinkAdded }: WishlistAdminViewProps = {} as WishlistAdminViewProps
-) {
+export default function WishlistAdminView({ onDrinkAdded }: WishlistAdminViewProps) {
   const [wishlistDrinks, setWishlistDrinks] = useState<WishlistDrink[]>([]);
   const [loading, setLoading] = useState(true);
-  const [pendingIds, setPendingIds] = useState<Set<number>>(new Set());
-  const [convertModal, setConvertModal] = useState<{
-    isOpen: boolean;
-    drinkId: number | null;
-    drinkName: string;
-  }>({ isOpen: false, drinkId: null, drinkName: "" });
-  const [deleteConfirm, setDeleteConfirm] = useState<{
-    isOpen: boolean;
-    drinkId: number | null;
-    drinkName: string;
-  }>({ isOpen: false, drinkId: null, drinkName: "" });
+  const { pendingIds, mark } = usePendingSet();
+  const [convertModal, setConvertModal] = useState<ConfirmState>({
+    isOpen: false,
+    drinkId: null,
+    drinkName: "",
+  });
+  const [deleteConfirm, setDeleteConfirm] = useState<ConfirmState>({
+    isOpen: false,
+    drinkId: null,
+    drinkName: "",
+  });
   const [isConverting, setIsConverting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [price, setPrice] = useState(0);
@@ -71,9 +42,7 @@ export default function WishlistAdminView(
         headers: { "Content-Type": "application/json" },
         cache: "no-store",
       });
-      if (!res.ok) {
-        throw new Error(`Failed to load wishlist (${res.status})`);
-      }
+      if (!res.ok) throw new Error(`Failed to load wishlist (${res.status})`);
       const data = await res.json();
       setWishlistDrinks(data.drinks ?? []);
     } catch (e) {
@@ -88,59 +57,6 @@ export default function WishlistAdminView(
     fetchWishlist();
   }, [fetchWishlist]);
 
-  const markPending = (id: number, add: boolean) => {
-    setPendingIds((prev) => {
-      const next = new Set(prev);
-      if (add) next.add(id);
-      else next.delete(id);
-      return next;
-    });
-  };
-
-  const handleConvertClick = (id: number, name: string) => {
-    setConvertModal({ isOpen: true, drinkId: id, drinkName: name });
-    setPrice(0);
-    setStock(0);
-  };
-
-  const handleDeleteClick = (id: number, name: string) => {
-    setDeleteConfirm({ isOpen: true, drinkId: id, drinkName: name });
-  };
-
-  const handleDeleteConfirm = async () => {
-    if (!deleteConfirm.drinkId) return;
-
-    const wishlistId = deleteConfirm.drinkId;
-    const drinkName = deleteConfirm.drinkName;
-
-    setIsDeleting(true);
-    markPending(wishlistId, true);
-
-    try {
-      const res = await fetch("/api/admin/delete-wishlist", {
-        method: "POST",
-        body: JSON.stringify({ wishlistId }),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Failed to delete wishlist item");
-      }
-
-      // Remove item from list
-      setWishlistDrinks((prev) => prev.filter((d) => d.id !== wishlistId));
-      success(`Deleted ${drinkName} from wishlist!`);
-      setDeleteConfirm({ isOpen: false, drinkId: null, drinkName: "" });
-    } catch (e) {
-      console.error(e);
-      error(e instanceof Error ? e.message : "Unable to delete wishlist item.");
-    } finally {
-      setIsDeleting(false);
-      markPending(wishlistId, false);
-    }
-  };
-
   const handleConvertConfirm = async () => {
     if (!convertModal.drinkId) return;
 
@@ -150,23 +66,18 @@ export default function WishlistAdminView(
       error("Please enter a valid price");
       return;
     }
-
     if (!Number.isInteger(stock) || stock < 0) {
       error("Stock must be a non-negative integer");
       return;
     }
 
     setIsConverting(true);
-    markPending(wishlistId, true);
+    mark(wishlistId, true);
 
     try {
       const res = await fetch("/api/admin/convert-wishlist", {
         method: "POST",
-        body: JSON.stringify({
-          wishlistId,
-          price,
-          stock,
-        }),
+        body: JSON.stringify({ wishlistId, price, stock }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -175,41 +86,55 @@ export default function WishlistAdminView(
         throw new Error(data.error || "Failed to convert wishlist item");
       }
 
-      await res.json();
       success(`Converted ${convertModal.drinkName} to a drink!`);
-
-      // Remove from wishlist
       setWishlistDrinks((prev) => prev.filter((d) => d.id !== wishlistId));
       setConvertModal({ isOpen: false, drinkId: null, drinkName: "" });
-
-      // Notify parent to refresh drinks
-      if (onDrinkAdded) {
-        onDrinkAdded();
-      }
+      onDrinkAdded?.();
     } catch (e) {
       console.error(e);
-      error(
-        e instanceof Error ? e.message : "Unable to convert wishlist item."
-      );
+      error(e instanceof Error ? e.message : "Unable to convert wishlist item.");
     } finally {
       setIsConverting(false);
-      markPending(wishlistId, false);
+      mark(wishlistId, false);
     }
   };
 
-  const handleConvertCancel = () => {
-    setConvertModal({ isOpen: false, drinkId: null, drinkName: "" });
-    setPrice(0);
-    setStock(0);
+  const handleDeleteConfirm = async () => {
+    if (!deleteConfirm.drinkId) return;
+
+    const { drinkId, drinkName } = deleteConfirm;
+    setIsDeleting(true);
+    mark(drinkId, true);
+
+    try {
+      const res = await fetch("/api/admin/delete-wishlist", {
+        method: "POST",
+        body: JSON.stringify({ wishlistId: drinkId }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to delete wishlist item");
+      }
+
+      setWishlistDrinks((prev) => prev.filter((d) => d.id !== drinkId));
+      success(`Deleted ${drinkName} from wishlist!`);
+      setDeleteConfirm({ isOpen: false, drinkId: null, drinkName: "" });
+    } catch (e) {
+      console.error(e);
+      error(e instanceof Error ? e.message : "Unable to delete wishlist item.");
+    } finally {
+      setIsDeleting(false);
+      mark(drinkId, false);
+    }
   };
 
   return (
     <div>
       <div className="mb-6 flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4 sm:gap-0">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white">
-            Wishlist Items
-          </h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Wishlist Items</h2>
           <p className="text-sm text-neutral-400 mt-1">
             Convert wishlist items to drinks by adding price and stock
           </p>
@@ -227,7 +152,7 @@ export default function WishlistAdminView(
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
           {loading ? (
             Array.from({ length: 6 }).map((_, i) => (
-              <SkeletonCard key={`skeleton-${i}`} />
+              <SkeletonCard key={`skeleton-${i}`} compact />
             ))
           ) : (
             <>
@@ -262,14 +187,8 @@ export default function WishlistAdminView(
                           <div className="flex items-center gap-2 text-sm font-medium text-indigo-700 dark:text-indigo-300">
                             <motion.span
                               className="inline-block h-3 w-3 rounded-full bg-indigo-500"
-                              animate={{
-                                scale: [1, 0.7, 1],
-                              }}
-                              transition={{
-                                repeat: Infinity,
-                                duration: 0.9,
-                                ease: "easeInOut",
-                              }}
+                              animate={{ scale: [1, 0.7, 1] }}
+                              transition={{ repeat: Infinity, duration: 0.9, ease: "easeInOut" }}
                             />
                             Processing…
                           </div>
@@ -282,15 +201,19 @@ export default function WishlistAdminView(
 
                     <div className="mt-5 flex flex-col gap-2 items-center">
                       <button
-                        onClick={() => handleConvertClick(d.id, d.name)}
+                        onClick={() =>
+                          setConvertModal({ isOpen: true, drinkId: d.id, drinkName: d.name })
+                        }
                         disabled={isPending}
                         className="btn px-6 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32DE84] disabled:opacity-40 disabled:pointer-events-none rounded-full"
-                        style={{ backgroundColor: '#32de84', color: '#000', boxShadow: 'none', animation: 'none', transition: 'none' }}
+                        style={{ backgroundColor: "#32de84", color: "#000", boxShadow: "none" }}
                       >
                         Add to Inventory
                       </button>
                       <button
-                        onClick={() => handleDeleteClick(d.id, d.name)}
+                        onClick={() =>
+                          setDeleteConfirm({ isOpen: true, drinkId: d.id, drinkName: d.name })
+                        }
                         disabled={isPending}
                         className="btn bg-red-500 hover:bg-red-600 text-black border-red-500 hover:border-red-600 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none px-4 py-2 rounded-full"
                       >
@@ -315,11 +238,11 @@ export default function WishlistAdminView(
         </motion.div>
       )}
 
-      {/* Convert Modal */}
+      {/* Convert Modal (custom — needs price/stock inputs, not a simple confirm) */}
       {convertModal.isOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-          onClick={handleConvertCancel}
+          onClick={() => setConvertModal({ isOpen: false, drinkId: null, drinkName: "" })}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -385,8 +308,7 @@ export default function WishlistAdminView(
                 disabled={isConverting || price <= 0 || stock < 0}
                 className="btn flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32de84] disabled:opacity-40 disabled:pointer-events-none"
                 style={{
-                  background:
-                    "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
+                  background: "linear-gradient(90deg, #32de84, #229e5c, #6fffc2, #32de84)",
                   backgroundSize: "200% 100%",
                   color: "#fff",
                   animation: "gradient-flow 4s linear infinite",
@@ -395,7 +317,11 @@ export default function WishlistAdminView(
                 {isConverting ? "Adding..." : "Add to Inventory"}
               </button>
               <button
-                onClick={handleConvertCancel}
+                onClick={() => {
+                  setConvertModal({ isOpen: false, drinkId: null, drinkName: "" });
+                  setPrice(0);
+                  setStock(0);
+                }}
                 disabled={isConverting}
                 className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
               >
@@ -406,55 +332,21 @@ export default function WishlistAdminView(
         </div>
       )}
 
-      {/* Delete Confirmation Modal */}
-      {deleteConfirm.isOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-          onClick={() =>
-            setDeleteConfirm({ isOpen: false, drinkId: null, drinkName: "" })
-          }
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="card bg-white dark:bg-neutral-900 p-6 w-full max-w-md"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
-              Delete Wishlist Item
-            </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
-              Are you sure you want to delete{" "}
-              <strong>{deleteConfirm.drinkName}</strong> from the wishlist? This
-              action cannot be undone.
-            </p>
-
-            <div className="flex gap-3">
-              <button
-                onClick={handleDeleteConfirm}
-                disabled={isDeleting}
-                className="btn bg-red-500 hover:bg-red-600 text-white border-red-500 hover:border-red-600 flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-40 disabled:pointer-events-none"
-              >
-                {isDeleting ? "Deleting..." : "Delete"}
-              </button>
-              <button
-                onClick={() =>
-                  setDeleteConfirm({
-                    isOpen: false,
-                    drinkId: null,
-                    drinkName: "",
-                  })
-                }
-                disabled={isDeleting}
-                className="btn btn-outline flex-1 text-sm font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 disabled:opacity-40 disabled:pointer-events-none"
-              >
-                Cancel
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      )}
+      <ConfirmModal
+        isOpen={deleteConfirm.isOpen}
+        onClose={() => setDeleteConfirm({ isOpen: false, drinkId: null, drinkName: "" })}
+        onConfirm={handleDeleteConfirm}
+        isConfirming={isDeleting}
+        title="Delete Wishlist Item"
+        confirmLabel={isDeleting ? "Deleting..." : "Delete"}
+        description={
+          <>
+            Are you sure you want to delete{" "}
+            <strong>{deleteConfirm.drinkName}</strong> from the wishlist? This
+            action cannot be undone.
+          </>
+        }
+      />
     </div>
   );
 }

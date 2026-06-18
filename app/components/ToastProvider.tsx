@@ -11,64 +11,35 @@ import React, {
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-/**
- * Toast types supported by the system.
- */
 export type ToastType = "success" | "error" | "info";
 
-/**
- * Toast interface definition.
- */
 export interface Toast {
   id: string;
   type: ToastType;
   message: string;
-  duration?: number; // ms until auto-dismiss
+  duration?: number;
   icon?: ReactNode;
   createdAt: number;
 }
 
-/**
- * Context shape for interacting with the toast system.
- */
 interface ToastContextValue {
   toasts: Toast[];
-  addToast: (
-    input: Omit<Toast, "id" | "createdAt"> & { id?: string }
-  ) => string;
+  addToast: (input: Omit<Toast, "id" | "createdAt"> & { id?: string }) => string;
   removeToast: (id: string) => void;
   clearToasts: () => void;
-  // Convenience helpers
-  success: (
-    message: string,
-    opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
-  ) => string;
-  error: (
-    message: string,
-    opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
-  ) => string;
-  info: (
-    message: string,
-    opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
-  ) => string;
+  success: (message: string, opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>) => string;
+  error: (message: string, opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>) => string;
+  info: (message: string, opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>) => string;
 }
 
 const ToastContext = createContext<ToastContextValue | null>(null);
 
-/**
- * Hook to consume the ToastContext.
- */
 export function useToasts(): ToastContextValue {
   const ctx = useContext(ToastContext);
-  if (!ctx) {
-    throw new Error("useToasts must be used within a ToastProvider");
-  }
+  if (!ctx) throw new Error("useToasts must be used within a ToastProvider");
   return ctx;
 }
 
-/**
- * Variants for framer-motion animations.
- */
 const toastVariants = {
   initial: { opacity: 0, y: 12, scale: 0.96, filter: "blur(4px)" },
   animate: {
@@ -87,54 +58,28 @@ const toastVariants = {
   },
 };
 
-/**
- * Basic icon components (could be replaced by a dedicated icon set).
- */
 const SuccessIcon = () => (
-  <span
-    aria-hidden="true"
-    className="inline-block text-green-600 dark:text-green-400"
-  >
-    ✓
-  </span>
+  <span aria-hidden="true" className="inline-block text-green-600 dark:text-green-400">✓</span>
 );
 const ErrorIcon = () => (
-  <span
-    aria-hidden="true"
-    className="inline-block text-red-600 dark:text-red-500"
-  >
-    ⚠
-  </span>
+  <span aria-hidden="true" className="inline-block text-red-600 dark:text-red-500">⚠</span>
 );
 const InfoIcon = () => (
-  <span
-    aria-hidden="true"
-    className="inline-block text-green-600 dark:text-green-400"
-  >
-    ⓘ
-  </span>
+  <span aria-hidden="true" className="inline-block text-green-600 dark:text-green-400">ⓘ</span>
 );
 
 function defaultIcon(type: ToastType): ReactNode {
   switch (type) {
-    case "success":
-      return <SuccessIcon />;
-    case "error":
-      return <ErrorIcon />;
-    case "info":
-    default:
-      return <InfoIcon />;
+    case "success": return <SuccessIcon />;
+    case "error": return <ErrorIcon />;
+    default: return <InfoIcon />;
   }
 }
 
-/**
- * Provider component.
- */
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const timeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
 
-  // Clean up on unmount
   useEffect(() => {
     return () => {
       Object.values(timeoutsRef.current).forEach(clearTimeout);
@@ -153,8 +98,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     (toast: Toast) => {
       const duration = toast.duration ?? 3500;
       if (duration <= 0) return;
-      const timeout = setTimeout(() => removeToast(toast.id), duration);
-      timeoutsRef.current[toast.id] = timeout;
+      timeoutsRef.current[toast.id] = setTimeout(() => removeToast(toast.id), duration);
     },
     [removeToast]
   );
@@ -177,28 +121,21 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     [scheduleRemoval]
   );
 
-  // Convenience helpers
   const success = useCallback(
-    (
-      message: string,
-      opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
-    ) => addToast({ type: "success", message, ...opts }),
+    (message: string, opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>) =>
+      addToast({ type: "success", message, ...opts }),
     [addToast]
   );
 
   const error = useCallback(
-    (
-      message: string,
-      opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
-    ) => addToast({ type: "error", message, ...opts }),
+    (message: string, opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>) =>
+      addToast({ type: "error", message, ...opts }),
     [addToast]
   );
 
   const info = useCallback(
-    (
-      message: string,
-      opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>
-    ) => addToast({ type: "info", message, ...opts }),
+    (message: string, opts?: Partial<Omit<Toast, "id" | "type" | "message" | "createdAt">>) =>
+      addToast({ type: "info", message, ...opts }),
     [addToast]
   );
 
@@ -208,20 +145,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     timeoutsRef.current = {};
   }, []);
 
-  const value: ToastContextValue = {
-    toasts,
-    addToast,
-    removeToast,
-    clearToasts,
-    success,
-    error,
-    info,
-  };
-
   return (
-    <ToastContext.Provider value={value}>
+    <ToastContext.Provider value={{ toasts, addToast, removeToast, clearToasts, success, error, info }}>
       {children}
-      {/* Toast viewport */}
       <div
         aria-live="polite"
         aria-atomic="true"
@@ -247,9 +173,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                   : "bg-indigo-50/80 dark:bg-indigo-900/30 border-indigo-200 dark:border-indigo-700",
               ].join(" ")}
             >
-              <div className="text-xl flex items-start pt-0.5">
-                {toast.icon}
-              </div>
+              <div className="text-xl flex items-start pt-0.5">{toast.icon}</div>
               <div className="flex-1">
                 <p
                   className="text-sm font-medium leading-snug text-neutral-800 dark:text-neutral-100"
@@ -283,64 +207,4 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       </div>
     </ToastContext.Provider>
   );
-}
-
-/**
- * Skeleton loader component (exported for reuse)
- * Simple shimmer effect; can be extended as needed.
- */
-export function Skeleton({ className = "" }: { className?: string }) {
-  return (
-    <div
-      className={`relative overflow-hidden bg-neutral-200 dark:bg-neutral-800 rounded-md ${className}`}
-      aria-hidden="true"
-    >
-      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.2s_infinite] bg-gradient-to-r from-transparent via-white/60 dark:via-white/10 to-transparent" />
-      <style jsx>{`
-        @keyframes shimmer {
-          100% {
-            transform: translateX(100%);
-          }
-        }
-      `}</style>
-    </div>
-  );
-}
-
-/**
- * Helper hook to show a skeleton list while loading.
- */
-export function useSkeleton(count: number): React.ReactElement[] {
-  return Array.from({ length: count }).map((_, i) => (
-    <Skeleton key={i} className="h-10 w-full" />
-  ));
-}
-
-/**
- * Example hook that can orchestrate optimistic UI (placeholder for future logic).
- */
-export function useOptimisticAction<A extends unknown[], R>(
-  action: (...args: A) => Promise<R>,
-  {
-    onError,
-    onSuccess,
-  }: {
-    onError?: (err: unknown) => void;
-    onSuccess?: (result: R) => void;
-  } = {}
-) {
-  const { success, error } = useToasts();
-
-  return async (...args: A) => {
-    try {
-      const result = await action(...args);
-      success("Action completed.");
-      onSuccess?.(result);
-      return result;
-    } catch (err) {
-      error("Something went wrong.");
-      onError?.(err);
-      throw err;
-    }
-  };
 }
