@@ -413,7 +413,7 @@ export default function HomePage() {
         {/* Content */}
         {activeTab === "shop" ? (
           <LayoutGroup>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 items-stretch">
               {loading ? (
                 Array.from({ length: 6 }).map((_, i) => (
                   <SkeletonCard key={`skeleton-${i}`} />
@@ -430,48 +430,55 @@ export default function HomePage() {
                         initial="initial"
                         animate="animate"
                         exit="exit"
-                        className="card bg-black p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
+                        className="card bg-black p-3 sm:p-5 flex flex-col h-full group relative hover:scale-[1.02] transition-transform"
                       >
                         {d.sugarFree && (
-                          <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md border-2 border-dashed border-emerald-400/60 bg-black text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                          <div className="absolute top-2 left-2 z-10 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md border-2 border-dashed border-emerald-400/60 bg-black text-emerald-400 text-[9px] sm:text-xs font-bold uppercase tracking-wider">
                             ZERO
                           </div>
                         )}
-                        <div className="w-full h-64 rounded-xl overflow-hidden relative">
+                        <div className="w-full h-32 sm:h-64 rounded-xl overflow-hidden relative">
+                          <Image
+                            src={d.imageUrl || "/next.svg"}
+                            alt=""
+                            fill
+                            sizes="(max-width: 640px) 50vw, 33vw"
+                            className="object-cover scale-110 blur-2xl opacity-60 brightness-75"
+                          />
                           <Image
                             src={d.imageUrl || "/next.svg"}
                             alt={d.name}
-                            width={500}
-                            height={500}
-                            className="w-full h-full object-contain"
+                            fill
+                            sizes="(max-width: 640px) 50vw, 33vw"
+                            className="object-contain p-2 sm:p-3"
                             priority
                           />
                         </div>
-                        <div className="mt-4">
+                        <div className="mt-2 sm:mt-4">
                           <p
-                            className="text-xs uppercase tracking-wider font-semibold"
+                            className="text-[10px] sm:text-xs uppercase tracking-wider font-semibold"
                             style={{ color: "#32de84" }}
                           >
                             {d.brand || "Unknown"}
                           </p>
-                          <h2 className="text-xl font-semibold mt-1 truncate text-white">
+                          <h2 className="text-sm sm:text-xl font-semibold mt-0.5 sm:mt-1 truncate text-white">
                             {d.name}
                           </h2>
                         </div>
-                        <div className="mt-3 flex items-center justify-between">
-                          <span className="text-4xl font-extrabold text-white">
+                        <div className="mt-1.5 sm:mt-3 flex items-center justify-between gap-1">
+                          <span className="text-xl sm:text-4xl font-extrabold text-white">
                             €{d.price.toFixed(2)}
                           </span>
-                          <span className={`stock-badge ${outOfStock ? "out" : ""}`}>
+                          <span className={`stock-badge text-[10px] sm:text-xs ${outOfStock ? "out" : ""}`}>
                             {outOfStock ? "Out" : `${d.stock} left`}
                           </span>
                         </div>
 
-                        <div className="mt-5 flex justify-center">
+                        <div className="mt-3 sm:mt-5">
                           <button
                             onClick={() => buyDrink(d.id)}
                             disabled={outOfStock}
-                            className="buy-btn px-7 py-2 rounded-full text-[#32de84] bg-black text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none"
+                            className="buy-btn w-full sm:w-auto sm:px-7 py-3 sm:py-2 rounded-full text-[#32de84] bg-black text-base sm:text-lg font-semibold transition-all disabled:opacity-40 disabled:pointer-events-none"
                           >
                             {outOfStock ? "No stock" : "Buy"}
                           </button>
