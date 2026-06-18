@@ -85,7 +85,7 @@ export async function GET(req: Request) {
         imageUrl: true,
         sugarFree: true,
       },
-      orderBy: { id: "asc" },
+      orderBy: { purchases: { _count: "desc" } },
     });
 
     return NextResponse.json({ success: true, drinks });
